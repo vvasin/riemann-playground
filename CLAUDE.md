@@ -36,7 +36,7 @@ npm run lint:html  # validate dist/index.html (run after build)
 | 5   | `zeros`      | complex s, extension via η(s)/(1 − 2/2^s), trivial/nontrivial zeros | σ slider → `zeroMap` + `zetaLine` (live \|ζ(σ+it)\|)                |
 | 6   | `wave`       | ψ(x), explicit formula, one pair of zeros = one wave                | zero buttons, linear/log axis, `wavePlot`                           |
 | 7   | `synth`      | sum of N waves rebuilds the ψ staircase                             | one N slider shared by `synthPlot` and `barPlot`                    |
-| 8   | `hypothesis` | statement, what is known, why ½, why it matters                     | β slider for a hypothetical zero: `hypoWave`, `hypoScale` (log-log) |
+| 8   | `hypothesis` | statement, what is known, the 2026 proof, why ½, why it matters     | β slider for a hypothetical zero: `hypoWave`, `hypoScale` (log-log) |
 | 9   | `proof`      | Schoenfeld bound, other consequences, what RH does not give         | 10^k slider over published π(10^k) values                           |
 
 The top nav (`.chapter-nav`) and the hero "Overview" list link to these ids. Update both, the include list in `index.html`, and the "Step N of 9" labels if steps are added or reordered; the e2e test checks they agree.
@@ -45,7 +45,8 @@ Slider controls use `.control` > `.control-head` (`<label for>` + `<output for>`
 
 ## Verified facts (do not "correct" these without a source)
 
-- Schoenfeld (1976): under RH, |π(x) − li(x)| < √x·ln x/(8π) for x ≥ 2657, and the converse also holds. Thanks to zeros already checked by computer, this bound is already proven for x up to about 10²⁶ (Büthe; Johnston, arXiv 2109.02249). The page says so.
+- RH is proven: Levent Alpöge released a Lean proof (about 17 million lines) on 20 Nov 2026; the Lean FRO and Mathlib Initiative joint statement of 21 Nov 2026 (leanprover-community.github.io/blog/posts/riemann-hypothesis/) certifies that it proves Mathlib's `RiemannHypothesis` and that the proof is correct. The page states this in the hero and step 8, notes that human study of the ideas and the Clay prize process are ongoing, and does not mention the generalized RH (not covered by the statement).
+- Schoenfeld (1976): under RH, |π(x) − li(x)| < √x·ln x/(8π) for x ≥ 2657, and the converse also holds. Before the RH proof, it was already proven for x up to about 10²⁶ from zeros checked by computer (Büthe; Johnston, arXiv 2109.02249). The page says so.
 - The constants of the best bound proven without RH (Platt–Trudgian 2021, Johnston–Yang) were **not** confirmed, so the page describes that bound only in words.
 - With N = 50, the bars in step 7 pick out every prime and prime power up to 30. Their bars are all higher than every other bar, which stays within ±0.9. Across all N, the bars stay in [−0.88, 3.86].
 - Checked numbers (the zeta values are not shown on the page; they validate `zeta`): ζ(½+10i) = 1.5449 − 0.1153i, ζ(−1) = −1/12, li(10¹²) = 37,607,950,280.8. There are 16 primes between 1001 and 1100, the gap after 1129 is 22, and H_n > 10 first at n = 12,367.

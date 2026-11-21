@@ -1,6 +1,6 @@
 # riemann-playground
 
-An interactive, step-by-step explanation of the Riemann hypothesis: what the zeta function is, how its zeros are connected to prime numbers, and what a proof would guarantee.
+An interactive, step-by-step explanation of the Riemann hypothesis: what the zeta function is, how its zeros are connected to prime numbers, and what its proof establishes.
 
 ## Development
 

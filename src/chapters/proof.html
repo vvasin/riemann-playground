@@ -1,6 +1,6 @@
 <section class="chapter" id="proof">
   <p class="step-label">Step 9 of 9</p>
-  <h2>What a proof would guarantee</h2>
+  <h2>What the proof establishes</h2>
   <div class="chapter-grid">
     <div class="prose">
       <p>
@@ -16,28 +16,30 @@
       </div>
       <p>
         So the hypothesis is exactly a statement about how far the count of primes can drift from
-        the estimate li(x) of step 2. For comparison, the best bounds proven without the hypothesis
-        are much weaker. They are smaller than x only by a factor that grows more slowly than any
-        power of x, such as √x or x<sup>0.01</sup>.
+        the estimate li(x) of step 2. Since the hypothesis is now proven, this inequality holds for
+        every x ≥ 2657. For comparison, the best bounds proven without the hypothesis are much
+        weaker. They are smaller than x only by a factor that grows more slowly than any power of x,
+        such as √x or x<sup>0.01</sup>.
       </p>
       <p>
         The panel shows real values. In each case the actual error is well below the bound. For x up
-        to about 10<sup>26</sup> the inequality has in fact already been proven, because the zeros
-        it depends on have been checked by computer. The hypothesis would make it true for every x.
+        to about 10<sup>26</sup> the inequality was proven before the hypothesis itself, because the
+        zeros it depends on had been checked by computer. The proof of the hypothesis extends it to
+        every x.
       </p>
       <h3>Other consequences</h3>
       <ul>
         <li>
-          <strong>Gaps between primes:</strong> there would always be a prime between x and x +
-          C·√x·ln x for a fixed constant C (Cramér, 1920).
+          <strong>Gaps between primes:</strong> there is always a prime between x and x + C·√x·ln x
+          for a fixed constant C (Cramér, 1920).
         </li>
         <li>
           <strong>Many existing theorems:</strong> a large number of results in number theory have
-          been proven under the assumption that the hypothesis holds. A proof would make all of them
-          unconditional.
+          been proven under the assumption that the hypothesis holds. The proof makes them
+          unconditional: they no longer depend on an assumption.
         </li>
       </ul>
-      <h3>What it would not give</h3>
+      <h3>What it does not give</h3>
       <ul>
         <li>A formula that produces the primes, or the n-th prime, directly.</li>
         <li>
@@ -50,15 +52,14 @@
         also a product over primes (step 4). Its zeros (step 5) each add one wave to the prime
         staircase (steps 6 and 7). The size of these waves depends on the real parts of the zeros.
         The Riemann hypothesis says all these real parts are ½ (step 8), which is the same as saying
-        the prime count never drifts from li(x) by more than about √x · ln x.
+        the prime count never drifts from li(x) by more than about √x · ln x. It was proven in 2026.
       </div>
     </div>
     <div class="panel">
       <h3>Actual error compared with the bound</h3>
       <p class="subtitle">
         Choose x. The values of π(x) for x ≥ 10<sup>6</sup> are published results of large
-        computations; li(x) and the bound are computed here. All values shown are below
-        10<sup>26</sup>, where the bound is already proven.
+        computations; li(x) and the bound are computed here. The bound holds for every x ≥ 2657.
       </p>
       <div class="control">
         <div class="control-head">
