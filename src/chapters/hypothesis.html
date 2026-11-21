@@ -1,0 +1,109 @@
+<section class="chapter" id="hypothesis">
+  <p class="step-label">Step 8 of 9</p>
+  <h2>The Riemann hypothesis</h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <div class="equation statement">
+        Every nontrivial zero of the zeta function has real part ½.
+      </div>
+      <p>
+        In the picture of step 5: all nontrivial zeros lie on the vertical line σ = ½, called the
+        <strong>critical line</strong>.
+      </p>
+      <h3>What is known</h3>
+      <ul>
+        <li>
+          All nontrivial zeros lie in the strip 0 &lt; σ &lt; 1. That none lie on the edge σ = 1 is
+          what proves the prime number theorem (1896).
+        </li>
+        <li>
+          Infinitely many zeros lie on the line (Hardy, 1914), and more than 40% of all of them do
+          (Conrey, 1989).
+        </li>
+        <li>The first 10 trillion zeros have been computed, and all are on the line.</li>
+        <li>
+          No proof is known. Checking any finite number of zeros cannot settle a statement about
+          infinitely many. It is one of the seven Millennium Prize Problems of the Clay Mathematics
+          Institute.
+        </li>
+      </ul>
+      <h3>Why ½</h3>
+      <p>
+        Zeros come in mirror pairs with real parts β and 1 − β (step 5). If one zero has β &gt; ½,
+        its partner has β &lt; ½, and vice versa. So the largest real part among all zeros is at
+        least ½. The hypothesis says it is exactly ½, the smallest value possible.
+      </p>
+      <h3>Why it matters</h3>
+      <p>
+        In step 6, the wave of a zero grows like x<sup>β</sup>. The error ψ(x) − x is the sum of all
+        these waves. If every β = ½, every wave grows like √x, and the total error stays near √x (up
+        to a logarithmic factor). If even one zero had β = 0.8, the error would, again and again,
+        reach sizes close to x<sup>0.8</sup>. The same holds for π(x) − li(x).
+      </p>
+      <div class="keypoint">
+        <strong>Key point:</strong> the largest real part of the zeros sets how large the error in
+        counting primes can become. The hypothesis says it is ½, the best possible value.
+      </div>
+    </div>
+    <div class="panel">
+      <h3>A zero on the line compared with a hypothetical zero off it</h3>
+      <p class="subtitle">
+        The blue wave comes from the real first zero, ½ + 14.13i. The pink wave comes from a
+        hypothetical zero at the same height with real part β. No such zero is known; this only
+        shows what it would do.
+      </p>
+      <div class="control">
+        <div class="control-head">
+          <label for="betaSlider">Real part β of the hypothetical zero</label>
+          <output id="betaValue" for="betaSlider">0.80</output>
+        </div>
+        <input id="betaSlider" type="range" min="0.5" max="0.95" step="0.05" value="0.8" />
+      </div>
+      <canvas
+        id="hypoWave"
+        class="plot short"
+        role="img"
+        aria-label="Wave of the real first zero and of a hypothetical zero with larger real part, for x from 2 to 100"
+      ></canvas>
+      <ul class="legend">
+        <li><span class="swatch blue"></span>Real zero, β = ½</li>
+        <li>
+          <span class="swatch rose"></span>Hypothetical zero, β = <span id="betaLegend">0.80</span>
+        </li>
+      </ul>
+      <hr class="divider" />
+      <h3>Size of each wave for large x</h3>
+      <p class="subtitle">
+        Both axes use powers of 10. The grey line is x itself, the main term of ψ(x). The size of a
+        wave is 2·x<sup>β</sup>/|ρ|.
+      </p>
+      <canvas
+        id="hypoScale"
+        class="plot medium"
+        role="img"
+        aria-label="Sizes of the two waves and of x, on logarithmic axes up to ten to the twelfth"
+      ></canvas>
+      <ul class="legend">
+        <li><span class="swatch grey"></span>x</li>
+        <li><span class="swatch blue"></span>Real zero's wave</li>
+        <li><span class="swatch rose"></span>Hypothetical wave</li>
+      </ul>
+      <div class="control">
+        <div class="control-head">
+          <label for="scaleExponent">Read values at x</label>
+          <output id="scaleExponentValue" for="scaleExponent">10⁸</output>
+        </div>
+        <input id="scaleExponent" type="range" min="2" max="12" step="1" value="8" />
+      </div>
+      <div class="compare three">
+        <div class="stat"><small>x</small> <strong id="scaleX">—</strong></div>
+        <div class="stat"><small>Real zero's wave</small> <strong id="scaleReal">—</strong></div>
+        <div class="stat"><small>Hypothetical wave</small> <strong id="scaleHypo">—</strong></div>
+      </div>
+      <p class="explain" id="hypoExplain"></p>
+      <p class="tiny">
+        A zero at β would come with a mirror zero at 1 − β, whose wave is smaller. It is not shown.
+      </p>
+    </div>
+  </div>
+</section>

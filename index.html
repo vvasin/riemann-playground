@@ -1,700 +1,133 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b1020">
-<meta name="description" content="An interactive, step-by-step explanation of the Riemann hypothesis: what the zeta function is, how its zeros are connected to prime numbers, and what a proof would guarantee.">
-<title>The Riemann Hypothesis, Step by Step</title>
-<style>
-:root{color-scheme:dark;--bg:#090e19;--surface:#121c2e;--border:#2c405b;--ink:#f0f5ff;--text:#c1cee0;--muted:#91a6c2;--mint:#66e9c3;--blue:#86c9ff;--gold:#ffd48c;--rose:#ff90b2;--violet:#b6a8ff;--shadow:0 20px 60px rgba(0,0,0,.20)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:92px}
-body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px}
-button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-a{color:var(--blue)}
-.wrap{max-width:1140px;padding:0 25px;margin:0 auto}
-.topbar{position:sticky;top:0;z-index:10;background:rgba(9,14,25,.94);border-bottom:1px solid #263b54;backdrop-filter:blur(16px)}
-.toprow{min-height:58px;display:flex;gap:20px;align-items:center;justify-content:space-between}
-.brand{font-size:13px;font-weight:750;color:var(--ink);white-space:nowrap;text-decoration:none}
-.chapternav{display:flex;align-items:center;gap:4px;overflow:auto;scrollbar-width:none}.chapternav::-webkit-scrollbar{display:none}
-.chapternav a{font-size:12px;line-height:1.2;text-decoration:none;color:#9caec8;padding:9px 10px;border-radius:8px;white-space:nowrap}
-.chapternav a.active,.chapternav a:hover{background:#1b3045;color:var(--mint)}
-.progress{height:3px;background:#1b293c}.progress span{display:block;height:100%;width:0;background:var(--mint)}
-.hero{padding:clamp(48px,7vw,96px) 0 64px;display:grid;grid-template-columns:1.2fr .8fr;gap:50px;align-items:start}
-.hero h1{font-size:clamp(36px,5.2vw,60px);line-height:1.08;letter-spacing:-.04em;margin:0 0 22px}
-.hero p{font-size:clamp(16px,1.6vw,19px);line-height:1.65;color:var(--text);max-width:640px;margin:0 0 18px}
-.steps{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px 22px}
-.steps h2{font-size:13px;color:var(--muted);margin:0 0 10px;font-weight:700}
-.steps ol{margin:0;padding-left:22px;color:var(--text);font-size:14px;line-height:1.5}
-.steps li{margin:0 0 8px}.steps li a{color:var(--ink);text-decoration:none;font-weight:650}.steps li a:hover{color:var(--mint)}
-.steps li span{display:block;color:var(--muted);font-size:13px}
-.primary{border:none;border-radius:11px;background:var(--mint);color:#071522;padding:11px 17px;font-weight:760;text-decoration:none;display:inline-flex}
-.primary:hover{background:#94ffe1}
-.secondary{background:#26374f;border:1px solid #4a607e;border-radius:11px;color:var(--ink);font-weight:680;padding:10px 14px}.secondary:hover{border-color:var(--blue)}
-.chapter{padding:64px 0 72px;border-top:1px solid #26354a}
-.steplabel{font-size:12px;font-weight:750;color:var(--mint);margin:0 0 10px;letter-spacing:.04em}
-.chapter h2{font-size:clamp(28px,3.6vw,42px);line-height:1.15;letter-spacing:-.03em;margin:0 0 24px;max-width:820px}
-.chapter-grid{display:grid;grid-template-columns:minmax(260px,.9fr) minmax(0,1.3fr);gap:clamp(25px,4vw,52px);align-items:start}
-.prose{color:var(--text);font-size:16px}.prose p{margin:0 0 17px}.prose strong{color:var(--ink)}
-.prose ul{margin:0 0 17px;padding-left:20px}.prose li{margin:0 0 6px}
-.prose h3{color:var(--ink);font-size:17px;margin:26px 0 8px}
-.keypoint{padding:10px 0 10px 16px;border-left:3px solid var(--mint);margin:22px 0;color:#d8e8f7;font-size:15px}
-.keypoint strong{color:var(--mint)}
-.panel{background:linear-gradient(150deg,rgba(25,39,61,.95),rgba(15,25,43,.96));border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:22px;min-width:0}
-.panel h3{font-size:17px;line-height:1.3;margin:0 0 6px}
-.subtitle{color:var(--muted);font-size:13.5px;line-height:1.55;margin:0 0 16px}
-.control{margin:16px 0 8px}
-.control label{font-weight:650;font-size:14px;display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:6px}
-.control output{color:var(--mint);font-variant-numeric:tabular-nums;white-space:nowrap}
-.control input[type=range]{width:100%;accent-color:var(--mint);cursor:pointer}
-.readout{border-top:1px solid var(--border);padding:15px 0 0;margin-top:16px}
-.readout .big{display:block;font-size:26px;line-height:1.2;font-weight:780;letter-spacing:-.02em;color:var(--ink)}
-.readout .meta{color:var(--muted);font-size:13px}
-.num-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin:14px 0 0}
-.num{min-width:0;aspect-ratio:1;border:1px solid #34475f;border-radius:8px;background:#172337;color:#8e9fb6;font-weight:700;font-size:13px;padding:0}
-.num.isprime{color:var(--mint);border-color:#32665e;background:#153432}.num.outside{opacity:.32}
-.num.chosen{outline:2px solid var(--gold);outline-offset:1px;color:var(--gold)}.num:hover{border-color:var(--gold)}
-.legend{display:flex;flex-wrap:wrap;gap:7px 18px;color:var(--muted);font-size:12px;margin:10px 0 2px}
-.legend i{display:inline-block;width:16px;height:3px;margin-right:6px;vertical-align:middle;background:var(--mint);border-radius:3px}
-.legend .blue{background:var(--blue)}.legend .rose{background:var(--rose)}.legend .violet{background:var(--violet)}.legend .gold{background:var(--gold)}.legend .grey{background:#7d8ea6}.legend .dot{width:9px;height:9px;border-radius:50%}
-.equation{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;background:#0b1524;border:1px solid #2a3e58;border-radius:11px;padding:13px 14px;line-height:1.8;color:#e9f2ff;overflow-x:auto;font-size:14px;margin:0 0 17px}
-.equation .sub{display:block;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:12.5px;line-height:1.55;color:var(--muted);margin-top:6px}
-.factor-list{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
-.factor{font:12px ui-monospace,SFMono-Regular,Consolas,monospace;padding:5px 8px;border-radius:7px;color:var(--mint);background:#163838;border:1px solid #35625f}
-.factor.inactive{color:#8197ad;background:#142137;border-color:#32445a}
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.compare.three{grid-template-columns:repeat(3,1fr)}
-.stat{padding:11px 13px;background:#101d31;border:1px solid #2a405c;border-radius:10px;min-width:0}
-.stat small{display:block;font-size:12px;color:var(--muted);line-height:1.4}
-.stat strong{display:block;font-size:clamp(16px,1.8vw,20px);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.tiny{font-size:12.5px;line-height:1.6;color:var(--muted);margin:12px 0 0}
-.explain{font-size:13.5px;line-height:1.6;color:var(--text);margin:12px 0 0}
-.plot{width:100%;height:320px;display:block;touch-action:pan-y}.plot.medium{height:250px}.plot.short{height:190px}
-.axis-note{font-size:12px;color:var(--muted);margin:4px 0 0}
-.choice{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}
-.choice button{border:1px solid #3b526b;color:var(--text);border-radius:8px;background:#1a2b43;padding:7px 11px;font-size:13px;font-weight:650}
-.choice button.active{background:#244a49;color:var(--mint);border-color:#5cbb9f}
-.choice-label{font-size:13px;color:var(--muted);font-weight:650;margin-top:12px}
-.metricline{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:10px 0;border-top:1px solid var(--border);font-size:13px;color:var(--muted);margin-top:10px}
-.metricline strong{font-variant-numeric:tabular-nums;font-size:15px;color:var(--ink);text-align:right}
-.buttonrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.buttonrow button{font-size:13px}
-.panel-divider{height:1px;background:#39506a;margin:26px 0 22px}
-.fraction-strip{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}
-.fraction-strip span{font:12px ui-monospace,SFMono-Regular,Consolas,monospace;padding:5px 7px;background:#162c3e;color:var(--blue);border-radius:7px;border:1px solid #31506a}
-.fraction-strip span.more{background:transparent;color:var(--muted)}
-.sum-progress{width:100%;height:9px;border:1px solid #38566a;border-radius:20px;overflow:hidden;background:#0d1b2b;margin-top:16px}
-.sum-progress span{display:block;height:100%;background:var(--mint);width:0}
-.power-control{margin-top:12px}.power-control>span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px;font-weight:650}
-.power-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-.power-buttons button{min-width:0;padding:8px 1px;border:1px solid #3c5974;border-radius:8px;background:#172942;color:var(--text);font-size:13px;font-weight:700}
-.power-buttons button.active{border-color:var(--mint);color:var(--mint);background:#173d3e}
-.term-result{margin:14px 0 0;color:var(--mint)}
-.axis-switch{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:4px;background:#0e1a2b;border:1px solid #344960;border-radius:10px;margin:14px 0 8px}
-.axis-switch button{border:0;border-radius:7px;background:transparent;color:var(--muted);font-size:12.5px;font-weight:680;padding:8px 5px}
-.axis-switch button.active{background:#21403f;color:var(--mint)}
-.hover-note{font-size:12.5px;color:var(--text);margin:8px 0 0;min-height:2.6em;font-variant-numeric:tabular-nums}
-select{background:#16273d;color:var(--ink);border:1px solid #4b617e;border-radius:9px;padding:9px 11px;width:100%;margin-top:6px}
-details.appendix{margin:6px 0 17px}details.appendix summary{color:var(--blue);cursor:pointer;font-weight:650;font-size:14px}
-details.appendix>div{margin-top:10px}
-.datatable{width:100%;border-collapse:collapse;font-size:14px;margin-top:12px;font-variant-numeric:tabular-nums}
-.datatable th{text-align:left;font-weight:600;color:var(--muted);font-size:13px;padding:8px 6px 8px 0;border-top:1px solid var(--border)}
-.datatable td{text-align:right;padding:8px 0;border-top:1px solid var(--border);color:var(--ink);font-weight:650}
-.meter{height:12px;border-radius:12px;background:#0d1b2b;border:1px solid #38566a;overflow:hidden;margin-top:8px}
-.meter span{display:block;height:100%;background:var(--mint)}
-.footer{border-top:1px solid var(--border);padding:40px 0 70px;color:var(--muted);font-size:13px}
-.footer p{max-width:900px;margin:0 0 12px}.footer .sources{display:flex;gap:8px 16px;flex-wrap:wrap}
-@media(max-width:860px){.hero{grid-template-columns:1fr;gap:26px}.chapter-grid{grid-template-columns:1fr}.chapter{padding:52px 0 60px}.prose{max-width:730px}}
-@media(max-width:560px){.wrap{padding:0 16px}.toprow{display:block;padding:8px 0 4px}.brand{display:block;margin:0 0 2px}.chapternav a{padding:7px 8px}.panel{padding:15px;border-radius:15px}.plot{height:270px}.plot.medium{height:220px}.plot.short{height:170px}.num-grid{gap:4px}.num{font-size:11px;border-radius:6px}.compare.three{grid-template-columns:1fr}.equation{font-size:13px}.power-buttons button{font-size:12px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-</style>
-</head>
-<body>
-<header class="topbar">
-  <div class="wrap toprow"><a class="brand" href="#top">The Riemann hypothesis</a>
-  <nav class="chapternav" aria-label="Steps">
-    <a href="#primes">1 Primes</a><a href="#estimate">2 Counting</a><a href="#zeta">3 Zeta</a><a href="#product">4 Euler product</a><a href="#zeros">5 Zeros</a><a href="#wave">6 One wave</a><a href="#synth">7 All waves</a><a href="#hypothesis">8 The hypothesis</a><a href="#proof">9 Consequences</a>
-  </nav></div>
-  <div class="progress" aria-hidden="true"><span id="readingProgress"></span></div>
-</header>
-<div class="wrap" id="top">
-<header class="hero">
-  <div>
-    <h1>The Riemann hypothesis, step by step</h1>
-    <p>The Riemann hypothesis is a claim about where one particular function, the zeta function, is equal to zero. It was stated in 1859 and is still unproven. It matters because the zeros of this function control how regularly the prime numbers are spread among the whole numbers.</p>
-    <p>This page builds the idea from the beginning in nine steps. You need arithmetic, powers, sums, complex numbers, and sine and cosine. Each step has a small calculation you can change. Every number and graph on the page is computed from the actual formulas.</p>
-    <a class="primary" href="#primes">Start with step 1</a>
-  </div>
-  <nav class="steps" aria-label="Overview">
-    <h2>Overview</h2>
-    <ol>
-      <li><a href="#primes">Prime numbers</a><span>Counting them with π(x)</span></li>
-      <li><a href="#estimate">Estimating the count</a><span>A smooth formula, and its error</span></li>
-      <li><a href="#zeta">The zeta function</a><span>A sum of powers</span></li>
-      <li><a href="#product">Euler's product</a><span>How zeta is tied to the primes</span></li>
-      <li><a href="#zeros">Complex inputs and zeros</a><span>Where zeta equals 0</span></li>
-      <li><a href="#wave">One zero, one wave</a><span>The exact formula for counting primes</span></li>
-      <li><a href="#synth">All the waves together</a><span>Rebuilding the prime staircase</span></li>
-      <li><a href="#hypothesis">The hypothesis</a><span>What it says and what is known</span></li>
-      <li><a href="#proof">What a proof would guarantee</a><span>And what it would not</span></li>
-    </ol>
-  </nav>
-</header>
-<main>
-
-<!-- STEP 1 -->
-<section class="chapter" id="primes">
-  <p class="steplabel">Step 1 of 9</p>
-  <h2>Prime numbers and the counting function π(x)</h2>
-  <div class="chapter-grid">
-    <div class="prose">
-      <p>A <strong>prime number</strong> is a whole number greater than 1 that is divisible only by 1 and by itself: 2, 3, 5, 7, 11, 13, …</p>
-      <p>Every whole number greater than 1 can be written as a product of primes in exactly one way, apart from the order of the factors. For example, 12 = 2 × 2 × 3, and no other set of primes multiplies to 12. This fact is used in step 4.</p>
-      <p>Primes become rarer as numbers get larger, and they do not follow a simple pattern. There are 25 primes up to 100, but only 16 between 1001 and 1100. After the prime 1129, the next prime is 1151.</p>
-      <p>To study how primes are spread out, we count them. <strong>π(x)</strong>, read “pi of x”, is the number of primes less than or equal to x. For example, π(10) = 4, because the primes up to 10 are 2, 3, 5 and 7. Here π is only the name of this function. It has nothing to do with the number 3.14159…</p>
-      <div class="keypoint"><strong>The question behind this page:</strong> how accurately can π(x) be predicted without listing the primes?</div>
-    </div>
-    <div class="panel">
-      <h3>Primes up to x</h3>
-      <p class="subtitle">Move the slider or click a number to set x. Primes are highlighted.</p>
-      <div class="control"><label for="primeLimit"><span>x</span><output id="primeLimitValue">30</output></label><input id="primeLimit" type="range" min="2" max="100" step="1" value="30"></div>
-      <div id="primeGrid" class="num-grid" aria-label="Numbers from 2 through 100"></div>
-      <div class="legend"><span><i></i>Prime</span><span><i class="grey"></i>Not prime</span><span><i class="gold"></i>x</span></div>
-      <div class="readout" aria-live="polite"><span class="big" id="primeCountText">π(30) = 10</span><span class="meta" id="numberExplanation"></span></div>
-    </div>
-  </div>
-</section>
-
-<!-- STEP 2 -->
-<section class="chapter" id="estimate">
-  <p class="steplabel">Step 2 of 9</p>
-  <h2>Estimating how many primes there are</h2>
-  <div class="chapter-grid">
-    <div class="prose">
-      <p>Around 1800, Gauss noticed from tables of primes that near a number n, roughly one number in every <strong>ln n</strong> is prime. (ln is the natural logarithm.) Near 1000, ln n ≈ 6.9, so about one number in 7 is prime. Near 1 000 000, about one in 14 is.</p>
-      <p>If a number n is prime with “probability” about 1/ln n, then the expected number of primes up to x is about</p>
-      <div class="equation">1/ln 2 + 1/ln 3 + 1/ln 4 + … + 1/ln x</div>
-      <p>A smooth version of this sum is called the <strong>logarithmic integral, li(x)</strong>. (Precisely, li(x) is the area under the curve 1/ln t from t = 0 to t = x.) A simpler but less accurate estimate is x / ln x.</p>
-      <p>The <strong>prime number theorem</strong>, proved in 1896, says that the ratio π(x) / li(x) gets closer and closer to 1 as x grows. So the estimate is right in <em>relative</em> terms.</p>
-      <p>The difference li(x) − π(x), however, keeps growing. How fast it grows is the open question. The Riemann hypothesis is equivalent to a precise answer: about as fast as √x, up to a factor of ln x (step 9).</p>
-      <div class="keypoint"><strong>Key point:</strong> the difference between π(x) and li(x) is the error of the estimate. The rest of the page explains what controls this error.</div>
-    </div>
-    <div class="panel">
-      <h3>π(x) compared with two estimates</h3>
-      <p class="subtitle">Choose how far to count. Hover over or tap the graph to read values.</p>
-      <div class="choice" id="estimateRange" role="group" aria-label="Largest x"></div>
-      <canvas id="estimatePlot" class="plot" role="img" aria-label="Prime counting function compared with li(x) and x divided by ln x"></canvas>
-      <div class="legend"><span><i></i>π(x), the actual count</span><span><i class="blue"></i>li(x)</span><span><i class="violet"></i>x / ln x</span></div>
-      <p class="hover-note" id="estimateHover" aria-live="polite"></p>
-      <div class="compare three"><div class="stat"><small id="estPiLabel">π(x)</small><strong id="estPi">—</strong></div><div class="stat"><small>li(x)</small><strong id="estLi">—</strong></div><div class="stat"><small>x / ln x</small><strong id="estXlog">—</strong></div></div>
-      <p class="explain" id="estimateExplain"></p>
-      <p class="tiny">li(x) is larger than π(x) for every x anyone has computed. Littlewood proved in 1914 that this reverses infinitely many times, but the first reversal happens beyond 10<sup>19</sup>.</p>
-    </div>
-  </div>
-</section>
-
-<!-- STEP 3 -->
-<section class="chapter" id="zeta">
-  <p class="steplabel">Step 3 of 9</p>
-  <h2>The zeta function</h2>
-  <div class="chapter-grid">
-    <div class="prose">
-      <p>Pick a number s. Raise every whole number to the power s, take the reciprocals, and add them all:</p>
-      <div class="equation">ζ(s) = 1/1<sup>s</sup> + 1/2<sup>s</sup> + 1/3<sup>s</sup> + 1/4<sup>s</sup> + …</div>
-      <p>This is the <strong>zeta function</strong>. ζ is the Greek letter zeta.</p>
-      <p>For s = 2 the sum is 1 + 1/4 + 1/9 + 1/16 + … The terms shrink quickly enough that the total approaches a fixed number, 1.644934… In 1734 Euler showed that this number is exactly π²/6, where π is the usual circle constant.</p>
-      <p>For s = 1 the sum is 1 + 1/2 + 1/3 + 1/4 + … The terms still shrink, but too slowly: the total grows without limit. The sum has a finite value exactly when <strong>s &gt; 1</strong>.</p>
-      <p>So far s is an ordinary real number. In step 5 it becomes a complex number.</p>
-      <div class="keypoint"><strong>Key point:</strong> ζ(s) is defined by adding 1/n<sup>s</sup> over all whole numbers n. This sum works for s &gt; 1.</div>
-    </div>
-    <div class="panel">
-      <h3>Adding the terms one by one</h3>
-      <p class="subtitle">Choose s, then change how many terms are added.</p>
-      <div class="choice" id="sChoice" role="group" aria-label="Choose s"></div>
-      <div class="control"><label for="sumCount"><span>Number of terms</span><output id="sumCountValue">10</output></label><input id="sumCount" type="range" min="1" max="250" step="1" value="10"></div>
-      <div class="fraction-strip" id="fractionStrip" aria-label="First terms of the sum"></div>
-      <div class="sum-progress" id="sumProgress" aria-hidden="true"><span id="sumProgressFill"></span></div>
-      <div class="compare"><div class="stat"><small>Sum of these terms</small><strong id="sumResult">—</strong></div><div class="stat"><small>Value of the infinite sum</small><strong id="sumLimit">—</strong></div></div>
-      <p class="explain" id="sumExplain" aria-live="polite"></p>
-    </div>
-  </div>
-</section>
-
-<!-- STEP 4 -->
-<section class="chapter" id="product">
-  <p class="steplabel">Step 4 of 9</p>
-  <h2>Euler's product: how zeta is tied to the primes</h2>
-  <div class="chapter-grid">
-    <div class="prose">
-      <p>Take s = 2. For each prime p, write a sum that uses only the powers of p:</p>
-      <div class="equation">for 2: 1 + 1/2² + 1/4² + 1/8² + …<br>for 3: 1 + 1/3² + 1/9² + 1/27² + …<br>for 5: 1 + 1/5² + 1/25² + …<br>and so on for every prime</div>
-      <p>Now multiply all of these sums together. To expand such a product, you pick one term from each sum and multiply the picks. For example, pick 1/4² from the first sum, 1/3² from the second, and 1 from all others. The result is 1/(4·3)² = 1/12².</p>
-      <p>Since 12 = 2² × 3 in only one way (step 1), the term 1/12² appears exactly once in the expansion. The same holds for every whole number n: 1/n² appears exactly once. So the product of all these sums is 1 + 1/2² + 1/3² + 1/4² + …, which is ζ(2).</p>
-      <p>Each of the sums is a geometric series: 1 + q + q² + … = 1/(1 − q) when −1 &lt; q &lt; 1. Here q = 1/p², so the sum for the prime p equals 1/(1 − 1/p²). The same argument works for any s &gt; 1:</p>
-      <div class="equation">ζ(s) = 1/(1 − 1/2<sup>s</sup>) × 1/(1 − 1/3<sup>s</sup>) × 1/(1 − 1/5<sup>s</sup>) × 1/(1 − 1/7<sup>s</sup>) × …<span class="sub">One factor for each prime. Valid for s &gt; 1.</span></div>
-      <p>This formula, found by Euler, also shows that there are infinitely many primes. As s approaches 1, the left side grows without limit (step 3). A product of finitely many factors would stay finite, so the number of factors, and therefore of primes, must be infinite.</p>
-      <div class="keypoint"><strong>Key point:</strong> the sum over all whole numbers equals a product over the primes. This is why the zeta function carries information about primes.</div>
-    </div>
-    <div class="panel">
-      <h3>Pick one term from each sum</h3>
-      <p class="subtitle">Choose a term from the sum for 2 and from the sum for 3. All other primes contribute 1.</p>
-      <div class="power-control"><span>From the sum for 2</span><div class="power-buttons" id="power2" role="group" aria-label="Term from the sum for 2"></div></div>
-      <div class="power-control"><span>From the sum for 3</span><div class="power-buttons" id="power3" role="group" aria-label="Term from the sum for 3"></div></div>
-      <div class="equation term-result" id="termResult" aria-live="polite">—</div>
-      <p class="tiny">With only 2 and 3 you get the numbers 1, 2, 3, 4, 6, 8, 9, 12, … Including the sums for 5, 7, 11, … produces every other whole number.</p>
-      <div class="panel-divider"></div>
-      <h3>Multiply the factors for the first primes</h3>
-      <p class="subtitle">Each prime p adds the factor 1/(1 − 1/p²). The product approaches ζ(2).</p>
-      <div class="control"><label for="factorCount"><span>Number of primes used</span><output id="factorCountValue">4</output></label><input id="factorCount" type="range" min="0" max="10" step="1" value="4"></div>
-      <div class="factor-list" id="factorList" aria-label="Primes included in the product"></div>
-      <div class="compare"><div class="stat"><small>Product</small><strong id="productResult">—</strong></div><div class="stat"><small>ζ(2) = π²/6</small><strong>1.644934…</strong></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- STEP 5 -->
-<section class="chapter" id="zeros">
-  <p class="steplabel">Step 5 of 9</p>
-  <h2>Complex inputs and the zeros of zeta</h2>
-  <div class="chapter-grid">
-    <div class="prose">
-      <p>In 1859 Riemann allowed s to be a complex number, <strong>s = σ + it</strong>. σ (sigma) is the real part and t is the imaginary part.</p>
-      <h3>What 1/n<sup>s</sup> means for complex s</h3>
-      <p>Write n = e<sup>ln n</sup> and use Euler's formula e<sup>iθ</sup> = cos θ + i sin θ. Then</p>
-      <div class="equation">1/n<sup>σ+it</sup> = (1/n<sup>σ</sup>) · (cos(t ln n) − i sin(t ln n))</div>
-      <p>So each term is a complex number of size 1/n<sup>σ</sup>, turned by the angle −t·ln n. The size depends only on σ. The sum still has a finite value when σ &gt; 1, and does not when σ ≤ 1.</p>
-      <h3>Extending zeta beyond the sum</h3>
-      <p>Something similar happens with the geometric series. The sum 1 + q + q² + … works only for −1 &lt; q &lt; 1, but the formula 1/(1 − q) gives a value for every q except 1. For zeta, one such formula uses the alternating sum</p>
-      <div class="equation">η(s) = 1 − 1/2<sup>s</sup> + 1/3<sup>s</sup> − 1/4<sup>s</sup> + …<span class="sub">Because the signs alternate, this sum has a finite value for every σ &gt; 0.</span></div>
-      <p>For σ &gt; 1 one can check that ζ(s) = η(s) / (1 − 2/2<sup>s</sup>). The right side also makes sense for 0 &lt; σ ≤ 1 (except at s = 1), and that is how ζ is defined there. It has been proven that there is only one way to extend ζ that keeps it smooth (complex differentiable), so every correct formula gives the same values. A different formula, the <em>functional equation</em>, extends ζ to σ ≤ 0.</p>
-      <details class="appendix"><summary>Why ζ(s) = η(s) / (1 − 2/2<sup>s</sup>)</summary><div class="equation">ζ(s) − η(s) = 2·(1/2<sup>s</sup> + 1/4<sup>s</sup> + 1/6<sup>s</sup> + …)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= (2/2<sup>s</sup>) · (1 + 1/2<sup>s</sup> + 1/3<sup>s</sup> + …) = (2/2<sup>s</sup>) · ζ(s)<br>so η(s) = (1 − 2/2<sup>s</sup>) · ζ(s).<span class="sub">The even terms appear with + in ζ and − in η, so subtracting leaves twice the even terms. Since 1/(2k)<sup>s</sup> = (1/2<sup>s</sup>)(1/k<sup>s</sup>), the even terms add up to (1/2<sup>s</sup>)·ζ(s).</span></div></details>
-      <h3>Zeros</h3>
-      <p>A <strong>zero</strong> of ζ is an input s with ζ(s) = 0. There are two kinds:</p>
-      <ul>
-        <li><strong>Trivial zeros</strong> at s = −2, −4, −6, … They come from the functional equation, are fully understood, and play no part in what follows.</li>
-        <li><strong>Nontrivial zeros</strong>, which all lie in the strip 0 &lt; σ &lt; 1, called the <strong>critical strip</strong>. The first one is at s = ½ + 14.1347…i.</li>
-      </ul>
-      <p>A nontrivial zero is usually written <strong>ρ = β + iγ</strong> (rho, beta, gamma). They come in mirror images: if β + iγ is a zero, then so are β − iγ, (1 − β) + iγ and (1 − β) − iγ. The panel shows only the upper half (t &gt; 0).</p>
-      <div class="keypoint"><strong>Key point:</strong> ζ can be evaluated at complex numbers. Its nontrivial zeros are points β + iγ in the critical strip. Every one found so far has β = ½.</div>
-    </div>
-    <div class="panel">
-      <h3>Look for zeros along a vertical line</h3>
-      <p class="subtitle">Choose a real part σ. The top picture shows that line in the complex plane. The bottom graph shows |ζ(σ + it)|, the distance of ζ from 0, as t goes from 0 to 50. At a zero, the graph touches 0.</p>
-      <div class="control"><label for="sigma"><span>Real part σ</span><output id="sigmaValue">0.50</output></label><input id="sigma" type="range" min="0.05" max="1.5" step="0.05" value="0.5"></div>
-      <canvas id="zeroMap" class="plot" role="img" aria-label="Complex plane with the critical strip, the first ten nontrivial zeros on the line real part one half, the trivial zeros at minus 2 and minus 4, and the selected vertical line"></canvas>
-      <p class="axis-note">Horizontal: real part σ. Vertical: imaginary part t.</p>
-      <div class="legend"><span><i class="dot"></i>Nontrivial zeros</span><span><i class="dot violet"></i>Trivial zeros</span><span><i class="dot rose"></i>s = 1, where ζ is infinite</span><span><i class="gold"></i>Chosen line</span></div>
-      <canvas id="zetaLine" class="plot short" role="img" aria-label="Absolute value of zeta along the chosen vertical line"></canvas>
-      <p class="axis-note">Horizontal: t. Vertical: |ζ(σ + it)|. Thin marks show the heights of the known zeros.</p>
-      <div class="readout" aria-live="polite"><span class="big" id="zetaMin">—</span><span class="meta" id="zetaMinNote"></span></div>
-    </div>
-  </div>
-</section>
-
-<!-- STEP 6 -->
-<section class="chapter" id="wave">
-  <p class="steplabel">Step 6 of 9</p>
-  <h2>One zero produces one wave</h2>
-  <div class="chapter-grid">
-    <div class="prose">
-      <p>To connect the zeros with primes we use a counting function that is a little different from π(x). <strong>ψ(x)</strong>, read “psi of x”, is a staircase that steps up at every prime and every power of a prime. The step at a power of p has height ln p:</p>
-      <div class="equation">x:&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;4=2²&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;8=2³&nbsp;&nbsp;9=3²&nbsp;…<br>step: ln2 ln3 ln2&nbsp;&nbsp;&nbsp;&nbsp;ln5 ln7 ln2&nbsp;&nbsp;&nbsp;&nbsp;ln3&nbsp;&nbsp;&nbsp;…</div>
-      <p>The step heights ln p compensate for primes becoming rarer (about one in ln n, step 2), so ψ(x) stays close to x. ψ contains the same information as π: either can be computed from the other. It is used because its formula is simpler.</p>
-      <p>Riemann (1859) and von Mangoldt (1895) proved an exact formula for ψ:</p>
-      <div class="equation">ψ(x) = x − Σ<sub>ρ</sub> x<sup>ρ</sup>/ρ − ln(2π) − ½·ln(1 − 1/x²)<span class="sub">The sum Σ runs over all nontrivial zeros ρ. Valid for x &gt; 1. At a step, the formula gives the midpoint of the step.</span></div>
-      <p>Except for the sum over zeros, the right side is a smooth curve. So every step of the staircase is produced by the zeros.</p>
-      <h3>Why each zero gives a wave</h3>
-      <p>For a zero ρ = β + iγ, Euler's formula gives</p>
-      <div class="equation">x<sup>ρ</sup> = x<sup>β</sup> · x<sup>iγ</sup> = x<sup>β</sup> · (cos(γ ln x) + i sin(γ ln x))</div>
-      <p>Adding the term of the mirror zero β − iγ cancels the imaginary parts. Together the pair contributes the real function</p>
-      <div class="equation">−2·x<sup>β</sup> · (β cos(γ ln x) + γ sin(γ ln x)) / (β² + γ²)</div>
-      <p>This is a wave. Its two numbers play different roles:</p>
-      <ul>
-        <li>The height <strong>γ</strong> sets how fast it oscillates. The oscillation is regular in ln x, not in x.</li>
-        <li>The real part <strong>β</strong> sets how fast its size grows: in proportion to x<sup>β</sup>. For β = ½ the size grows like √x.</li>
-      </ul>
-      <div class="keypoint"><strong>Key point:</strong> each pair of zeros adds one wave to the prime staircase. The height of the zero gives the frequency; the real part gives the growth rate.</div>
-    </div>
-    <div class="panel">
-      <h3>The wave of one pair of zeros</h3>
-      <p class="subtitle">Pick one of the first six zeros. The graph shows its exact contribution to ψ(x) for x from 2 to 30. Dashed lines show its size, ±2·√x / |ρ|.</p>
-      <div class="choice" id="waveZeroButtons" role="group" aria-label="Choose a zero"></div>
-      <div class="axis-switch" role="group" aria-label="Horizontal scale">
-        <button type="button" data-axis="linear" class="active" aria-pressed="true">Ordinary x axis</button>
-        <button type="button" data-axis="log" aria-pressed="false">Logarithmic x axis</button>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#0b1020" />
+    <meta
+      name="description"
+      content="An interactive, step-by-step explanation of the Riemann hypothesis: what the zeta function is, how its zeros are connected to prime numbers, and what a proof would guarantee."
+    />
+    <title>The Riemann Hypothesis, Step by Step</title>
+    <link rel="stylesheet" href="./src/styles/index.css" />
+    <script type="module" src="./src/main.ts"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap top-row">
+        <a class="brand" href="#top">The Riemann hypothesis</a>
+        <nav class="chapter-nav" aria-label="Steps">
+          <a href="#primes">1 Primes</a>
+          <a href="#estimate">2 Counting</a>
+          <a href="#zeta">3 Zeta</a>
+          <a href="#product">4 Euler product</a>
+          <a href="#zeros">5 Zeros</a>
+          <a href="#wave">6 One wave</a>
+          <a href="#synth">7 All waves</a>
+          <a href="#hypothesis">8 The hypothesis</a>
+          <a href="#proof">9 Consequences</a>
+        </nav>
       </div>
-      <canvas id="wavePlot" class="plot medium" role="img" aria-label="Contribution of one pair of zeros to psi of x"></canvas>
-      <p class="axis-note" id="axisCaption"></p>
-      <p class="hover-note" id="waveInfo" aria-live="polite"></p>
+      <div class="progress" aria-hidden="true"><span id="readingProgress"></span></div>
+    </header>
+    <div class="wrap" id="top">
+      <main>
+        <header class="hero">
+          <div>
+            <h1>The Riemann hypothesis, step by step</h1>
+            <p>
+              The Riemann hypothesis is a claim about where one particular function, the zeta
+              function, is equal to zero. It was stated in 1859 and is still unproven. It matters
+              because the zeros of this function control how regularly the prime numbers are spread
+              among the whole numbers.
+            </p>
+            <p>
+              This page builds the idea from the beginning in nine steps. You need arithmetic,
+              powers, sums, complex numbers, and sine and cosine. Each step has a small calculation
+              you can change. Every number and graph on the page is computed from the actual
+              formulas.
+            </p>
+            <a class="primary" href="#primes">Start with step 1</a>
+          </div>
+          <nav class="steps" aria-label="Overview">
+            <h2>Overview</h2>
+            <ol>
+              <li><a href="#primes">Prime numbers</a> <span>Counting them with π(x)</span></li>
+              <li>
+                <a href="#estimate">Estimating the count</a>
+                <span>A smooth formula, and its error</span>
+              </li>
+              <li><a href="#zeta">The zeta function</a> <span>A sum of powers</span></li>
+              <li>
+                <a href="#product">Euler's product</a>
+                <span>How zeta is tied to the primes</span>
+              </li>
+              <li>
+                <a href="#zeros">Complex inputs and zeros</a> <span>Where zeta equals 0</span>
+              </li>
+              <li>
+                <a href="#wave">One zero, one wave</a>
+                <span>The exact formula for counting primes</span>
+              </li>
+              <li>
+                <a href="#synth">All the waves together</a>
+                <span>Rebuilding the prime staircase</span>
+              </li>
+              <li>
+                <a href="#hypothesis">The hypothesis</a>
+                <span>What it says and what is known</span>
+              </li>
+              <li>
+                <a href="#proof">What a proof would guarantee</a>
+                <span>And what it would not</span>
+              </li>
+            </ol>
+          </nav>
+        </header>
+        <html-include src="src/chapters/primes.html"></html-include>
+        <html-include src="src/chapters/estimate.html"></html-include>
+        <html-include src="src/chapters/zeta.html"></html-include>
+        <html-include src="src/chapters/product.html"></html-include>
+        <html-include src="src/chapters/zeros.html"></html-include>
+        <html-include src="src/chapters/wave.html"></html-include>
+        <html-include src="src/chapters/synth.html"></html-include>
+        <html-include src="src/chapters/hypothesis.html"></html-include>
+        <html-include src="src/chapters/proof.html"></html-include>
+      </main>
+      <footer class="footer">
+        <p>
+          <strong>About the calculations.</strong> The heights γ of the first 50 nontrivial zeros
+          are taken from published tables. ζ(σ + it) is computed with Euler–Maclaurin summation.
+          li(x) is computed with Ramanujan's series. ψ(x) and π(x) up to 100 000 are computed
+          exactly; π(10<sup>k</sup>) for k ≥ 6 are published values. The formula in steps 6 and 7 is
+          the explicit formula for ψ, cut off after N pairs of zeros; the cut-off is the only source
+          of difference from the exact staircase. The zero with β ≠ ½ in step 8 is hypothetical.
+        </p>
+        <div class="sources">
+          <span>Further reading:</span>
+          <a
+            href="https://www.claymath.org/millennium/riemann-hypothesis/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Clay Mathematics Institute: problem statement</a
+          >
+          <a href="https://www.aimath.org/WWN/rh/rh.pdf" target="_blank" rel="noopener noreferrer"
+            >AIM: Riemann hypothesis overview</a
+          >
+          <a href="https://dlmf.nist.gov/25.16" target="_blank" rel="noopener noreferrer"
+            >NIST DLMF: zeta and primes</a
+          >
+          <a href="https://arxiv.org/abs/2109.02249" target="_blank" rel="noopener noreferrer"
+            >Johnston: bounds from checked zeros</a
+          >
+          <a
+            href="https://www.fungrim.org/topic/Zeros_of_the_Riemann_zeta_function.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Tables of zeros</a
+          >
+        </div>
+      </footer>
     </div>
-  </div>
-</section>
-
-<!-- STEP 7 -->
-<section class="chapter" id="synth">
-  <p class="steplabel">Step 7 of 9</p>
-  <h2>Adding the waves rebuilds the prime staircase</h2>
-  <div class="chapter-grid">
-    <div class="prose">
-      <p>Start with the smooth part, x − ln(2π) − ½·ln(1 − 1/x²), and add the waves of the first N pairs of zeros. The panel uses the first 50 pairs, with heights γ from 14.13 to 143.11.</p>
-      <p>With N = 0 the curve is a nearly straight ramp. As N grows, the waves add up so that the curve rises steeply at primes and prime powers and stays nearly flat in between. With all infinitely many zeros, the formula gives the staircase exactly.</p>
-      <p>The lower graph shows the same thing number by number. For each whole number n, it shows how much the curve rises between n − 0.45 and n + 0.45, next to the actual step of ψ at n. With 50 pairs, every prime and prime power up to 30 stands out, and the other numbers stay close to 0. Note that 25 = 5² and 27 = 3³ produce steps too: the waves locate prime <em>powers</em>, not only primes.</p>
-      <p>This is not a practical way to find primes. To resolve the steps at larger x you need more and more zeros, and testing a number for primality directly is much easier. The formula matters for theory: it shows that the positions of the zeros determine how the primes are spread out.</p>
-      <div class="keypoint"><strong>Key point:</strong> the prime staircase equals a smooth ramp plus one wave for each pair of zeros.</div>
-    </div>
-    <div class="panel">
-      <h3>The staircase ψ(x) and the formula with N pairs of zeros</h3>
-      <div class="control"><label for="zeroCount"><span>Pairs of zeros N</span><output id="zeroCountValue">0</output></label><input type="range" id="zeroCount" min="0" max="50" value="0" step="1"></div>
-      <div class="buttonrow"><button class="secondary" id="oneMore" type="button">Add 1 pair</button><button class="secondary" id="allZeros" type="button">Use all 50</button><button class="secondary" id="clearZeros" type="button">Reset to 0</button></div>
-      <canvas id="synthPlot" class="plot" role="img" aria-label="The exact psi staircase and the formula using the first N pairs of zeros"></canvas>
-      <div class="legend"><span><i></i>ψ(x), exact</span><span><i class="blue"></i>Formula with N pairs</span><span><i class="grey"></i>Primes</span><span><i class="violet"></i>Prime powers (4, 8, 9, …)</span></div>
-      <p class="hover-note" id="synthHover" aria-live="polite"></p>
-      <div class="metricline"><span>Average distance between the curves, away from the steps</span><strong id="meanError">—</strong></div>
-      <div class="panel-divider"></div>
-      <h3>Rise of the curve at each whole number</h3>
-      <label for="rangeSelect" class="choice-label">Numbers shown</label>
-      <select id="rangeSelect"><option value="2,10">2 to 10: primes 2, 3, 5, 7; prime powers 4, 8, 9</option><option value="10,19">10 to 19: primes 11, 13, 17, 19; prime power 16</option><option value="20,25" selected>20 to 25: prime 23; prime power 25</option><option value="24,30">24 to 30: prime 29; prime powers 25, 27</option></select>
-      <canvas id="resPlot" class="plot short" role="img" aria-label="Bars comparing the actual step of psi with the rise of the formula at each whole number"></canvas>
-      <div class="legend"><span><i></i>Actual step (ln p)</span><span><i class="blue"></i>Rise of the formula with N pairs</span></div>
-      <p class="tiny">Labels: p = prime, pᵏ = power of a prime. Uses the same N as the graph above.</p>
-    </div>
-  </div>
-</section>
-
-<!-- STEP 8 -->
-<section class="chapter" id="hypothesis">
-  <p class="steplabel">Step 8 of 9</p>
-  <h2>The Riemann hypothesis</h2>
-  <div class="chapter-grid">
-    <div class="prose">
-      <div class="equation" style="font-family:inherit;font-size:17px;font-weight:650">Every nontrivial zero of the zeta function has real part ½.</div>
-      <p>In the picture of step 5: all nontrivial zeros lie on the vertical line σ = ½, called the <strong>critical line</strong>.</p>
-      <h3>What is known</h3>
-      <ul>
-        <li>All nontrivial zeros lie in the strip 0 &lt; σ &lt; 1. That none lie on the edge σ = 1 is what proves the prime number theorem (1896).</li>
-        <li>Infinitely many zeros lie on the line (Hardy, 1914), and more than 40% of all of them do (Conrey, 1989).</li>
-        <li>The first 10 trillion zeros have been computed, and all are on the line.</li>
-        <li>No proof is known. Checking any finite number of zeros cannot settle a statement about infinitely many. It is one of the seven Millennium Prize Problems of the Clay Mathematics Institute.</li>
-      </ul>
-      <h3>Why ½</h3>
-      <p>Zeros come in mirror pairs with real parts β and 1 − β (step 5). If one zero has β &gt; ½, its partner has β &lt; ½, and vice versa. So the largest real part among all zeros is at least ½. The hypothesis says it is exactly ½, the smallest value possible.</p>
-      <h3>Why it matters</h3>
-      <p>In step 6, the wave of a zero grows like x<sup>β</sup>. The error ψ(x) − x is the sum of all these waves. If every β = ½, every wave grows like √x, and the total error stays near √x (up to a logarithmic factor). If even one zero had β = 0.8, the error would, again and again, reach sizes close to x<sup>0.8</sup>. The same holds for π(x) − li(x).</p>
-      <div class="keypoint"><strong>Key point:</strong> the largest real part of the zeros sets how large the error in counting primes can become. The hypothesis says it is ½, the best possible value.</div>
-    </div>
-    <div class="panel">
-      <h3>A zero on the line compared with a hypothetical zero off it</h3>
-      <p class="subtitle">The blue wave comes from the real first zero, ½ + 14.13i. The pink wave comes from a hypothetical zero at the same height with real part β. No such zero is known; this only shows what it would do.</p>
-      <div class="control"><label for="betaSlider"><span>Real part β of the hypothetical zero</span><output id="betaValue">0.80</output></label><input id="betaSlider" type="range" min="0.5" max="0.95" step="0.05" value="0.8"></div>
-      <canvas id="hypoWave" class="plot short" role="img" aria-label="Wave of the real first zero and of a hypothetical zero with larger real part, for x from 2 to 100"></canvas>
-      <div class="legend"><span><i class="blue"></i>Real zero, β = ½</span><span><i class="rose"></i>Hypothetical zero, β = <span id="betaLegend">0.80</span></span></div>
-      <div class="panel-divider"></div>
-      <h3>Size of each wave for large x</h3>
-      <p class="subtitle">Both axes use powers of 10. The grey line is x itself, the main term of ψ(x). The size of a wave is 2·x<sup>β</sup>/|ρ|.</p>
-      <canvas id="hypoScale" class="plot medium" role="img" aria-label="Sizes of the two waves and of x, on logarithmic axes up to ten to the twelfth"></canvas>
-      <div class="legend"><span><i class="grey"></i>x</span><span><i class="blue"></i>Real zero's wave</span><span><i class="rose"></i>Hypothetical wave</span></div>
-      <div class="control"><label for="scaleExponent"><span>Read values at x</span><output id="scaleExponentValue">10⁸</output></label><input type="range" id="scaleExponent" min="2" max="12" value="8" step="1"></div>
-      <div class="compare three"><div class="stat"><small>x</small><strong id="hsX">—</strong></div><div class="stat"><small>Real zero's wave</small><strong id="hsReal">—</strong></div><div class="stat"><small>Hypothetical wave</small><strong id="hsHypo">—</strong></div></div>
-      <p class="explain" id="hypoExplain"></p>
-      <p class="tiny">A zero at β would come with a mirror zero at 1 − β, whose wave is smaller. It is not shown.</p>
-    </div>
-  </div>
-</section>
-
-<!-- STEP 9 -->
-<section class="chapter" id="proof">
-  <p class="steplabel">Step 9 of 9</p>
-  <h2>What a proof would guarantee</h2>
-  <div class="chapter-grid">
-    <div class="prose">
-      <p>Von Koch (1901) showed that the Riemann hypothesis is equivalent to a statement about counting primes. Schoenfeld (1976) gave it in a form with explicit numbers:</p>
-      <div class="equation">If the Riemann hypothesis is true, then for every x ≥ 2657:<br>|π(x) − li(x)| &lt; √x · ln x / (8π)<span class="sub">Conversely, if this inequality holds for every x ≥ 2657, the Riemann hypothesis is true. Here π is again the circle constant.</span></div>
-      <p>So the hypothesis is exactly a statement about how far the count of primes can drift from the estimate li(x) of step 2. For comparison, the best bounds proven without the hypothesis are much weaker. They are smaller than x only by a factor that grows more slowly than any power of x, such as √x or x<sup>0.01</sup>.</p>
-      <p>The panel shows real values. In each case the actual error is well below the bound. For x up to about 10<sup>26</sup> the inequality has in fact already been proven, because the zeros it depends on have been checked by computer. The hypothesis would make it true for every x.</p>
-      <h3>Other consequences</h3>
-      <ul>
-        <li><strong>Gaps between primes:</strong> there would always be a prime between x and x + C·√x·ln x for a fixed constant C (Cramér, 1920).</li>
-        <li><strong>Many existing theorems:</strong> a large number of results in number theory have been proven under the assumption that the hypothesis holds. A proof would make all of them unconditional.</li>
-      </ul>
-      <h3>What it would not give</h3>
-      <ul>
-        <li>A formula that produces the primes, or the n-th prime, directly.</li>
-        <li>A fast method for factoring large numbers. It would not break encryption such as RSA.</li>
-        <li>An answer to whether a particular number is prime. That is done by primality tests.</li>
-      </ul>
-      <div class="keypoint"><strong>Summary:</strong> the zeta function is a sum over all whole numbers (step 3) and also a product over primes (step 4). Its zeros (step 5) each add one wave to the prime staircase (steps 6 and 7). The size of these waves depends on the real parts of the zeros. The Riemann hypothesis says all these real parts are ½ (step 8), which is the same as saying the prime count never drifts from li(x) by more than about √x · ln x.</div>
-    </div>
-    <div class="panel">
-      <h3>Actual error compared with the bound</h3>
-      <p class="subtitle">Choose x. The values of π(x) for x ≥ 10<sup>6</sup> are published results of large computations; li(x) and the bound are computed here. All values shown are below 10<sup>26</sup>, where the bound is already proven.</p>
-      <div class="control"><label for="proofExponent"><span>x</span><output id="proofExponentValue">10⁸</output></label><input id="proofExponent" type="range" min="4" max="12" step="1" value="8"></div>
-      <table class="datatable" aria-live="polite">
-        <tr><th>π(x), number of primes up to x</th><td id="pvPi">—</td></tr>
-        <tr><th>li(x), the estimate</th><td id="pvLi">—</td></tr>
-        <tr><th>Actual error li(x) − π(x)</th><td id="pvErr">—</td></tr>
-        <tr><th>Bound √x · ln x / (8π)</th><td id="pvBound">—</td></tr>
-      </table>
-      <p class="explain" id="pvExplain"></p>
-      <div class="meter" aria-hidden="true"><span id="pvMeter"></span></div>
-      <p class="tiny">The bar shows the actual error as a share of the bound.</p>
-    </div>
-  </div>
-</section>
-</main>
-<footer class="footer">
-  <p><strong>About the calculations.</strong> The heights γ of the first 50 nontrivial zeros are taken from published tables. ζ(σ + it) is computed with Euler–Maclaurin summation. li(x) is computed with Ramanujan's series. ψ(x) and π(x) up to 100 000 are computed exactly; π(10<sup>k</sup>) for k ≥ 6 are published values. The formula in steps 6 and 7 is the explicit formula for ψ, cut off after N pairs of zeros; the cut-off is the only source of difference from the exact staircase. The zero with β ≠ ½ in step 8 is hypothetical.</p>
-  <div class="sources"><span>Further reading:</span><a href="https://www.claymath.org/millennium/riemann-hypothesis/" target="_blank" rel="noopener noreferrer">Clay Mathematics Institute: problem statement</a><a href="https://www.aimath.org/WWN/rh/rh.pdf" target="_blank" rel="noopener noreferrer">AIM: Riemann hypothesis overview</a><a href="https://dlmf.nist.gov/25.16" target="_blank" rel="noopener noreferrer">NIST DLMF: zeta and primes</a><a href="https://arxiv.org/abs/2109.02249" target="_blank" rel="noopener noreferrer">Johnston: bounds from checked zeros</a><a href="https://www.fungrim.org/topic/Zeros_of_the_Riemann_zeta_function.html" target="_blank" rel="noopener noreferrer">Tables of zeros</a></div>
-</footer>
-</div>
-<script>
-'use strict';
-/* Heights (imaginary parts) of the first 50 nontrivial zeros, all with real part 1/2. */
-const GAMMAS=[
-  14.134725141735,21.022039638772,25.010857580146,30.424876125860,32.935061587739,
-  37.586178158826,40.918719012147,43.327073280915,48.005150881167,49.773832477672,
-  52.970321477715,56.446247697063,59.347044002603,60.831778524610,65.112544048082,
-  67.079810529494,69.546401711174,72.067157674482,75.704690699083,77.144840068874,
-  79.337375020249,82.910380854086,84.735492980517,87.425274613125,88.809111207634,
-  92.491899270558,94.651344040520,95.870634228245,98.831194218194,101.317851005731,
-  103.725538040478,105.446623052326,107.168611184276,111.029535543170,111.874659176993,
-  114.320220915453,116.226680320858,118.790782865976,121.370125002421,122.946829293553,
-  124.256818554346,127.516683879297,129.578704199956,131.087688530933,133.497737202998,
-  134.756509753374,138.116042054533,139.736208952121,141.123707404021,143.111845807621];
-/* Published values of pi(10^k). */
-const PI_KNOWN={4:1229,5:9592,6:78498,7:664579,8:5761455,9:50847534,10:455052511,11:4118054813,12:37607912018};
-const C={mint:'#66e9c3',blue:'#86c9ff',gold:'#ffd48c',rose:'#ff90b2',violet:'#b6a8ff',grey:'#7d8ea6',grid:'#2c415a',text:'#a7b8cd',ink:'#f0f5ff'};
-const $=id=>document.getElementById(id);
-const SUP='⁰¹²³⁴⁵⁶⁷⁸⁹';
-const sup=n=>String(n).replace(/\d/g,d=>SUP[d]).replace('-','⁻').replace('.','·');
-const fmtInt=n=>Math.round(n).toLocaleString('en-US');
-const fixed=(n,d=2)=>Number(n).toFixed(d);
-const fmt1=n=>Number(n).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
-const words=n=>new Intl.NumberFormat('en-US',{notation:'compact',compactDisplay:'long',maximumSignificantDigits:3}).format(n);
-
-/* ---------- number theory ---------- */
-const SIEVE_MAX=100000;
-const composite=new Uint8Array(SIEVE_MAX+1);composite[0]=composite[1]=1;
-for(let i=2;i*i<=SIEVE_MAX;i++)if(!composite[i])for(let j=i*i;j<=SIEVE_MAX;j+=i)composite[j]=1;
-const isPrime=n=>Number.isInteger(n)&&n>=2&&n<=SIEVE_MAX&&!composite[n];
-const PI_PREFIX=new Int32Array(SIEVE_MAX+1);for(let n=1;n<=SIEVE_MAX;n++)PI_PREFIX[n]=PI_PREFIX[n-1]+(composite[n]?0:1);
-const piExact=x=>x<2?0:PI_PREFIX[Math.min(SIEVE_MAX,Math.floor(x))];
-const PRIMES=[];for(let n=2;n<=200;n++)if(isPrime(n))PRIMES.push(n);
-function firstFactor(n){for(let d=2;d*d<=n;d++)if(n%d===0)return d;return null;}
-const MAXPSI=100;const MANGOLDT=Array(MAXPSI+1).fill(0);
-for(const p of PRIMES){for(let q=p;q<=MAXPSI;q*=p)MANGOLDT[q]=Math.log(p);}
-const PSI_PREFIX=Array(MAXPSI+1).fill(0);for(let n=1;n<=MAXPSI;n++)PSI_PREFIX[n]=PSI_PREFIX[n-1]+MANGOLDT[n];
-const psiExact=x=>x<2?0:PSI_PREFIX[Math.min(MAXPSI,Math.floor(x))];
-/* li(x) by Ramanujan's series (x > 1). */
-function li(x){const L=Math.log(x);let sum=0,fact=1,inner=0;
-  for(let n=1;n<400;n++){fact*=n;if((n-1)%2===0)inner+=1/n;const term=((n-1)%2?-1:1)*Math.pow(L,n)/(fact*Math.pow(2,n-1))*inner;sum+=term;if(n>2*L&&Math.abs(term)<1e-17*Math.abs(sum))break;}
-  return 0.5772156649015329+Math.log(L)+Math.sqrt(x)*sum;}
-/* zeta(sigma+it) by Euler-Maclaurin summation. Returns [re, im]. */
-const BERN=[1/6,-1/30,1/42,-1/30,5/66,-691/2730,7/6,-3617/510,43867/798,-174611/330];
-const cmul=(a,b)=>[a[0]*b[0]-a[1]*b[1],a[0]*b[1]+a[1]*b[0]];
-function cdiv(a,b){const d=b[0]*b[0]+b[1]*b[1];return[(a[0]*b[0]+a[1]*b[1])/d,(a[1]*b[0]-a[0]*b[1])/d];}
-function npow(n,s){const l=Math.log(n),m=Math.exp(-s[0]*l);return[m*Math.cos(s[1]*l),-m*Math.sin(s[1]*l)];}
-function zeta(sig,t){const s=[sig,t];const N=Math.max(15,Math.ceil(Math.abs(t)/3)+10);let r=[0,0];
-  for(let n=1;n<N;n++){const p=npow(n,s);r[0]+=p[0];r[1]+=p[1];}
-  const Ns=npow(N,s);const tail=cdiv([Ns[0]*N,Ns[1]*N],[sig-1,t]);r[0]+=tail[0]+Ns[0]/2;r[1]+=tail[1]+Ns[1]/2;
-  let poch=s.slice(),term=[Ns[0]/N,Ns[1]/N],fact=2;
-  for(let k=1;k<=BERN.length;k++){const c=cmul(poch,term);r[0]+=BERN[k-1]/fact*c[0];r[1]+=BERN[k-1]/fact*c[1];
-    poch=cmul(cmul(poch,[sig+2*k-1,t]),[sig+2*k,t]);term=[term[0]/(N*N),term[1]/(N*N)];fact*=(2*k+1)*(2*k+2);}
-  return r;}
-const zetaAbs=(sig,t)=>{const z=zeta(sig,t);return Math.hypot(z[0],z[1]);};
-/* Contribution of the pair beta +- i gamma to psi(x): -2 Re(x^rho / rho). */
-function pairWave(x,beta,gamma){const th=gamma*Math.log(x);return -2*Math.pow(x,beta)*(beta*Math.cos(th)+gamma*Math.sin(th))/(beta*beta+gamma*gamma);}
-const smoothTerm=x=>x-Math.log(2*Math.PI)-.5*Math.log(1-1/(x*x));
-function psiN(x,N){let v=smoothTerm(x);for(let i=0;i<N;i++)v+=pairWave(x,.5,GAMMAS[i]);return v;}
-const localRise=(n,N)=>psiN(n+.45,N)-psiN(n-.45,N);
-
-const state={primeX:30,estMax:1000,estHover:null,s:2,sumN:10,pow2:2,pow3:1,factors:4,sigma:.5,zeroIndex:0,waveAxis:'linear',waveHover:null,n:0,synthHover:null,range:[20,25],beta:.8,scaleExp:8,proofExp:8};
-
-/* ---------- plotting helpers (coordinates in CSS pixels) ---------- */
-function createPlot(id,domain,opts={}){const el=$(id);const r=el.getBoundingClientRect();if(!r.width||!r.height)return null;
-  const dpr=Math.min(window.devicePixelRatio||1,2);el.width=Math.round(r.width*dpr);el.height=Math.round(r.height*dpr);
-  const ctx=el.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
-  const w=r.width,h=r.height,p={l:opts.left??46,r:opts.right??12,t:opts.top??12,b:opts.bottom??28};const pw=w-p.l-p.r,ph=h-p.t-p.b;
-  const X=x=>p.l+(x-domain.x0)/(domain.x1-domain.x0)*pw;const Y=y=>p.t+(domain.y1-y)/(domain.y1-domain.y0)*ph;
-  el._geom={p,pw,domain};
-  ctx.clearRect(0,0,w,h);ctx.font='11px ui-sans-serif,system-ui,sans-serif';ctx.textBaseline='middle';ctx.lineWidth=1;
-  for(const x of opts.xticks||[]){ctx.strokeStyle=C.grid;ctx.beginPath();ctx.moveTo(X(x),p.t);ctx.lineTo(X(x),h-p.b);ctx.stroke();ctx.fillStyle=C.text;ctx.textAlign='center';ctx.fillText(opts.xfmt?opts.xfmt(x):String(x),X(x),h-p.b+15);}
-  for(const y of opts.yticks||[]){ctx.strokeStyle=C.grid;ctx.beginPath();ctx.moveTo(p.l,Y(y));ctx.lineTo(w-p.r,Y(y));ctx.stroke();ctx.fillStyle=C.text;ctx.textAlign='right';ctx.fillText(opts.yfmt?opts.yfmt(y):String(y),p.l-7,Y(y));}
-  ctx.strokeStyle='#516882';ctx.strokeRect(p.l,p.t,pw,ph);ctx.save();ctx.beginPath();ctx.rect(p.l,p.t,pw,ph);ctx.clip();
-  return{ctx,X,Y,p,w,h,pw,ph,domain,finish(){ctx.restore();}};}
-function line(g,fn,x0,x1,steps,color,width=2,dash=[]){const{ctx,X,Y}=g;ctx.beginPath();let started=false;
-  for(let j=0;j<=steps;j++){const x=x0+(x1-x0)*j/steps;const y=fn(x);if(!Number.isFinite(y)){started=false;continue;}const py=Math.max(-1e4,Math.min(1e4,Y(y)));if(!started){ctx.moveTo(X(x),py);started=true;}else ctx.lineTo(X(x),py);}
-  ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.stroke();ctx.setLineDash([]);}
-function dot(g,x,y,r,color,hollow=false){const{ctx,X,Y}=g;ctx.beginPath();ctx.arc(X(x),Y(y),r,0,2*Math.PI);if(hollow){ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();}else{ctx.fillStyle=color;ctx.fill();}}
-function vline(g,x,color,dash=[3,5]){const{ctx,X,p,ph}=g;ctx.strokeStyle=color;ctx.lineWidth=1;ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(X(x),p.t);ctx.lineTo(X(x),p.t+ph);ctx.stroke();ctx.setLineDash([]);}
-/* Map a pointer event to the data x coordinate of a plot. */
-function pointerX(el,e){const g=el._geom;if(!g)return null;const r=el.getBoundingClientRect();const f=Math.max(0,Math.min(1,(e.clientX-r.left-g.p.l)/g.pw));return g.domain.x0+f*(g.domain.x1-g.domain.x0);}
-function hover(id,set,redraw){const el=$(id);const on=e=>{const x=pointerX(el,e);if(x!==null){set(x);redraw();}};el.addEventListener('pointermove',on);el.addEventListener('pointerdown',on);el.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'){set(null);redraw();}});}
-function choiceButtons(id,items,get,set){const el=$(id);el.replaceChildren();for(const[value,label]of items){const b=document.createElement('button');b.type='button';b.textContent=label;b.addEventListener('click',()=>set(value));b._value=value;el.appendChild(b);}
-  return()=>{for(const b of el.children){const a=b._value===get();b.classList.toggle('active',a);b.setAttribute('aria-pressed',String(a));}};}
-
-/* ---------- step 1 ---------- */
-function renderPrimeGrid(){const el=$('primeGrid');for(let n=2;n<=100;n++){const b=document.createElement('button');b.type='button';b.className='num';b.dataset.n=n;b.textContent=n;b.setAttribute('aria-label',`${n}${isPrime(n)?', prime':''}`);b.addEventListener('click',()=>{state.primeX=n;updatePrimeGrid();});el.appendChild(b);}updatePrimeGrid();}
-function updatePrimeGrid(){const x=state.primeX;$('primeLimit').value=x;$('primeLimitValue').textContent=x;$('primeCountText').textContent=`π(${x}) = ${piExact(x)}`;
-  let desc;if(isPrime(x)){const r=Math.floor(Math.sqrt(x));desc=r<2?`${x} is prime.`:`${x} is prime: no number from 2 to ${r} divides it. (Checking up to √${x} is enough.)`;}else{const d=firstFactor(x);desc=`${x} is not prime: ${x} = ${d} × ${x/d}.`;}
-  const list=PRIMES.filter(p=>p<=x);$('numberExplanation').textContent=`${desc} Primes up to ${x}: ${list.length<=12?list.join(', '):list.slice(0,6).join(', ')+', …, '+list.slice(-3).join(', ')}.`;
-  for(const b of $('primeGrid').children){const n=Number(b.dataset.n);b.className=`num${isPrime(n)?' isprime':''}${n>x?' outside':''}${n===x?' chosen':''}`;b.setAttribute('aria-pressed',String(n===x));}}
-
-/* ---------- step 2 ---------- */
-function niceTicks(max){const raw=max/4,mag=10**Math.floor(Math.log10(raw)),step=[1,2,2.5,5,10].map(m=>m*mag).find(s=>s>=raw);const out=[];for(let v=0;v<=max;v+=step)out.push(v);return out;}
-let updateEstButtons;
-function drawEstimate(){const X1=state.estMax,yMax=li(X1)*1.08;
-  const ticks=X1<=100?[0,20,40,60,80,100]:[0,.2,.4,.6,.8,1].map(f=>f*X1);
-  const g=createPlot('estimatePlot',{x0:0,x1:X1,y0:0,y1:yMax},{left:50,xticks:ticks,yticks:niceTicks(yMax),xfmt:fmtInt,yfmt:fmtInt});if(!g)return;
-  const steps=Math.min(4000,Math.max(800,X1*4));
-  line(g,x=>x<2?NaN:x/Math.log(x),2,X1,600,C.violet,1.8,[5,4]);
-  line(g,x=>x<2?NaN:li(x),2,X1,600,C.blue,2.2);
-  line(g,x=>piExact(x),0,X1,steps,C.mint,2);
-  if(state.estHover!==null)vline(g,state.estHover,C.gold);
-  g.finish();
-  $('estPiLabel').textContent=`π(${fmtInt(X1)})`;$('estPi').textContent=fmtInt(piExact(X1));$('estLi').textContent=fmt1(li(X1));$('estXlog').textContent=fmt1(X1/Math.log(X1));
-  const err=li(X1)-piExact(X1);
-  $('estimateExplain').textContent=`At x = ${fmtInt(X1)}: li(x) − π(x) = ${fixed(err,1)}, which is ${fixed(100*err/piExact(X1),2)}% of π(x). The estimate x / ln x is off by ${fixed(100*(piExact(X1)-X1/Math.log(X1))/piExact(X1),1)}%.`;
-  if(state.estHover===null)$('estimateHover').textContent='';else{const x=Math.max(2,state.estHover);$('estimateHover').textContent=`At x = ${fmtInt(x)}: π(x) = ${fmtInt(piExact(x))}, li(x) = ${fmt1(li(x))}, x / ln x = ${fmt1(x/Math.log(x))}.`;}
-  updateEstButtons();}
-
-/* ---------- step 3 ---------- */
-const S_INFO={1:{limit:null},2:{limit:Math.PI**2/6,text:'π²/6 = 1.644934…'},3:{limit:1.2020569031595942,text:'1.202057…'},4:{limit:Math.PI**4/90,text:'π⁴/90 = 1.082323…'}};
-let updateSButtons;
-function updateSum(){const n=state.sumN,s=state.s;let v=0;for(let k=1;k<=n;k++)v+=1/Math.pow(k,s);
-  $('sumCount').value=n;$('sumCountValue').textContent=n;$('sumResult').textContent=fixed(v,6);
-  const strip=$('fractionStrip');strip.replaceChildren();
-  for(let k=1;k<=Math.min(8,n);k++){const c=document.createElement('span');c.textContent=k===1?'1':`1/${k}${s===1?'':sup(s)}`;strip.appendChild(c);}
-  if(n>8){const m=document.createElement('span');m.className='more';m.textContent=`+ ${n-8} more terms`;strip.appendChild(m);}
-  const info=S_INFO[s];
-  if(info.limit===null){$('sumLimit').textContent='none (grows forever)';$('sumProgress').style.visibility='hidden';
-    $('sumExplain').textContent=`For s = 1 the sum keeps growing. After n terms it is about ln n + 0.577. It passes 10 only after 12,367 terms, and passes 100 after about 1.5 × 10⁴³ terms, but it never stops growing.`;}
-  else{const pct=100*v/info.limit;$('sumLimit').textContent=info.text;$('sumProgress').style.visibility='visible';$('sumProgressFill').style.width=pct+'%';
-    const tail=info.limit-v;$('sumExplain').textContent=`${n===1?'The first term gives':`The first ${n} terms give`} ${pct>99.9999?'more than 99.9999':fixed(pct,pct>99.99?4:2)}% of the total. The remaining infinitely many terms add up to ${tail<1e-5?tail.toExponential(2).replace(/e-(\d+)/,(m,d)=>' × 10⁻'+sup(d)):fixed(tail,6)}.`;}
-  updateSButtons();}
-
-/* ---------- step 4 ---------- */
-function renderPowerChoices(){for(const p of[2,3]){const el=$('power'+p);for(let e=0;e<=3;e++){const b=document.createElement('button');b.type='button';b.dataset.exp=e;b.textContent=e===0?'1':`1/${p**e}²`;b.addEventListener('click',()=>{if(p===2)state.pow2=e;else state.pow3=e;updatePowerChoices();});el.appendChild(b);}}updatePowerChoices();}
-function updatePowerChoices(){for(const p of[2,3])for(const b of $('power'+p).children){const a=Number(b.dataset.exp)===(p===2?state.pow2:state.pow3);b.classList.toggle('active',a);b.setAttribute('aria-pressed',String(a));}
-  const a=2**state.pow2,b=3**state.pow3,n=a*b;const pa=a===1?'1':`1/${a}²`,pb=b===1?'1':`1/${b}²`;
-  const fac=[state.pow2?`2${state.pow2>1?sup(state.pow2):''}`:'',state.pow3?`3${state.pow3>1?sup(state.pow3):''}`:''].filter(Boolean).join(' × ');
-  $('termResult').textContent=n===1?'1 × 1 = 1, the first term of ζ(2) (n = 1)':`${pa} × ${pb} = 1/${n}²` + (fac.includes('×')||fac.length>1?`, because ${n} = ${fac}`:'');}
-function renderProduct(){const k=state.factors;$('factorCountValue').textContent=k;$('factorCount').value=k;let v=1;for(let j=0;j<k;j++)v/=1-1/(PRIMES[j]**2);$('productResult').textContent=fixed(v,6);
-  const list=$('factorList');list.replaceChildren();for(let i=0;i<10;i++){const e=document.createElement('span');e.className='factor'+(i<k?'':' inactive');e.textContent=`p = ${PRIMES[i]}`;list.appendChild(e);}}
-
-/* ---------- step 5 ---------- */
-function drawZeroMap(){const sig=state.sigma;const g=createPlot('zeroMap',{x0:-5,x1:2,y0:-4,y1:52},{left:34,bottom:26,xticks:[-4,-3,-2,-1,0,.5,1,2],yticks:[0,10,20,30,40,50],xfmt:x=>x===.5?'½':x<0?'−'+(-x):String(x)});if(!g)return;const{ctx,X,Y,p,ph}=g;
-  ctx.fillStyle='rgba(102,233,195,.09)';ctx.fillRect(X(0),p.t,X(1)-X(0),ph);
-  ctx.fillStyle=C.mint;ctx.font='11px system-ui';ctx.textAlign='right';ctx.fillText('critical strip',X(-.12),Y(47));ctx.fillText('(0 < σ < 1)',X(-.12),Y(44.5));
-  ctx.fillStyle=C.text;ctx.textAlign='left';if(g.pw>420){ctx.fillText('sum works',X(1.08),Y(30));ctx.fillText('here (σ > 1)',X(1.08),Y(27.5));}else{ctx.fillText('sum',X(1.06),Y(30));ctx.fillText('works',X(1.06),Y(27.5));}
-  ctx.strokeStyle='rgba(255,212,140,.35)';ctx.setLineDash([4,5]);ctx.beginPath();ctx.moveTo(X(.5),p.t);ctx.lineTo(X(.5),p.t+ph);ctx.stroke();ctx.setLineDash([]);
-  ctx.strokeStyle=C.gold;ctx.lineWidth=2.4;ctx.beginPath();ctx.moveTo(X(sig),Y(0));ctx.lineTo(X(sig),Y(50));ctx.stroke();
-  for(let i=0;i<10;i++)dot(g,.5,GAMMAS[i],4.5,C.mint);
-  for(const t of[-2,-4])dot(g,t,0,5,C.violet,true);
-  ctx.strokeStyle=C.rose;ctx.lineWidth=2.2;const px=X(1),py=Y(0);ctx.beginPath();ctx.moveTo(px-5,py-5);ctx.lineTo(px+5,py+5);ctx.moveTo(px+5,py-5);ctx.lineTo(px-5,py+5);ctx.stroke();
-  g.finish();}
-function drawZetaLine(){const sig=state.sigma;const T=50,yMax=4;
-  const g=createPlot('zetaLine',{x0:0,x1:T,y0:0,y1:yMax},{left:34,bottom:26,xticks:[0,10,20,30,40,50],yticks:[0,1,2,3,4]});if(!g)return;
-  for(let i=0;i<10;i++)vline(g,GAMMAS[i],'rgba(102,233,195,.35)',[2,3]);
-  line(g,t=>Math.min(yMax*2,zetaAbs(sig,t)),0,T,1000,C.gold,2);g.finish();
-  let best=Infinity,at=0;for(let t=0;t<=T;t+=.01){const v=zetaAbs(sig,t);if(v<best){best=v;at=t;}}
-  for(let t=at-.01;t<=at+.01;t+=.0002){const v=zetaAbs(sig,t);if(v<best){best=v;at=t;}}
-  $('sigmaValue').textContent=fixed(sig,2);
-  if(best<1e-3){$('zetaMin').textContent=`ζ = 0 on this line (10 zeros for t ≤ 50)`;$('zetaMinNote').textContent=`On the line σ = ½ the graph touches 0 at t = 14.13, 21.02, 25.01, 30.42, 32.94, 37.59, 40.92, 43.33, 48.01 and 49.77. These are the nontrivial zeros.`;}
-  else{$('zetaMin').textContent=`Smallest value: ${fixed(best,3)}`;$('zetaMinNote').textContent=`On the line σ = ${fixed(sig,2)}, the smallest value of |ζ| for t from 0 to 50 is ${fixed(best,3)}, near t = ${fixed(at,2)}. It never reaches 0, so this part of the line has no zeros.${sig>=.95&&sig<=1.05?' Near t = 0 the graph goes off the top because ζ is infinite at s = 1.':''}`;}}
-function drawZeros(){drawZeroMap();drawZetaLine();}
-
-/* ---------- step 6 ---------- */
-let updateWaveButtons;
-function drawWave(){const i=state.zeroIndex,gamma=GAMMAS[i],lin=state.waveAxis==='linear',a=2,b=30;
-  const xAt=u=>lin?u:Math.exp(u),x0=lin?a:Math.log(a),x1=lin?b:Math.log(b);const mod=Math.hypot(.5,gamma);const env=x=>2*Math.sqrt(x)/mod;
-  const amp=Math.ceil(env(b)*1.15*10)/10;
-  const g=createPlot('wavePlot',{x0,x1,y0:-amp,y1:amp},{left:40,xticks:lin?[2,5,10,15,20,25,30]:[2,3,5,8,13,20,30].map(Math.log),yticks:[-amp,0,amp],xfmt:v=>String(Math.round(xAt(v))),yfmt:y=>fixed(y,1)});if(!g)return;
-  line(g,u=>env(xAt(u)),x0,x1,300,'rgba(134,201,255,.45)',1.2,[5,4]);line(g,u=>-env(xAt(u)),x0,x1,300,'rgba(134,201,255,.45)',1.2,[5,4]);
-  line(g,u=>pairWave(xAt(u),.5,gamma),x0,x1,1000,C.blue,2.4);
-  if(state.waveHover!==null){const u=state.waveHover;vline(g,u,C.gold);dot(g,u,pairWave(xAt(u),.5,gamma),4,C.gold);}
-  g.finish();
-  $('axisCaption').textContent=lin?'Ordinary axis: equal distances mean adding the same amount to x. The oscillations get wider toward the right.':'Logarithmic axis: equal distances mean multiplying x by the same factor. The same oscillations are now evenly spaced.';
-  const base=`Zero ${i+1}: ρ = ½ + ${fixed(gamma,3)}i. One full oscillation takes ln x up by 2π/γ = ${fixed(2*Math.PI/gamma,3)}, that is, x is multiplied by ${fixed(Math.exp(2*Math.PI/gamma),3)}.`;
-  $('waveInfo').textContent=state.waveHover===null?base:`At x = ${fixed(xAt(state.waveHover),2)} this pair adds ${fixed(pairWave(xAt(state.waveHover),.5,gamma),3)} to ψ(x).`;
-  updateWaveButtons();document.querySelectorAll('.axis-switch button').forEach(bt=>{const on=bt.dataset.axis===state.waveAxis;bt.classList.toggle('active',on);bt.setAttribute('aria-pressed',String(on));});}
-
-/* ---------- step 7 ---------- */
-function drawSynth(){const N=state.n;
-  const g=createPlot('synthPlot',{x0:1.5,x1:30,y0:-2,y1:34},{left:34,xticks:[2,5,10,15,20,25,30],yticks:[0,5,10,15,20,25,30]});if(!g)return;const{ctx,X,Y}=g;
-  for(let n=2;n<=30;n++){if(!MANGOLDT[n])continue;ctx.strokeStyle=isPrime(n)?'rgba(125,142,166,.35)':'rgba(182,168,255,.55)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(X(n),Y(-2));ctx.lineTo(X(n),Y(34));ctx.stroke();}
-  ctx.strokeStyle=C.mint;ctx.lineWidth=2.6;ctx.beginPath();ctx.moveTo(X(1.5),Y(0));for(let n=2;n<=30;n++){ctx.lineTo(X(n),Y(PSI_PREFIX[n-1]));ctx.lineTo(X(n),Y(PSI_PREFIX[n]));}ctx.lineTo(X(30),Y(PSI_PREFIX[30]));ctx.stroke();
-  line(g,x=>psiN(x,N),1.5,30,1200,C.blue,2);
-  if(state.synthHover!==null)vline(g,state.synthHover,C.gold);g.finish();
-  $('zeroCountValue').textContent=N;$('zeroCount').value=N;
-  let err=0,cnt=0;for(let x=2.04;x<29.95;x+=.075){if(MANGOLDT.some((v,n)=>v>0&&Math.abs(x-n)<.16))continue;err+=Math.abs(psiN(x,N)-psiExact(x));cnt++;}
-  $('meanError').textContent=fixed(err/cnt,3);
-  if(state.synthHover===null)$('synthHover').textContent='Hover over or tap the graph to compare values at one x.';
-  else{const x=Math.max(1.5,state.synthHover);$('synthHover').textContent=`At x = ${fixed(x,2)}: exact ψ(x) = ${fixed(psiExact(x),3)}, formula with ${N} pair${N===1?'':'s'} = ${fixed(psiN(x,N),3)}.`;}
-  drawRes();}
-function drawRes(){const[lo,hi]=state.range,N=state.n;const nums=Array.from({length:hi-lo+1},(_,i)=>i+lo);
-  const g=createPlot('resPlot',{x0:lo-.7,x1:hi+.7,y0:-1.5,y1:4.3},{left:34,top:16,xticks:nums,yticks:[-1,0,1,2,3,4]});if(!g)return;const{ctx,X,Y,pw}=g;
-  const bw=Math.min(20,pw/nums.length*.26);
-  nums.forEach(n=>{const act=MANGOLDT[n],est=localRise(n,N);
-    ctx.fillStyle=C.mint;ctx.fillRect(X(n)-bw-1,Y(act),bw,Math.max(act>0?0:1.5,Y(0)-Y(act)));
-    ctx.fillStyle=C.blue;const top=Y(Math.max(0,est)),bot=Y(Math.min(0,est));ctx.fillRect(X(n)+1,top,bw,Math.max(1.5,bot-top));
-    if(act>0){ctx.fillStyle=C.mint;ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillText(isPrime(n)?'p':'pᵏ',X(n)-bw/2,Math.max(9,Y(act)-9));}});
-  ctx.strokeStyle='#7d8ea6';ctx.beginPath();ctx.moveTo(g.p.l,Y(0));ctx.lineTo(g.p.l+pw,Y(0));ctx.stroke();g.finish();}
-
-/* ---------- step 8 ---------- */
-function drawHypo(){const b=state.beta,gamma=GAMMAS[0];
-  $('betaValue').textContent=fixed(b,2);$('betaLegend').textContent=fixed(b,2);
-  let amp=0;for(let x=2;x<=100;x+=.25)amp=Math.max(amp,Math.abs(pairWave(x,b,gamma)),Math.abs(pairWave(x,.5,gamma)));amp=Math.ceil(amp*1.1);
-  const g=createPlot('hypoWave',{x0:2,x1:100,y0:-amp,y1:amp},{left:34,xticks:[2,20,40,60,80,100],yticks:[-amp,0,amp]});
-  if(g){line(g,x=>pairWave(x,.5,gamma),2,100,1200,C.blue,2);line(g,x=>pairWave(x,b,gamma),2,100,1200,C.rose,2);g.finish();}
-  const k=state.scaleExp;const lr=Math.log10(2/Math.hypot(.5,gamma)),lh=Math.log10(2/Math.hypot(b,gamma));
-  const h=createPlot('hypoScale',{x0:0,x1:12,y0:-1,y1:12.5},{left:40,xticks:[0,2,4,6,8,10,12],yticks:[0,3,6,9,12],xfmt:v=>'10'+sup(v),yfmt:v=>'10'+sup(v)});
-  if(h){line(h,u=>u,0,12,10,C.grey,2);line(h,u=>.5*u+lr,0,12,10,C.blue,2.2);line(h,u=>b*u+lh,0,12,10,C.rose,2.2);vline(h,k,C.gold);dot(h,k,.5*k+lr,4,C.blue);dot(h,k,b*k+lh,4,C.rose);dot(h,k,k,4,C.grey);h.finish();}
-  const x=10**k,real=2*Math.sqrt(x)/Math.hypot(.5,gamma),hyp=2*Math.pow(x,b)/Math.hypot(b,gamma);
-  $('scaleExponentValue').textContent='10'+sup(k);$('hsX').textContent=words(x);$('hsReal').textContent=words(real);$('hsHypo').textContent=words(hyp);
-  $('hypoExplain').textContent=b===.5?'With β = ½ the two zeros are the same, so the waves coincide. Move the slider to the right.':`At x = 10${sup(k)} the hypothetical wave is about ${words(hyp/real)} times larger than the real one, and equals ${fixed(100*hyp/x,hyp/x<.001?4:2)}% of x. The real wave is ${fixed(100*real/x,real/x<.001?6:2)}% of x. As x grows, the real wave becomes a smaller and smaller share of x; the closer β is to 1, the more slowly this happens for the hypothetical one.`;}
-
-/* ---------- step 9 ---------- */
-function updateProof(){const k=state.proofExp,x=10**k,pi=PI_KNOWN[k],l=li(x),err=l-pi,bound=Math.sqrt(x)*Math.log(x)/(8*Math.PI);
-  $('proofExponentValue').textContent='10'+sup(k);$('pvPi').textContent=fmtInt(pi);$('pvLi').textContent=l.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
-  $('pvErr').textContent=err.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});$('pvBound').textContent=bound.toLocaleString('en-US',{maximumFractionDigits:1,minimumFractionDigits:1});
-  const share=err/bound;$('pvMeter').style.width=Math.min(100,100*share)+'%';
-  $('pvExplain').textContent=`The actual error is ${fixed(100*share,1)}% of the bound. Compared with the number of primes, the bound is ${fixed(100*bound/pi,bound/pi<.001?4:3)}% of π(x).`;}
-
-/* ---------- navigation ---------- */
-function setupNavigation(){const links=[...document.querySelectorAll('.chapternav a')];const sections=links.map(a=>document.getElementById(a.getAttribute('href').slice(1)));let last=-1;
-  function update(){let idx=-1;const th=window.innerHeight*.35;sections.forEach((s,i)=>{if(s.getBoundingClientRect().top<=th)idx=i;});
-    links.forEach((a,i)=>a.classList.toggle('active',i===idx));
-    if(idx!==last&&idx>=0){const nav=document.querySelector('.chapternav'),c=links[idx];nav.scrollLeft=Math.max(0,c.offsetLeft-nav.offsetLeft-(nav.clientWidth-c.offsetWidth)/2);last=idx;}
-    const d=document.documentElement;$('readingProgress').style.width=Math.max(0,Math.min(100,window.scrollY/((d.scrollHeight-window.innerHeight)||1)*100))+'%';}
-  window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update();}
-
-function drawAll(){drawEstimate();drawZeros();drawWave();drawSynth();drawHypo();}
-function init(){
-  renderPrimeGrid();
-  updateEstButtons=choiceButtons('estimateRange',[[100,'up to 100'],[1000,'1,000'],[10000,'10,000'],[100000,'100,000']],()=>state.estMax,v=>{state.estMax=v;state.estHover=null;drawEstimate();});
-  updateSButtons=choiceButtons('sChoice',[[1,'s = 1'],[2,'s = 2'],[3,'s = 3'],[4,'s = 4']],()=>state.s,v=>{state.s=v;updateSum();});
-  updateWaveButtons=choiceButtons('waveZeroButtons',GAMMAS.slice(0,6).map((g,i)=>[i,`Zero ${i+1}`]),()=>state.zeroIndex,v=>{state.zeroIndex=v;drawWave();});
-  updateSum();renderPowerChoices();renderProduct();updateProof();
-  hover('estimatePlot',x=>state.estHover=x,drawEstimate);
-  hover('wavePlot',x=>state.waveHover=x,drawWave);
-  hover('synthPlot',x=>state.synthHover=x,drawSynth);
-  document.querySelectorAll('.axis-switch button').forEach(b=>b.addEventListener('click',()=>{state.waveAxis=b.dataset.axis;state.waveHover=null;drawWave();}));
-  $('primeLimit').addEventListener('input',e=>{state.primeX=Number(e.target.value);updatePrimeGrid();});
-  $('sumCount').addEventListener('input',e=>{state.sumN=Number(e.target.value);updateSum();});
-  $('factorCount').addEventListener('input',e=>{state.factors=Number(e.target.value);renderProduct();});
-  $('sigma').addEventListener('input',e=>{state.sigma=Number(e.target.value);drawZeros();});
-  $('zeroCount').addEventListener('input',e=>{state.n=Number(e.target.value);drawSynth();});
-  $('oneMore').addEventListener('click',()=>{state.n=Math.min(50,state.n+1);drawSynth();});
-  $('allZeros').addEventListener('click',()=>{state.n=50;drawSynth();});
-  $('clearZeros').addEventListener('click',()=>{state.n=0;drawSynth();});
-  $('rangeSelect').addEventListener('change',e=>{state.range=e.target.value.split(',').map(Number);drawRes();});
-  $('betaSlider').addEventListener('input',e=>{state.beta=Number(e.target.value);drawHypo();});
-  $('scaleExponent').addEventListener('input',e=>{state.scaleExp=Number(e.target.value);drawHypo();});
-  $('proofExponent').addEventListener('input',e=>{state.proofExp=Number(e.target.value);updateProof();});
-  setupNavigation();drawAll();
-  let raf=0;window.addEventListener('resize',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(drawAll);});
-}
-init();
-</script>
-</body>
+  </body>
 </html>

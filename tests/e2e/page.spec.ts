@@ -1,0 +1,148 @@
+import { expect, type Page, test } from "@playwright/test";
+
+const CHAPTERS = [
+  "primes",
+  "estimate",
+  "zeta",
+  "product",
+  "zeros",
+  "wave",
+  "synth",
+  "hypothesis",
+  "proof",
+];
+
+async function slide(page: Page, id: string, value: number) {
+  await page.locator(`#${id}`).fill(String(value));
+}
+
+test.beforeEach(async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error" && !message.location().url.endsWith("favicon.ico")) {
+      errors.push(message.text());
+    }
+  });
+  await page.goto("./");
+  await expect(page.locator("#primeGrid button")).toHaveCount(99);
+  expect(errors).toEqual([]);
+});
+
+test.describe("layout", () => {
+  test("has no horizontal scroll", async ({ page }) => {
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test("links every chapter from the top nav and the overview", async ({ page }) => {
+    const hrefs = CHAPTERS.map((id) => `#${id}`);
+    const sectionIds = await page.locator("section.chapter").evaluateAll((s) => s.map((e) => e.id));
+    expect(sectionIds).toEqual(CHAPTERS);
+    for (const list of [".chapter-nav a", ".steps a"]) {
+      const links = await page
+        .locator(list)
+        .evaluateAll((a) => a.map((e) => e.getAttribute("href")));
+      expect(links).toEqual(hrefs);
+    }
+    for (const [i, id] of CHAPTERS.entries()) {
+      await expect(page.locator(`#${id} .step-label`)).toHaveText(`Step ${i + 1} of 9`);
+      await expect(page.locator(`#${id} .keypoint`)).toHaveCount(1);
+    }
+  });
+
+  test("draws every plot", async ({ page }) => {
+    const blank = await page
+      .locator("canvas")
+      .evaluateAll((canvases) =>
+        (canvases as HTMLCanvasElement[])
+          .filter((c) => c.width === 0 || c.height === 0)
+          .map((c) => c.id),
+      );
+    expect(blank).toEqual([]);
+  });
+});
+
+test.describe("controls", () => {
+  test("step 1 counts primes", async ({ page }) => {
+    await expect(page.locator("#primeCountText")).toHaveText("π(30) = 10");
+    await slide(page, "primeLimit", 100);
+    await expect(page.locator("#primeCountText")).toHaveText("π(100) = 25");
+    await page.locator("#primeGrid button", { hasText: /^12$/ }).click();
+    await expect(page.locator("#numberExplanation")).toContainText("12 is not prime: 12 = 2 × 6.");
+    await expect(page.locator("#primeLimitValue")).toHaveText("12");
+  });
+
+  test("step 2 compares the estimates", async ({ page }) => {
+    await expect(page.locator("#estPi")).toHaveText("168");
+    await page.locator("#estimateRange button", { hasText: "100,000" }).click();
+    await expect(page.locator("#estPi")).toHaveText("9,592");
+    await expect(page.locator("#estimateRange button.active")).toHaveText("100,000");
+  });
+
+  test("step 3 adds terms of the sum", async ({ page }) => {
+    await expect(page.locator("#sumResult")).toHaveText("1.549768");
+    await page.locator("#sChoice button", { hasText: "s = 1" }).click();
+    await expect(page.locator("#sumLimit")).toHaveText("none (grows forever)");
+    await page.locator("#sChoice button", { hasText: "s = 2" }).click();
+    await slide(page, "sumCount", 250);
+    await expect(page.locator("#fractionStrip li")).toHaveCount(9);
+    await expect(page.locator("#fractionStrip .more")).toHaveText("+ 242 more terms");
+  });
+
+  test("step 4 multiplies the Euler factors", async ({ page }) => {
+    await expect(page.locator("#termResult")).toHaveText(
+      "1/4² × 1/3² = 1/12², because 12 = 2² × 3",
+    );
+    await page.locator("#power2 button").nth(3).click();
+    await expect(page.locator("#termResult")).toHaveText(
+      "1/8² × 1/3² = 1/24², because 24 = 2³ × 3",
+    );
+    await slide(page, "factorCount", 10);
+    await expect(page.locator("#productResult")).toHaveText("1.633070");
+    await expect(page.locator("#factorList .inactive")).toHaveCount(0);
+  });
+
+  test("step 5 finds zeros only on the critical line", async ({ page }) => {
+    await expect(page.locator("#zetaMin")).toHaveText("ζ = 0 on this line (10 zeros for t ≤ 50)");
+    await slide(page, "sigma", 0.8);
+    await expect(page.locator("#sigmaValue")).toHaveText("0.80");
+    await expect(page.locator("#zetaMin")).toHaveText(/^Smallest value: 0\.\d{3}$/);
+  });
+
+  test("step 6 switches zero and axis", async ({ page }) => {
+    await page.locator("#waveZeroButtons button", { hasText: "Zero 2" }).click();
+    await expect(page.locator("#waveInfo")).toContainText("Zero 2: ρ = ½ + 21.022i.");
+    await page.locator("#wave .axis-switch button[data-axis=log]").click();
+    await expect(page.locator("#axisCaption")).toContainText("Logarithmic axis");
+    await expect(page.locator("#wave .axis-switch button[data-axis=log]")).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+
+  test("step 7 adds pairs of zeros", async ({ page }) => {
+    await page.locator("#addPair").click();
+    await expect(page.locator("#pairCountValue")).toHaveText("1");
+    await page.locator("#allPairs").click();
+    await expect(page.locator("#pairCount")).toHaveValue("50");
+    await page.locator("#resetPairs").click();
+    await expect(page.locator("#pairCountValue")).toHaveText("0");
+  });
+
+  test("step 8 compares a hypothetical zero", async ({ page }) => {
+    await slide(page, "betaSlider", 0.5);
+    await expect(page.locator("#hypoExplain")).toContainText("the waves coincide");
+    await slide(page, "scaleExponent", 12);
+    await expect(page.locator("#scaleX")).toHaveText("1 trillion");
+  });
+
+  test("step 9 compares the error with the bound", async ({ page }) => {
+    await slide(page, "proofExponent", 12);
+    await expect(page.locator("#proofExponentValue")).toHaveText("10¹²");
+    await expect(page.locator("#proofPi")).toHaveText("37,607,912,018");
+    await expect(page.locator("#proofLi")).toHaveText("37,607,950,280.8");
+  });
+});

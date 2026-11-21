@@ -1,0 +1,94 @@
+.prose {
+  font-size: 16px;
+  color: var(--text);
+}
+
+.prose p {
+  margin: 0 0 17px;
+}
+
+.prose strong {
+  color: var(--ink);
+}
+
+.prose ul {
+  margin: 0 0 17px;
+  padding-left: 20px;
+}
+
+.prose li {
+  margin: 0 0 6px;
+}
+
+.prose h3 {
+  margin: 26px 0 8px;
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.keypoint {
+  margin: 22px 0;
+  padding: 10px 0 10px 16px;
+  border-left: 3px solid var(--mint);
+  font-size: 15px;
+  color: #d8e8f7;
+}
+
+.keypoint strong {
+  color: var(--mint);
+}
+
+.equation {
+  margin: 0 0 17px;
+  padding: 13px 14px;
+  overflow-x: auto;
+  border: 1px solid #2a3e58;
+  border-radius: 11px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.8;
+  color: #e9f2ff;
+  background: #0b1524;
+}
+
+.equation .sub {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.equation.statement {
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.appendix {
+  margin: 6px 0 17px;
+}
+
+.appendix summary {
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--blue);
+  cursor: pointer;
+}
+
+.appendix > div {
+  margin-top: 10px;
+}
+
+@media (width <= 860px) {
+  .prose {
+    max-width: 730px;
+  }
+}
+
+@media (width <= 560px) {
+  .equation {
+    font-size: 13px;
+  }
+}

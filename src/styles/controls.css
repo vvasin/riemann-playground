@@ -1,0 +1,144 @@
+.primary {
+  display: inline-flex;
+  padding: 11px 17px;
+  border: none;
+  border-radius: 11px;
+  font-weight: 760;
+  color: #071522;
+  text-decoration: none;
+  background: var(--mint);
+}
+
+.primary:hover {
+  background: #94ffe1;
+}
+
+.secondary {
+  padding: 10px 14px;
+  border: 1px solid #4a607e;
+  border-radius: 11px;
+  font-weight: 680;
+  color: var(--ink);
+  background: #26374f;
+}
+
+.secondary:hover {
+  border-color: var(--blue);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.button-row button {
+  font-size: 13px;
+}
+
+.choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 4px;
+}
+
+.choice button {
+  padding: 7px 11px;
+  border: 1px solid #3b526b;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--text);
+  background: #1a2b43;
+}
+
+.choice button.active {
+  border-color: #5cbb9f;
+  color: var(--mint);
+  background: #244a49;
+}
+
+.choice-label {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--muted);
+}
+
+.axis-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  margin: 14px 0 8px;
+  padding: 4px;
+  border: 1px solid #344960;
+  border-radius: 10px;
+  background: #0e1a2b;
+}
+
+.axis-switch button {
+  padding: 8px 5px;
+  border: 0;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 680;
+  color: var(--muted);
+  background: transparent;
+}
+
+.axis-switch button.active {
+  color: var(--mint);
+  background: #21403f;
+}
+
+.power-control {
+  margin-top: 12px;
+}
+
+.power-control > span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--muted);
+}
+
+.power-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.power-buttons button {
+  min-width: 0;
+  padding: 8px 1px;
+  border: 1px solid #3c5974;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  background: #172942;
+}
+
+.power-buttons button.active {
+  border-color: var(--mint);
+  color: var(--mint);
+  background: #173d3e;
+}
+
+select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 9px 11px;
+  border: 1px solid #4b617e;
+  border-radius: 9px;
+  color: var(--ink);
+  background: #16273d;
+}
+
+@media (width <= 560px) {
+  .power-buttons button {
+    font-size: 12px;
+  }
+}

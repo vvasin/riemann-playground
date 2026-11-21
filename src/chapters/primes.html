@@ -1,0 +1,58 @@
+<section class="chapter" id="primes">
+  <p class="step-label">Step 1 of 9</p>
+  <h2>Prime numbers and the counting function π(x)</h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>
+        A <strong>prime number</strong> is a whole number greater than 1 that is divisible only by 1
+        and by itself: 2, 3, 5, 7, 11, 13, …
+      </p>
+      <p>
+        Every whole number greater than 1 can be written as a product of primes in exactly one way,
+        apart from the order of the factors. For example, 12 = 2 × 2 × 3, and no other set of primes
+        multiplies to 12. This fact is used in step 4.
+      </p>
+      <p>
+        Primes become rarer as numbers get larger, and they do not follow a simple pattern. There
+        are 25 primes up to 100, but only 16 between 1001 and 1100. After the prime 1129, the next
+        prime is 1151.
+      </p>
+      <p>
+        To study how primes are spread out, we count them. <strong>π(x)</strong>, read “pi of x”, is
+        the number of primes less than or equal to x. For example, π(10) = 4, because the primes up
+        to 10 are 2, 3, 5 and 7. Here π is only the name of this function. It has nothing to do with
+        the number 3.14159…
+      </p>
+      <div class="keypoint">
+        <strong>The question behind this page:</strong> how accurately can π(x) be predicted without
+        listing the primes?
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Primes up to x</h3>
+      <p class="subtitle">Move the slider or click a number to set x. Primes are highlighted.</p>
+      <div class="control">
+        <div class="control-head">
+          <label for="primeLimit">x</label>
+          <output id="primeLimitValue" for="primeLimit">30</output>
+        </div>
+        <input id="primeLimit" type="range" min="2" max="100" step="1" value="30" />
+      </div>
+      <div
+        id="primeGrid"
+        class="num-grid"
+        role="group"
+        aria-label="Numbers from 2 through 100"
+      ></div>
+      <ul class="legend">
+        <li><span class="swatch"></span>Prime</li>
+        <li><span class="swatch grey"></span>Not prime</li>
+        <li><span class="swatch gold"></span>x</li>
+      </ul>
+      <div class="readout" aria-live="polite">
+        <span class="big" id="primeCountText">π(30) = 10</span
+        ><span class="meta" id="numberExplanation"></span>
+      </div>
+    </div>
+  </div>
+</section>

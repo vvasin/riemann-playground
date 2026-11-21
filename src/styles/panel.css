@@ -1,0 +1,279 @@
+.panel {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: linear-gradient(150deg, rgb(25 39 61 / 95%), rgb(15 25 43 / 96%));
+  box-shadow: var(--shadow);
+}
+
+.panel h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.control {
+  margin: 16px 0 8px;
+}
+
+.control-head {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.control output {
+  color: var(--mint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.control input[type="range"] {
+  width: 100%;
+  accent-color: var(--mint);
+  cursor: pointer;
+}
+
+.readout {
+  margin-top: 16px;
+  padding: 15px 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.readout .big {
+  display: block;
+  font-size: 26px;
+  font-weight: 780;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.readout .meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 18px;
+  margin: 10px 0 2px;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.swatch {
+  display: inline-block;
+  width: 16px;
+  height: 3px;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 3px;
+  background: var(--mint);
+}
+
+.swatch.blue {
+  background: var(--blue);
+}
+
+.swatch.rose {
+  background: var(--rose);
+}
+
+.swatch.violet {
+  background: var(--violet);
+}
+
+.swatch.gold {
+  background: var(--gold);
+}
+
+.swatch.grey {
+  background: var(--grey);
+}
+
+.swatch.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.plot {
+  display: block;
+  width: 100%;
+  height: 320px;
+  touch-action: pan-y;
+}
+
+.plot.medium {
+  height: 250px;
+}
+
+.plot.short {
+  height: 190px;
+}
+
+.axis-note {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.hover-note {
+  min-height: 2.6em;
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.compare.three {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.stat {
+  min-width: 0;
+  padding: 11px 13px;
+  border: 1px solid #2a405c;
+  border-radius: 10px;
+  background: #101d31;
+}
+
+.stat small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.stat strong {
+  display: block;
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.tiny {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.explain {
+  margin: 12px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.metric-line {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.metric-line strong {
+  font-size: 15px;
+  color: var(--ink);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.divider {
+  height: 1px;
+  margin: 26px 0 22px;
+  border: 0;
+  background: #39506a;
+}
+
+.data-table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table th {
+  padding: 8px 6px 8px 0;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: left;
+}
+
+.data-table td {
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+  font-weight: 650;
+  color: var(--ink);
+  text-align: right;
+}
+
+.meter {
+  height: 12px;
+  margin-top: 8px;
+  overflow: hidden;
+  border: 1px solid #38566a;
+  border-radius: 12px;
+  background: #0d1b2b;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  background: var(--mint);
+}
+
+@media (width <= 560px) {
+  .panel {
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .plot {
+    height: 270px;
+  }
+
+  .plot.medium {
+    height: 220px;
+  }
+
+  .plot.short {
+    height: 170px;
+  }
+
+  .compare.three {
+    grid-template-columns: 1fr;
+  }
+}

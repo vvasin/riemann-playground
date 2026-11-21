@@ -1,0 +1,81 @@
+<section class="chapter" id="wave">
+  <p class="step-label">Step 6 of 9</p>
+  <h2>One zero produces one wave</h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>
+        To connect the zeros with primes we use a counting function that is a little different from
+        π(x). <strong>ψ(x)</strong>, read “psi of x”, is a staircase that steps up at every prime
+        and every power of a prime. The step at a power of p has height ln p:
+      </p>
+      <div class="equation">
+        x:&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;4=2²&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;8=2³&nbsp;&nbsp;9=3²&nbsp;…<br />step:
+        ln2 ln3 ln2&nbsp;&nbsp;&nbsp;&nbsp;ln5 ln7 ln2&nbsp;&nbsp;&nbsp;&nbsp;ln3&nbsp;&nbsp;&nbsp;…
+      </div>
+      <p>
+        The step heights ln p compensate for primes becoming rarer (about one in ln n, step 2), so
+        ψ(x) stays close to x. ψ contains the same information as π: either can be computed from the
+        other. It is used because its formula is simpler.
+      </p>
+      <p>Riemann (1859) and von Mangoldt (1895) proved an exact formula for ψ:</p>
+      <div class="equation">
+        ψ(x) = x − Σ<sub>ρ</sub> x<sup>ρ</sup>/ρ − ln(2π) − ½·ln(1 − 1/x²)<span class="sub"
+          >The sum Σ runs over all nontrivial zeros ρ. Valid for x &gt; 1. At a step, the formula
+          gives the midpoint of the step.</span
+        >
+      </div>
+      <p>
+        Except for the sum over zeros, the right side is a smooth curve. So every step of the
+        staircase is produced by the zeros.
+      </p>
+      <h3>Why each zero gives a wave</h3>
+      <p>For a zero ρ = β + iγ, Euler's formula gives</p>
+      <div class="equation">
+        x<sup>ρ</sup> = x<sup>β</sup> · x<sup>iγ</sup> = x<sup>β</sup> · (cos(γ ln x) + i sin(γ ln
+        x))
+      </div>
+      <p>
+        Adding the term of the mirror zero β − iγ cancels the imaginary parts. Together the pair
+        contributes the real function
+      </p>
+      <div class="equation">−2·x<sup>β</sup> · (β cos(γ ln x) + γ sin(γ ln x)) / (β² + γ²)</div>
+      <p>This is a wave. Its two numbers play different roles:</p>
+      <ul>
+        <li>
+          The height <strong>γ</strong> sets how fast it oscillates. The oscillation is regular in
+          ln x, not in x.
+        </li>
+        <li>
+          The real part <strong>β</strong> sets how fast its size grows: in proportion to
+          x<sup>β</sup>. For β = ½ the size grows like √x.
+        </li>
+      </ul>
+      <div class="keypoint">
+        <strong>Key point:</strong> each pair of zeros adds one wave to the prime staircase. The
+        height of the zero gives the frequency; the real part gives the growth rate.
+      </div>
+    </div>
+    <div class="panel">
+      <h3>The wave of one pair of zeros</h3>
+      <p class="subtitle">
+        Pick one of the first six zeros. The graph shows its exact contribution to ψ(x) for x from 2
+        to 30. Dashed lines show its size, ±2·√x / |ρ|.
+      </p>
+      <div class="choice" id="waveZeroButtons" role="group" aria-label="Choose a zero"></div>
+      <div class="axis-switch" role="group" aria-label="Horizontal scale">
+        <button type="button" data-axis="linear" class="active" aria-pressed="true">
+          Ordinary x axis
+        </button>
+        <button type="button" data-axis="log" aria-pressed="false">Logarithmic x axis</button>
+      </div>
+      <canvas
+        id="wavePlot"
+        class="plot medium"
+        role="img"
+        aria-label="Contribution of one pair of zeros to psi of x"
+      ></canvas>
+      <p class="axis-note" id="axisCaption"></p>
+      <p class="hover-note" id="waveInfo" aria-live="polite"></p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 92px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+:is(a, button, input, select, summary):focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+a {
+  color: var(--blue);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

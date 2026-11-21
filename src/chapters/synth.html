@@ -1,0 +1,88 @@
+<section class="chapter" id="synth">
+  <p class="step-label">Step 7 of 9</p>
+  <h2>Adding the waves rebuilds the prime staircase</h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>
+        Start with the smooth part, x − ln(2π) − ½·ln(1 − 1/x²), and add the waves of the first N
+        pairs of zeros. The panel uses the first 50 pairs, with heights γ from 14.13 to 143.11.
+      </p>
+      <p>
+        With N = 0 the curve is a nearly straight ramp. As N grows, the waves add up so that the
+        curve rises steeply at primes and prime powers and stays nearly flat in between. With all
+        infinitely many zeros, the formula gives the staircase exactly.
+      </p>
+      <p>
+        The lower graph shows the same thing number by number. For each whole number n, it shows how
+        much the curve rises between n − 0.45 and n + 0.45, next to the actual step of ψ at n. With
+        50 pairs, every prime and prime power up to 30 stands out, and the other numbers stay close
+        to 0. Note that 25 = 5² and 27 = 3³ produce steps too: the waves locate prime
+        <em>powers</em>, not only primes.
+      </p>
+      <p>
+        This is not a practical way to find primes. To resolve the steps at larger x you need more
+        and more zeros, and testing a number for primality directly is much easier. The formula
+        matters for theory: it shows that the positions of the zeros determine how the primes are
+        spread out.
+      </p>
+      <div class="keypoint">
+        <strong>Key point:</strong> the prime staircase equals a smooth ramp plus one wave for each
+        pair of zeros.
+      </div>
+    </div>
+    <div class="panel">
+      <h3>The staircase ψ(x) and the formula with N pairs of zeros</h3>
+      <div class="control">
+        <div class="control-head">
+          <label for="pairCount">Pairs of zeros N</label>
+          <output id="pairCountValue" for="pairCount">0</output>
+        </div>
+        <input id="pairCount" type="range" min="0" max="50" step="1" value="0" />
+      </div>
+      <div class="button-row">
+        <button class="secondary" id="addPair" type="button">Add 1 pair</button>
+        <button class="secondary" id="allPairs" type="button">Use all 50</button>
+        <button class="secondary" id="resetPairs" type="button">Reset to 0</button>
+      </div>
+      <canvas
+        id="synthPlot"
+        class="plot"
+        role="img"
+        aria-label="The exact psi staircase and the formula using the first N pairs of zeros"
+      ></canvas>
+      <ul class="legend">
+        <li><span class="swatch"></span>ψ(x), exact</li>
+        <li><span class="swatch blue"></span>Formula with N pairs</li>
+        <li><span class="swatch grey"></span>Primes</li>
+        <li><span class="swatch violet"></span>Prime powers (4, 8, 9, …)</li>
+      </ul>
+      <p class="hover-note" id="synthHover" aria-live="polite"></p>
+      <div class="metric-line">
+        <span>Average distance between the curves, away from the steps</span>
+        <strong id="meanError">—</strong>
+      </div>
+      <hr class="divider" />
+      <h3>Rise of the curve at each whole number</h3>
+      <label for="barRange" class="choice-label">Numbers shown</label>
+      <select id="barRange">
+        <option value="2,10">2 to 10: primes 2, 3, 5, 7; prime powers 4, 8, 9</option>
+        <option value="10,19">10 to 19: primes 11, 13, 17, 19; prime power 16</option>
+        <option value="20,25" selected>20 to 25: prime 23; prime power 25</option>
+        <option value="24,30">24 to 30: prime 29; prime powers 25, 27</option>
+      </select>
+      <canvas
+        id="barPlot"
+        class="plot short"
+        role="img"
+        aria-label="Bars comparing the actual step of psi with the rise of the formula at each whole number"
+      ></canvas>
+      <ul class="legend">
+        <li><span class="swatch"></span>Actual step (ln p)</li>
+        <li><span class="swatch blue"></span>Rise of the formula with N pairs</li>
+      </ul>
+      <p class="tiny">
+        Labels: p = prime, pᵏ = power of a prime. Uses the same N as the graph above.
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+<section class="chapter" id="estimate">
+  <p class="step-label">Step 2 of 9</p>
+  <h2>Estimating how many primes there are</h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>
+        Around 1800, Gauss noticed from tables of primes that near a number n, roughly one number in
+        every <strong>ln n</strong> is prime. (ln is the natural logarithm.) Near 1000, ln n ≈ 6.9,
+        so about one number in 7 is prime. Near 1 000 000, about one in 14 is.
+      </p>
+      <p>
+        If a number n is prime with “probability” about 1/ln n, then the expected number of primes
+        up to x is about
+      </p>
+      <div class="equation">1/ln 2 + 1/ln 3 + 1/ln 4 + … + 1/ln x</div>
+      <p>
+        A smooth version of this sum is called the <strong>logarithmic integral, li(x)</strong>.
+        (Precisely, li(x) is the area under the curve 1/ln t from t = 0 to t = x.) A simpler but
+        less accurate estimate is x / ln x.
+      </p>
+      <p>
+        The <strong>prime number theorem</strong>, proved in 1896, says that the ratio π(x) / li(x)
+        gets closer and closer to 1 as x grows. So the estimate is right in <em>relative</em> terms.
+      </p>
+      <p>
+        The difference li(x) − π(x), however, keeps growing. How fast it grows is the open question.
+        The Riemann hypothesis is equivalent to a precise answer: about as fast as √x, up to a
+        factor of ln x (step 9).
+      </p>
+      <div class="keypoint">
+        <strong>Key point:</strong> the difference between π(x) and li(x) is the error of the
+        estimate. The rest of the page explains what controls this error.
+      </div>
+    </div>
+    <div class="panel">
+      <h3>π(x) compared with two estimates</h3>
+      <p class="subtitle">Choose how far to count. Hover over or tap the graph to read values.</p>
+      <div class="choice" id="estimateRange" role="group" aria-label="Largest x"></div>
+      <canvas
+        id="estimatePlot"
+        class="plot"
+        role="img"
+        aria-label="Prime counting function compared with li(x) and x divided by ln x"
+      ></canvas>
+      <ul class="legend">
+        <li><span class="swatch"></span>π(x), the actual count</li>
+        <li><span class="swatch blue"></span>li(x)</li>
+        <li><span class="swatch violet"></span>x / ln x</li>
+      </ul>
+      <p class="hover-note" id="estimateHover" aria-live="polite"></p>
+      <div class="compare three">
+        <div class="stat"><small id="estPiLabel">π(x)</small> <strong id="estPi">—</strong></div>
+        <div class="stat"><small>li(x)</small> <strong id="estLi">—</strong></div>
+        <div class="stat"><small>x / ln x</small> <strong id="estXlog">—</strong></div>
+      </div>
+      <p class="explain" id="estimateExplain"></p>
+      <p class="tiny">
+        li(x) is larger than π(x) for every x anyone has computed. Littlewood proved in 1914 that
+        this reverses infinitely many times, but the first reversal happens beyond 10<sup>19</sup>.
+      </p>
+    </div>
+  </div>
+</section>

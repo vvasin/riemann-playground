@@ -1,0 +1,21 @@
+:root {
+  color-scheme: dark;
+
+  --bg: #090e19;
+  --surface: #121c2e;
+  --border: #2c405b;
+  --ink: #f0f5ff;
+  --text: #c1cee0;
+  --muted: #91a6c2;
+  --mint: #66e9c3;
+  --blue: #86c9ff;
+  --gold: #ffd48c;
+  --rose: #ff90b2;
+  --violet: #b6a8ff;
+  --grey: #7d8ea6;
+  --shadow: 0 20px 60px rgb(0 0 0 / 20%);
+  --font-sans:
+    "Inter", ui-sans-serif, -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Arial",
+    sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+}
