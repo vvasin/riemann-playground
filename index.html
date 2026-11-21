@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Риман: симфония простых чисел</title>
+<style>
+:root{--bg:#090e1a;--panel:#101a2a;--panel2:#142139;--line:#29405b;--ink:#e9f3ff;--muted:#9aadc8;--blue:#79c8ff;--mint:#6bf0c5;--gold:#ffd17b;--pink:#fb799c;--purple:#b0a2fa;--radius:20px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 65% -10%,#172949 0%,transparent 50%),var(--bg);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+.shell{width:min(1200px,calc(100% - 36px));margin:auto}header{padding:60px 0 28px}.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mint);font-weight:750}.hero h1{font-size:clamp(36px,6.8vw,76px);line-height:1.06;letter-spacing:-.055em;margin:14px 0 18px;max-width:900px}.hero h1 em{color:var(--blue);font-style:normal}.lead{color:#b7c8df;max-width:800px;font-size:clamp(16px,2vw,20px)}.hero nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}a.pill{border:1px solid #335270;color:#cde8fa;text-decoration:none;padding:9px 14px;border-radius:99px;font-size:13px}a.pill:hover{border-color:var(--mint)}
+section{margin:25px 0 42px}.section-head{display:flex;gap:16px;align-items:start;max-width:990px;margin:12px 0 20px}.section-number{min-width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:13px;color:var(--mint);font-weight:800}.section-head h2{font-size:clamp(23px,3vw,34px);letter-spacing:-.03em;line-height:1.2;margin:0 0 8px}.section-head p{margin:0;color:var(--muted);font-size:15px}.panel{background:linear-gradient(145deg,rgba(22,36,56,.94),rgba(13,24,40,.94));border:1px solid #293d58;border-radius:var(--radius);box-shadow:0 10px 38px #0002}.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.9fr);gap:16px}.plot-panel{padding:15px}.side{padding:21px;display:flex;flex-direction:column;gap:14px}.plot-title{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 5px 11px;font-weight:700}.meta{font-size:12px;color:var(--muted);font-weight:500}.plot{display:block;width:100%;height:370px;touch-action:pan-y;cursor:crosshair}.plot.short{height:220px}.legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:7px 8px 3px;color:var(--muted);font-size:12px}.key{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:5px;border-radius:3px}.key.dash{border-top:2px dashed var(--gold);height:0}.key.blue{background:var(--blue)}.key.mint{background:var(--mint)}.key.pink{background:var(--pink)}.key.purple{background:var(--purple)}
+.kicker{color:var(--mint);font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:800}.big{font-size:29px;font-weight:780;letter-spacing:-.05em;line-height:1.12}.sub{color:var(--muted);font-size:13px}.info{border-left:2px solid var(--blue);padding-left:14px;color:#c1d2e5;font-size:14px}.side p{margin:0}.formula{background:#0a1322;border:1px solid #253a54;padding:13px;border-radius:13px;overflow-wrap:anywhere;color:#dbe7fd;font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}.formula small{display:block;color:var(--muted);font:12px/1.5 system-ui;margin-top:5px}.control{margin:8px 0}.control label{font-weight:650;display:flex;justify-content:space-between;gap:10px;margin-bottom:7px}.control output{color:var(--mint);font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--mint);cursor:pointer}select{width:100%;background:#101b2e;color:var(--ink);border:1px solid #3b516e;border-radius:11px;padding:10px}.buttons{display:flex;gap:10px;flex-wrap:wrap}.btn{background:var(--mint);color:#091726;border:0;padding:11px 17px;border-radius:11px;font-weight:770}.btn.secondary{border:1px solid #47627c;color:var(--ink);background:#223550}.btn:disabled{opacity:.5;cursor:not-allowed}.toggle{display:flex;align-items:center;gap:12px;line-height:1.35;cursor:pointer}.toggle input{accent-color:var(--pink);width:19px;height:19px;flex-shrink:0}.note{padding:17px 20px;margin-top:14px;background:#101c2e;border:1px solid #28405b;border-radius:16px;color:#b6c8df;font-size:14px}.note strong{color:var(--ink)}.mini{font-size:12px;color:var(--muted)}.metric{display:flex;justify-content:space-between;border-bottom:1px solid #28405a;padding:8px 0;gap:8px}.metric strong{font-variant-numeric:tabular-nums}footer{padding:10px 0 55px;color:var(--muted);font-size:13px}footer a{color:var(--blue)}.topgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.topgrid .panel{padding:15px}.topgrid .plot{height:195px}.topgrid .plot-title{font-size:14px}.status{font-variant-numeric:tabular-nums;color:var(--mint)}.tag{padding:3px 8px;background:#27403e;color:#91f3d0;font-size:11px;border-radius:8px}.warn{background:#3a2834;color:#ffbed0}.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#0b1626;border:1px solid #2a3d57;border-radius:13px;padding:12px}.stat span{display:block;font-size:12px;color:var(--muted)}.stat strong{font-size:23px;font-variant-numeric:tabular-nums}.table-wrap{overflow-x:auto}.peaks{width:100%;border-collapse:collapse;font-size:13px}.peaks th{text-align:left;color:var(--muted);font-weight:550}.peaks th,.peaks td{padding:7px;border-bottom:1px solid #2b4058}.peaks td:nth-child(2){font-variant-numeric:tabular-nums}.peaks tr.highlight{background:#1c3443}.peaks tr.highlight td:first-child{color:var(--mint);font-weight:800}.bottomformula{padding:12px 16px;margin:12px 0;color:#b4c7dd;border-left:2px solid var(--mint);font-size:13px}.bottomformula code{color:var(--ink)}
+@media(max-width:840px){.layout{grid-template-columns:1fr}.side{gap:11px}.topgrid{grid-template-columns:1fr}.plot{height:330px}header{padding-top:36px}}@media(max-width:500px){.shell{width:min(100% - 20px,1200px)}.plot-panel,.topgrid .panel{padding:8px}.side{padding:16px}.plot{height:295px}.hero h1{font-size:40px}.plot-title{font-size:13px}.formula{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="hero">
+<div class="eyebrow">Интерактивная математическая лаборатория · без библиотек</div>
+<h1>Риман и <em>симфония</em> простых чисел</h1>
+<p class="lead">Представьте, что простые числа — это неожиданные удары барабана, а нули дзета-функции — частоты огромного оркестра. Как из гладкой линии возникает почти точная карта этих ударов?</p>
+<nav><a class="pill" href="#zeros">01 · Где живут нули</a><a class="pill" href="#synth">02 · Синтезатор</a><a class="pill" href="#resonance">03 · Резонанс</a></nav>
+</header>
+<main>
+<section id="zeros">
+<div class="section-head"><div class="section-number">01</div><div><h2>Нули на комплексной плоскости</h2><p>Дзета-функция ζ(s) принимает комплексное число s = σ + it и возвращает комплексное значение. Нуль — точка, где ζ(s) = 0. Нетривиальные нули лежат внутри критической полосы 0 &lt; σ &lt; 1. Гипотеза Римана утверждает: у каждого из них σ = ½.</p></div></div>
+<div class="layout"><div class="panel plot-panel"><div class="plot-title"><span>Плоскость s = σ + it</span><span class="meta">Нажмите на одну из шести точек</span></div><canvas id="zeroPlot" class="plot" aria-label="Комплексная плоскость и шесть первых нетривиальных нулей" role="img"></canvas><div class="legend"><span><i class="key mint"></i>Нули</span><span><i class="key dash"></i>Критическая прямая</span><span><i class="key pink"></i>Гипотетический сдвиг (блок 3)</span></div></div><aside class="panel side"><div class="kicker">Выбранный нуль</div><div class="big" id="zeroName">ρ₁ = ½ + 14.1347i</div><div class="sub" id="zeroExplanation">Чем выше точка, тем быстрее колеблется её гармоника по логарифму x.</div><canvas id="wavePlot" class="plot short" style="height:170px" role="img" aria-label="Гармоника от выбранного нуля"></canvas><div class="formula">h<sub>ρ</sub>(x) = −2 Re(x<sup>ρ</sup> / ρ)<small>Вклад пары комплексно-сопряжённых нулей ρ и ρ̄ в формулу для ψ(x).</small></div><p class="info">Мнимая часть <strong>t</strong> задаёт частоту по <strong>ln x</strong>. Действительная часть <strong>σ</strong> задаёт степень роста огибающей <strong>x<sup>σ</sup></strong>, а не постоянную «громкость». Также влияют |ρ| и фаза.</p></aside></div>
+<div class="note"><strong>Важное различие.</strong> Здесь мы не рисуем график самой ζ(s): точки показывают координаты её известных нулей. Ни одно конечное число проверенных нулей не доказывает гипотезу для всех нулей.</div>
+</section>
+<section id="synth">
+<div class="section-head"><div class="section-number">02</div><div><h2>Синтезатор простых чисел</h2><p>Функция Чебышёва ψ(x) прибавляет ln p в каждой степени простого p: 2, 3, 4 = 2², 5, 7, 8 = 2³, 9 = 3²… Каждый нуль добавляет волну. Сумма 50 пар нулей уже хорошо намечает эту лестницу, но не восстанавливает её идеально.</p></div></div>
+<div class="layout"><div class="panel plot-panel"><div class="plot-title"><span>ψ(x): точные ступени и сумма гармоник</span><span class="meta" id="plotStatus">0 пар нулей</span></div><canvas id="synthPlot" class="plot" aria-label="Точная функция Чебышёва и её аппроксимация" role="img"></canvas><div class="legend"><span><i class="key mint"></i>Точная ψ(x)</span><span><i class="key blue"></i>Усечённая явная формула</span><span><i class="key purple"></i>Простые степени</span></div></div><aside class="panel side"><div class="kicker">Управление спектром</div><div class="control"><label for="zeroCount">Добавлено пар нулей <output id="countValue">0 / 50</output></label><input id="zeroCount" type="range" min="0" max="50" step="1" value="0"></div><div class="buttons"><button class="btn secondary" id="stepButton">+1 нуль</button><button class="btn" id="allButton">Все 50</button><button class="btn secondary" id="resetButton">Сброс</button></div><div class="formula">ψ<sub>N</sub>(x) = x − ln(2π) − ½ln(1 − x<sup>−2</sup>)<br>− 2 Re Σ<sub>n=1…N</sub> x<sup>ρₙ</sup>/ρₙ<small>ρₙ = ½ + iγₙ; обе половины сопряжённой пары учтены множителем 2.</small></div><div class="stat-row"><div class="stat"><span>Пар нулей</span><strong id="statN">0</strong></div><div class="stat"><span>Средняя ошибка*</span><strong id="statError">—</strong></div></div><p class="mini">* Средняя абсолютная ошибка на равномерной сетке x ∈ [2.05, 29.95], исключая непосредственную близость к целым prime powers. При конечном N волны дают эффекты Гиббса около ступеней.</p></aside></div>
+<div class="note"><strong>Почему ступени возникают «из волн»?</strong> В явной формуле главная гладкая часть — x. Каждая пара нулей добавляет осциллирующую поправку −2 Re(x<sup>ρ</sup>/ρ). При суммировании эти поправки компенсируют гладкость там, где у ψ(x) есть арифметические скачки. Для точного равенства требуется бесконечная сумма с правильным порядком предельного перехода. В самих точках скачков предел равен середине ступени.</div>
+</section>
+<section id="resonance">
+<div class="section-head"><div class="section-number">03</div><div><h2>Поиск через резонанс</h2><p>Выберем диапазон и посчитаем, насколько растёт восстановленная ψ(x) при пересечении каждого целого числа. В идеальном пределе величина скачка — ln p для степени простого p и ноль в остальных точках. Посмотрим, что получается из конечных 50 гармоник.</p></div></div>
+<div class="layout"><div class="panel plot-panel"><div class="plot-title"><span>Локальные скачки: ψ(n + ε) − ψ(n − ε)</span><span class="meta status" id="resStatus">Готов к запуску</span></div><canvas id="resPlot" class="plot" aria-label="Резонанс гармоник для целых чисел выбранного диапазона" role="img"></canvas><div class="legend"><span><i class="key mint"></i>Точный скачок</span><span><i class="key blue"></i>Оценка из нулей</span><span><i class="key pink"></i>Модель нарушения ГР</span></div><div class="bottomformula">Для каждого целого <code>n</code> измеряем разность на <code>n ± 0.45</code>. Это фильтр сглаженной лестницы, <strong>не алгоритм гарантированного теста простоты</strong> при N = 50.</div></div><aside class="panel side"><div class="kicker">Эксперимент</div><div class="control"><label for="rangeSelect">Целевой диапазон</label><select id="rangeSelect"><option value="20,24">20–24: простое 23</option><option value="10,19">10–19: четыре простых</option><option value="24,30">24–30: 25 = 5² и 29</option><option value="2,10">2–10: простые степени</option></select></div><div class="control"><label for="epsilon">Ширина окна ε <output id="epsValue">0.45</output></label><input id="epsilon" type="range" min="0.15" max="0.49" step="0.01" value="0.45"></div><label class="toggle"><input id="offLine" type="checkbox"><span><strong>А что, если гипотеза Римана неверна?</strong><br><small class="sub">Заменить первую пару нулей гипотетическим симметричным квартетом σ = 0.85 и 0.15.</small></span></label><div class="buttons"><button class="btn" id="runButton">Запустить резонанс волн</button><button class="btn secondary" id="stopButton">Показать все 50</button></div><div class="metric"><span>Добавлено пар / групп</span><strong id="resCount">0 / 50</strong></div><div class="metric"><span>Выбранная конфигурация</span><strong id="modelType">ГР</strong></div><div class="table-wrap"><table class="peaks"><thead><tr><th>Число</th><th>Оценка</th><th>Точный скачок</th></tr></thead><tbody id="peakRows"></tbody></table></div><p class="mini">При гипотетическом сдвиге мы меняем положение нуля, оставляя остальные 49 пар прежними. Это контрфактическая модель воздействия одного спектрального дефекта, а не настоящая дзета-функция с изменённым нулём.</p></aside></div>
+<div class="note"><strong>Что именно означает «резонанс»?</strong> Это метафора интерференции осциллирующих слагаемых. В точке 23 конечная сумма обычно показывает положительный скачок, а возле 21, 22 и 24 — значения ближе к нулю. Однако отдельные волны не обязаны «полностью гаситься» в каждом составном числе. Число 25 тоже вызовет скачок, поскольку 25 = 5². Чтобы перейти к функции подсчёта <strong>только</strong> простых π(x), нужны дополнительные преобразования, например обращение Мёбиуса.</div>
+</section>
+</main>
+<footer>Данные: первые 50 положительных мнимых частей нулей ζ(s), округление до 10–12 знаков. Формула фон Мангольдта для ψ₀(x). Источники: <a href="https://www.fungrim.org/topic/Zeros_of_the_Riemann_zeta_function.html" target="_blank" rel="noopener">Fungrim — таблица нулей</a> · <a href="https://www2.math.uu.se/~ast10761/analtalt08/www_notes.pdf" target="_blank" rel="noopener">A. Strömbergsson — явная формула</a>. Все вычисления и графики выполняются локально в браузере.</footer>
+</div>
+<script>
+'use strict';
+/* Verified positive imaginary parts of the first 50 nontrivial zeta zeros. */
+const GAMMAS = [
+14.134725141735,21.022039638772,25.010857580146,30.424876125860,32.935061587739,
+37.586178158826,40.918719012147,43.327073280915,48.005150881167,49.773832477672,
+52.970321477715,56.446247697063,59.347044002603,60.831778524610,65.112544048082,
+67.079810529494,69.546401711174,72.067157674482,75.704690699083,77.144840068874,
+79.337375020249,82.910380854086,84.735492980517,87.425274613125,88.809111207634,
+92.491899270558,94.651344040520,95.870634228245,98.831194218194,101.317851005731,
+103.725538040478,105.446623052326,107.168611184276,111.029535543170,111.874659176993,
+114.320220915453,116.226680320858,118.790782865976,121.370125002421,122.946829293553,
+124.256818554346,127.516683879297,129.578704199956,131.087688530933,133.497737202998,
+134.756509753374,138.116042054533,139.736208952121,141.123707404021,143.111845807621
+];
+const COLORS={grid:'#28405b',text:'#a3b8d3',ink:'#e9f3ff',blue:'#79c8ff',mint:'#6bf0c5',gold:'#ffd17b',pink:'#fb799c',purple:'#b0a2fa',bg:'#101b2d'};
+const prime = n => {if(n<2)return false;for(let d=2;d*d<=n;d++)if(n%d===0)return false;return true;};
+const primes=Array.from({length:31},(_,i)=>i).filter(prime);
+function vonMangoldt(n){for(const p of primes){let q=p;while(q<=n){if(q===n)return Math.log(p);q*=p;}}return 0;}
+const exactJumps=Array.from({length:31},(_,n)=>vonMangoldt(n));
+const sums=exactJumps.map((_,i)=>exactJumps.slice(0,i+1).reduce((a,b)=>a+b,0));
+function psiExact(x){return x<2?0:sums[Math.min(30,Math.floor(x))];}
+/* -2 Re[x^(beta+i gamma)/(beta+i gamma)] =
+   -2*x^beta * (beta*cos(gamma*log x)+gamma*sin(gamma*log x))/(beta²+gamma²).
+   One term incorporates the conjugate with negative imaginary part. */
+function pairWave(x,beta,gamma){const a=gamma*Math.log(x), den=beta*beta+gamma*gamma;
+return -2*Math.pow(x,beta)*(beta*Math.cos(a)+gamma*Math.sin(a))/den;}
+/* Counterfactual off-line zero must respect rho -> 1-conj(rho):
+   replace one critical-line pair by TWO pairs at beta=.85 and .15.
+   This changes the spectral multiset and is not an actual zeta-function. */
+function modeWave(x,i,off){const g=GAMMAS[i];return off&&i===0?pairWave(x,.85,g)+pairWave(x,.15,g):pairWave(x,.5,g);}
+function smoothTerm(x){return x-Math.log(2*Math.PI)-.5*Math.log(1-1/(x*x));}
+function psiApprox(x,N,off=false){let y=smoothTerm(x);for(let i=0;i<N;i++)y+=modeWave(x,i,off);return y;}
+const $=id=>document.getElementById(id);
+const state={selected:0,n:0,resN:0,off:false,playing:false,range:[20,24],eps:.45};
+/* Canvas retains a CSS-pixel coordinate system even on high-density screens. */
+function setupCanvas(el){const rect=el.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);if(!rect.width||!rect.height)return null;el.width=Math.round(rect.width*dpr);el.height=Math.round(rect.height*dpr);const ctx=el.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);return {ctx,w:rect.width,h:rect.height};}
+function frame(canvas,domain,opts={}){
+ const s=setupCanvas(canvas);if(!s)return null;const {ctx,w,h}=s;
+ const pad={left:opts.left??48,right:opts.right??18,top:opts.top??16,bottom:opts.bottom??35};
+ const width=w-pad.left-pad.right,height=h-pad.top-pad.bottom;
+ const X=x=>pad.left+(x-domain.x0)/(domain.x1-domain.x0)*width;
+ const Y=y=>pad.top+(domain.y1-y)/(domain.y1-domain.y0)*height;
+ ctx.clearRect(0,0,w,h);ctx.font='11px system-ui, sans-serif';ctx.textBaseline='middle';ctx.lineWidth=1;
+ for(const x of opts.xticks||[]){const px=X(x);ctx.strokeStyle=COLORS.grid;ctx.beginPath();ctx.moveTo(px,pad.top);ctx.lineTo(px,h-pad.bottom);ctx.stroke();ctx.fillStyle=COLORS.text;ctx.textAlign='center';ctx.fillText(String(x),px,h-pad.bottom+17);}
+ for(const y of opts.yticks||[]){const py=Y(y);ctx.strokeStyle=COLORS.grid;ctx.beginPath();ctx.moveTo(pad.left,py);ctx.lineTo(w-pad.right,py);ctx.stroke();ctx.fillStyle=COLORS.text;ctx.textAlign='right';ctx.fillText(String(y),pad.left-8,py);}
+ ctx.strokeStyle='#4e6581';ctx.strokeRect(pad.left,pad.top,width,height);return {...s,X,Y,pad,width,height,domain};
+}
+function poly(g,fn,x0,x1,count,color,lineWidth=2,dash=[]){const {ctx,X,Y}=g;ctx.strokeStyle=color;ctx.lineWidth=lineWidth;ctx.setLineDash(dash);ctx.beginPath();for(let j=0;j<=count;j++){const x=x0+(x1-x0)*j/count,y=fn(x);if(j===0)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y));}ctx.stroke();ctx.setLineDash([]);}
+function dot(ctx,x,y,r,color,halo=false){if(halo){ctx.beginPath();ctx.arc(x,y,r+7,0,2*Math.PI);ctx.fillStyle=color+'26';ctx.fill();}ctx.beginPath();ctx.arc(x,y,r,0,2*Math.PI);ctx.fillStyle=color;ctx.fill();}
+function format(v,d=2){return Number(v).toFixed(d).replace('.',',');}
+function drawZeros(){const g=frame($('zeroPlot'),{x0:-4,x1:2,y0:0,y1:40},{xticks:[-4,-3,-2,-1,0,.5,1,2],yticks:[0,5,10,15,20,25,30,35,40]});if(!g)return;
+const {ctx,X,Y,pad,w,h}=g;ctx.fillStyle='#6bf0c51a';ctx.fillRect(X(0),pad.top,X(1)-X(0),h-pad.top-pad.bottom);
+ctx.strokeStyle=COLORS.gold;ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(X(.5),Y(0));ctx.lineTo(X(.5),Y(40));ctx.stroke();ctx.setLineDash([]);
+GAMMAS.slice(0,6).forEach((gamma,i)=>{const sel=state.selected===i;dot(ctx,X(.5),Y(gamma),sel?6.5:4.5,sel?COLORS.gold:COLORS.mint,sel);if(sel){ctx.font='bold 12px system-ui';ctx.textAlign='left';ctx.fillStyle=COLORS.gold;ctx.fillText('ρ'+(i+1),X(.5)+12,Y(gamma)-10);}});
+if(state.off){dot(ctx,X(.85),Y(GAMMAS[0]),6,COLORS.pink,true);dot(ctx,X(.15),Y(GAMMAS[0]),6,COLORS.pink,true);}
+ctx.fillStyle=COLORS.text;ctx.textAlign='left';ctx.font='12px system-ui';ctx.fillText('Im(s)',pad.left+7,pad.top+12);ctx.textAlign='right';ctx.fillText('Re(s)',w-pad.right-5,h-11);
+}
+function drawWave(){let i=state.selected, gamma=GAMMAS[i];const domain={x0:0,x1:2.4,y0:-1.25,y1:1.25};const g=frame($('wavePlot'),domain,{left:34,right:12,top:10,bottom:28,xticks:[0,.5,1,1.5,2],yticks:[-1,0,1]});if(!g)return;
+const norm=u=>pairWave(Math.exp(u),.5,gamma)*gamma/(2*Math.exp(u*.5));poly(g,norm,0,2.4,500,COLORS.blue,2.4);
+$('zeroName').textContent=`ρ${'₁₂₃₄₅₆'[i]} = ½ + ${format(gamma,4)}i`;
+$('zeroExplanation').textContent=`γ = ${format(gamma,4)}. На диапазоне ln(x) от 0 до 2,4 волна совершает примерно ${format(gamma*2.4/(2*Math.PI),1)} колебаний. Здесь амплитуда нормирована по огибающей для сравнения частот.`;
+const {ctx,w,h}=g;ctx.fillStyle=COLORS.text;ctx.font='11px system-ui';ctx.textAlign='right';ctx.fillText('ln x',w-16,h-10);
+}
+$('zeroPlot').addEventListener('pointerdown',e=>{const rect=$('zeroPlot').getBoundingClientRect();const px=e.clientX-rect.left,py=e.clientY-rect.top;const g={left:48,right:18,top:16,bottom:35};const X=.5;const center=g.left+(X+4)/6*(rect.width-g.left-g.right);let best=-1,min=Infinity;GAMMAS.slice(0,6).forEach((gamma,i)=>{const y=g.top+(40-gamma)/40*(rect.height-g.top-g.bottom);const d=Math.hypot(px-center,py-y);if(d<min){min=d;best=i;}});if(min<27){state.selected=best;drawZeros();drawWave();}});
+function drawExactStair(g){const {ctx,X,Y}=g;ctx.strokeStyle=COLORS.mint;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(X(2),Y(psiExact(2)));for(let n=3;n<=30;n++){ctx.lineTo(X(n),Y(psiExact(n-0.0001)));ctx.lineTo(X(n),Y(psiExact(n)));}ctx.stroke();
+for(let n=2;n<=30;n++){if(exactJumps[n]>0){ctx.strokeStyle=prime(n)?COLORS.mint:COLORS.purple;ctx.lineWidth=1;ctx.globalAlpha=.4;ctx.beginPath();ctx.moveTo(X(n),Y(0));ctx.lineTo(X(n),Y(32));ctx.stroke();ctx.globalAlpha=1;}}
+}
+function drawSynth(){const g=frame($('synthPlot'),{x0:2,x1:30,y0:-1,y1:34},{xticks:[2,5,10,15,20,25,30],yticks:[0,5,10,15,20,25,30]});if(!g)return;drawExactStair(g);poly(g,x=>psiApprox(x,state.n),2,30,1250,COLORS.blue,2.25);$('plotStatus').textContent=`${state.n} пар нулей`;const test=[];for(let x=2.05;x<29.95;x+=.085){if([2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29].some(n=>Math.abs(x-n)<.15))continue;test.push(Math.abs(psiApprox(x,state.n)-psiExact(x)));}let mae=test.reduce((a,b)=>a+b,0)/test.length;$('statError').textContent=format(mae,2);$('statN').textContent=state.n;$('countValue').textContent=`${state.n} / 50`;$('zeroCount').value=state.n;}
+$('zeroCount').addEventListener('input',e=>{state.n=Number(e.target.value);drawSynth();});
+$('stepButton').onclick=()=>{state.n=Math.min(50,state.n+1);drawSynth();};$('allButton').onclick=()=>{state.n=50;drawSynth();};$('resetButton').onclick=()=>{state.n=0;drawSynth();};
+function getRange(){return state.range;}
+function jumpAt(n,N,off){return psiApprox(n+state.eps,N,off)-psiApprox(n-state.eps,N,off);}
+function drawRes(){const [min,max]=getRange(),items=Array.from({length:max-min+1},(_,i)=>min+i);const vals=items.map(n=>jumpAt(n,state.resN,state.off));const targets=items.map(n=>exactJumps[n]);const absMax=Math.max(3.8,...vals.map(Math.abs),...targets.map(Math.abs));const ylim=Math.ceil(absMax*1.2*2)/2;
+const g=frame($('resPlot'),{x0:min-.7,x1:max+.7,y0:-Math.max(1.2,ylim*.25),y1:ylim},{left:42,right:10,top:18,bottom:33,xticks:items,yticks:[0,Math.round(ylim/2*10)/10,ylim]});if(!g)return;
+const {ctx,X,Y}=g;ctx.lineWidth=1.5;items.forEach((n,i)=>{const space=(g.width/items.length);const bw=Math.min(25,space*.3);const target=targets[i],est=vals[i];ctx.fillStyle=COLORS.mint+'80';ctx.fillRect(X(n)-bw-2,Y(target),bw,Math.abs(Y(target)-Y(0)));ctx.fillStyle=state.off?COLORS.pink:COLORS.blue;let top=Y(Math.max(0,est)),bot=Y(Math.min(0,est));ctx.fillRect(X(n)+2,top,bw,Math.max(2,bot-top));if(target>0){ctx.font='bold 11px system-ui';ctx.fillStyle=COLORS.mint;ctx.textAlign='center';ctx.fillText(prime(n)?'p':'pᵏ',X(n),Math.max(g.pad.top+7,Y(target)-13));}});
+$('resCount').textContent=`${state.resN} / 50`;$('modelType').textContent=state.off?'Квартет вне прямой':'ГР';$('modelType').style.color=state.off?COLORS.pink:COLORS.mint;
+$('resStatus').textContent=state.playing?`Суммирование: ${state.resN}/50`:`Показано ${state.resN} / 50`;
+$('peakRows').innerHTML=items.map((n,i)=>`<tr class="${prime(n)?'highlight':''}"><td>${n} ${prime(n)?'· простое':(exactJumps[n]>0?'· pᵏ':'· составное')}</td><td>${format(vals[i],2)}</td><td>${format(targets[i],2)}</td></tr>`).join('');
+}
+$('rangeSelect').addEventListener('change',e=>{state.range=e.target.value.split(',').map(Number);stop(false);drawRes();});
+$('epsilon').addEventListener('input',e=>{state.eps=Number(e.target.value);$('epsValue').textContent=state.eps.toFixed(2);drawRes();});
+$('offLine').addEventListener('change',e=>{state.off=e.target.checked;drawRes();drawZeros();});
+let animationToken=0;function stop(jump){animationToken++;state.playing=false;if(jump)state.resN=50;drawRes();}
+$('stopButton').onclick=()=>stop(true);
+$('runButton').onclick=()=>{animationToken++;const token=animationToken;state.resN=0;state.playing=true;drawRes();let last=0;function tick(timestamp){if(token!==animationToken)return;if(!last)last=timestamp;if(timestamp-last>=55){state.resN=Math.min(50,state.resN+1);last=timestamp;drawRes();}if(state.resN<50)requestAnimationFrame(tick);else{state.playing=false;drawRes();}}requestAnimationFrame(tick);};
+function drawAll(){drawZeros();drawWave();drawSynth();drawRes();}
+let resizeFrame=0;window.addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(drawAll);});
+drawAll();
+</script>
+</body>
+</html>
