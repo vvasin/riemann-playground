@@ -1,136 +1,300 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<title>Риман: симфония простых чисел</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="A seven-chapter interactive, beginner-friendly journey from prime numbers to the Riemann hypothesis. Actual zeta zeros, real explicit-formula calculations, no dependencies.">
+<title>How Can a Function Know Where Primes Are? — An Interactive Riemann Hypothesis Story</title>
 <style>
-:root{--bg:#090e1a;--panel:#101a2a;--panel2:#142139;--line:#29405b;--ink:#e9f3ff;--muted:#9aadc8;--blue:#79c8ff;--mint:#6bf0c5;--gold:#ffd17b;--pink:#fb799c;--purple:#b0a2fa;--radius:20px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 65% -10%,#172949 0%,transparent 50%),var(--bg);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}
-button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
-.shell{width:min(1200px,calc(100% - 36px));margin:auto}header{padding:60px 0 28px}.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mint);font-weight:750}.hero h1{font-size:clamp(36px,6.8vw,76px);line-height:1.06;letter-spacing:-.055em;margin:14px 0 18px;max-width:900px}.hero h1 em{color:var(--blue);font-style:normal}.lead{color:#b7c8df;max-width:800px;font-size:clamp(16px,2vw,20px)}.hero nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}a.pill{border:1px solid #335270;color:#cde8fa;text-decoration:none;padding:9px 14px;border-radius:99px;font-size:13px}a.pill:hover{border-color:var(--mint)}
-section{margin:25px 0 42px}.section-head{display:flex;gap:16px;align-items:start;max-width:990px;margin:12px 0 20px}.section-number{min-width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:13px;color:var(--mint);font-weight:800}.section-head h2{font-size:clamp(23px,3vw,34px);letter-spacing:-.03em;line-height:1.2;margin:0 0 8px}.section-head p{margin:0;color:var(--muted);font-size:15px}.panel{background:linear-gradient(145deg,rgba(22,36,56,.94),rgba(13,24,40,.94));border:1px solid #293d58;border-radius:var(--radius);box-shadow:0 10px 38px #0002}.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.9fr);gap:16px}.plot-panel{padding:15px}.side{padding:21px;display:flex;flex-direction:column;gap:14px}.plot-title{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 5px 11px;font-weight:700}.meta{font-size:12px;color:var(--muted);font-weight:500}.plot{display:block;width:100%;height:370px;touch-action:pan-y;cursor:crosshair}.plot.short{height:220px}.legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:7px 8px 3px;color:var(--muted);font-size:12px}.key{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:5px;border-radius:3px}.key.dash{border-top:2px dashed var(--gold);height:0}.key.blue{background:var(--blue)}.key.mint{background:var(--mint)}.key.pink{background:var(--pink)}.key.purple{background:var(--purple)}
-.kicker{color:var(--mint);font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:800}.big{font-size:29px;font-weight:780;letter-spacing:-.05em;line-height:1.12}.sub{color:var(--muted);font-size:13px}.info{border-left:2px solid var(--blue);padding-left:14px;color:#c1d2e5;font-size:14px}.side p{margin:0}.formula{background:#0a1322;border:1px solid #253a54;padding:13px;border-radius:13px;overflow-wrap:anywhere;color:#dbe7fd;font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}.formula small{display:block;color:var(--muted);font:12px/1.5 system-ui;margin-top:5px}.control{margin:8px 0}.control label{font-weight:650;display:flex;justify-content:space-between;gap:10px;margin-bottom:7px}.control output{color:var(--mint);font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--mint);cursor:pointer}select{width:100%;background:#101b2e;color:var(--ink);border:1px solid #3b516e;border-radius:11px;padding:10px}.buttons{display:flex;gap:10px;flex-wrap:wrap}.btn{background:var(--mint);color:#091726;border:0;padding:11px 17px;border-radius:11px;font-weight:770}.btn.secondary{border:1px solid #47627c;color:var(--ink);background:#223550}.btn:disabled{opacity:.5;cursor:not-allowed}.toggle{display:flex;align-items:center;gap:12px;line-height:1.35;cursor:pointer}.toggle input{accent-color:var(--pink);width:19px;height:19px;flex-shrink:0}.note{padding:17px 20px;margin-top:14px;background:#101c2e;border:1px solid #28405b;border-radius:16px;color:#b6c8df;font-size:14px}.note strong{color:var(--ink)}.mini{font-size:12px;color:var(--muted)}.metric{display:flex;justify-content:space-between;border-bottom:1px solid #28405a;padding:8px 0;gap:8px}.metric strong{font-variant-numeric:tabular-nums}footer{padding:10px 0 55px;color:var(--muted);font-size:13px}footer a{color:var(--blue)}.topgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.topgrid .panel{padding:15px}.topgrid .plot{height:195px}.topgrid .plot-title{font-size:14px}.status{font-variant-numeric:tabular-nums;color:var(--mint)}.tag{padding:3px 8px;background:#27403e;color:#91f3d0;font-size:11px;border-radius:8px}.warn{background:#3a2834;color:#ffbed0}.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#0b1626;border:1px solid #2a3d57;border-radius:13px;padding:12px}.stat span{display:block;font-size:12px;color:var(--muted)}.stat strong{font-size:23px;font-variant-numeric:tabular-nums}.table-wrap{overflow-x:auto}.peaks{width:100%;border-collapse:collapse;font-size:13px}.peaks th{text-align:left;color:var(--muted);font-weight:550}.peaks th,.peaks td{padding:7px;border-bottom:1px solid #2b4058}.peaks td:nth-child(2){font-variant-numeric:tabular-nums}.peaks tr.highlight{background:#1c3443}.peaks tr.highlight td:first-child{color:var(--mint);font-weight:800}.bottomformula{padding:12px 16px;margin:12px 0;color:#b4c7dd;border-left:2px solid var(--mint);font-size:13px}.bottomformula code{color:var(--ink)}
-@media(max-width:840px){.layout{grid-template-columns:1fr}.side{gap:11px}.topgrid{grid-template-columns:1fr}.plot{height:330px}header{padding-top:36px}}@media(max-width:500px){.shell{width:min(100% - 20px,1200px)}.plot-panel,.topgrid .panel{padding:8px}.side{padding:16px}.plot{height:295px}.hero h1{font-size:40px}.plot-title{font-size:13px}.formula{font-size:12px}}
+:root{color-scheme:dark;--bg:#090e19;--surface:#121c2e;--surface2:#172439;--border:#2c405b;--ink:#f0f5ff;--text:#c1cee0;--muted:#91a6c2;--mint:#66e9c3;--blue:#86c9ff;--gold:#ffd48c;--rose:#ff90b2;--violet:#b6a8ff;--grid:#2c415a;--shadow:0 20px 60px rgba(0,0,0,.20)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:92px}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(ellipse 70% 38% at 70% -8%,#193151 0%,transparent 80%),var(--bg);color:var(--ink);line-height:1.65;font-size:16px}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px}a{color:var(--blue)}.wrap{max-width:1140px;padding:0 25px;margin:0 auto}.topbar{position:sticky;top:0;z-index:10;background:rgba(9,14,25,.93);border-bottom:1px solid #263b54;backdrop-filter:blur(16px)}.toprow{min-height:62px;display:flex;gap:24px;align-items:center;justify-content:space-between}.brand{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:820;color:var(--ink);white-space:nowrap}.brand b{color:var(--mint)}.chapternav{display:flex;align-items:center;gap:5px;overflow:auto;scrollbar-width:none}.chapternav::-webkit-scrollbar{display:none}.chapternav a{font-size:12px;line-height:1.2;text-decoration:none;color:#9caec8;padding:10px 11px;border-radius:9px;white-space:nowrap}.chapternav a.active,.chapternav a:hover{background:#1b3045;color:var(--mint)}.progress{height:3px;background:#1b293c}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--mint));transition:width .15s}
+.hero{padding:clamp(65px,8vw,124px) 0 88px;display:grid;grid-template-columns:1.25fr .75fr;gap:50px;align-items:center}.eyebrow,.chapter-tag{letter-spacing:.17em;text-transform:uppercase;font-weight:820;font-size:12px;color:var(--mint)}.hero h1{font-size:clamp(42px,6.2vw,78px);line-height:1.055;letter-spacing:-.065em;margin:18px 0 24px}.hero h1 span{color:var(--mint)}.hero p{font-size:clamp(17px,1.75vw,21px);line-height:1.6;color:var(--text);max-width:620px;margin:0 0 24px}.primary{border:none;border-radius:12px;background:var(--mint);color:#071522;padding:12px 19px;font-weight:790;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.primary:hover{background:#94ffe1}.secondary{background:#26374f;border:1px solid #4a607e;border-radius:12px;color:var(--ink);font-weight:720;padding:11px 15px}.secondary:hover{border-color:var(--blue)}.hero-art{min-width:0;position:relative;overflow:hidden;padding:30px 24px 23px;background:radial-gradient(circle at 60% 30%,#15354b 0,transparent 64%),linear-gradient(140deg,#15223a,#0d1727);border:1px solid #334860;border-radius:25px;box-shadow:var(--shadow)}.hero-art:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 36px,rgba(139,177,220,.05) 37px 38px)}.hero-art h2{position:relative;font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin:0 0 21px}.number-cloud{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;position:relative}.number-cloud span{height:52px;border-radius:12px;display:grid;place-items:center;font-size:22px;font-weight:780;background:#1c2b42;border:1px solid #2c4059;color:#687c95}.number-cloud span.prime{background:#143c3d;border-color:#2e7b70;color:var(--mint);box-shadow:0 0 18px #66e9c315}.hero-art p{position:relative;margin:17px 0 0;font-size:12px;color:var(--muted)}.storyline{display:flex;align-items:center;gap:14px;margin:0 0 50px;color:var(--muted);font-size:13px}.storyline .line{height:1px;background:var(--border);flex:1}
+.chapter{padding:71px 0 81px;border-top:1px solid #26354a;scroll-margin-top:85px}.chapter-top{display:flex;align-items:center;gap:10px;margin-bottom:16px}.chip{display:inline-block;padding:2px 10px;border:1px solid #355b66;border-radius:6px;color:var(--mint);font-size:11px;font-weight:780}.chapter-top small{color:var(--muted);font-size:12px}.chapter h2{font-size:clamp(32px,4.4vw,52px);line-height:1.14;letter-spacing:-.05em;margin:0 0 24px;max-width:820px}.chapter h2 em{color:var(--gold);font-style:normal}.chapter-grid{display:grid;grid-template-columns:minmax(250px,.84fr) minmax(0,1.36fr);gap:clamp(25px,4vw,55px);align-items:start}.prose{color:var(--text);font-size:16px}.prose p{margin:0 0 19px}.prose strong{color:var(--ink)}.prose code,.aside-explain code{font:14px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--mint)}.one-idea{padding:10px 0 10px 16px;border-left:3px solid var(--mint);margin:22px 0;color:#d8e8f7;font-size:15px}.one-idea strong{color:var(--mint)}.bridge{font-size:15px;color:var(--muted);padding-top:13px;border-top:1px solid var(--border);margin-top:23px}.bridge b{color:var(--gold)}.panel{background:linear-gradient(150deg,rgba(25,39,61,.95),rgba(15,25,43,.96));border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);padding:22px;min-width:0}.panel h3{font-size:17px;letter-spacing:-.02em;line-height:1.3;margin:0 0 6px}.subtitle{color:var(--muted);font-size:13px;line-height:1.55;margin:0 0 20px}.smallcaps{font-size:11px;font-weight:770;letter-spacing:.11em;text-transform:uppercase;color:var(--mint)}.control{margin:19px 0 10px}.control label{font-weight:720;font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:8px}.control output{color:var(--mint);font-variant-numeric:tabular-nums}.control input[type=range]{width:100%;accent-color:var(--mint);cursor:pointer}.readout{border-top:1px solid var(--border);padding:17px 0 0;margin-top:20px}.readout .big{display:block;font-size:30px;line-height:1.15;font-weight:810;letter-spacing:-.04em;color:var(--ink)}.readout .meta{color:var(--muted);font-size:13px}.num-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px;margin:16px 0 0}.num{min-width:0;aspect-ratio:1;border:1px solid #34475f;border-radius:9px;background:#172337;color:#8e9fb6;font-weight:750;font-size:13px;padding:0}.num.isprime{color:var(--mint);border-color:#32665e;background:#153432}.num.outside{opacity:.32}.num.chosen{outline:2px solid var(--gold);outline-offset:1px;color:var(--gold)}.num:hover{border-color:var(--gold)}.legend{display:flex;flex-wrap:wrap;gap:9px 19px;color:var(--muted);font-size:12px;margin:13px 0 1px}.legend i{display:inline-block;width:16px;height:3px;margin-right:6px;vertical-align:middle;background:var(--mint);border-radius:3px}.legend .blue{background:var(--blue)}.legend .rose{background:var(--rose)}.legend .violet{background:var(--violet)}.legend .gold{background:var(--gold)}.equation{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;background:#0b1524;border:1px solid #2a3e58;border-radius:12px;padding:15px 14px;line-height:1.8;color:#e9f2ff;overflow-x:auto;font-size:14px;white-space:normal}.equation .accent{color:var(--mint)}.equation .sub{display:block;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:12px;line-height:1.55;color:var(--muted);margin-top:7px}.math-big{font-size:20px;letter-spacing:-.03em}.factor-list{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 0}.factor{font:12px ui-monospace,SFMono-Regular,Consolas,monospace;padding:6px 8px;border-radius:7px;color:var(--mint);background:#163838;border:1px solid #35625f}.factor.inactive{color:#8197ad;background:#142137;border-color:#32445a}.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}.stat{padding:13px;background:#101d31;border:1px solid #2a405c;border-radius:11px}.stat small{display:block;font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:clamp(17px,2vw,23px);font-variant-numeric:tabular-nums;letter-spacing:-.03em}.tiny{font-size:12px;line-height:1.6;color:var(--muted)}.aside-explain{color:var(--muted);font-size:13px;line-height:1.7}.plot-title{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;margin:0 0 9px}.plot-title h3{margin:0}.plot-title small{color:var(--muted);font-size:12px}.plot{width:100%;height:340px;display:block;touch-action:pan-y}.plot.short{height:155px}.plot.medium{height:260px}.zero-buttons{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.zero-buttons button{border:1px solid #3b526b;color:var(--text);border-radius:8px;background:#1a2b43;padding:6px 10px;font-size:12px}.zero-buttons button.active{background:#244a49;color:var(--mint);border-color:#5cbb9f}.wave-caption{font-size:13px;color:var(--text);margin:13px 0 0}.toggle{display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin:22px 0 8px}.toggle input{margin-top:4px;width:20px;height:20px;flex:0 0 auto;accent-color:var(--rose)}.toggle strong{display:block;font-size:15px}.toggle span{display:block;font-size:13px;color:var(--muted)}.choice{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}.choice button{background:#1d304a;color:var(--ink);border:1px solid #365774;border-radius:10px;padding:9px 12px;font-size:13px}.choice button.active{background:#1c4a45;border-color:#63cbb0;color:var(--mint)}.metricline{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:11px 0;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}.metricline strong{font-variant-numeric:tabular-nums;font-size:15px;color:var(--ink);text-align:right}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.three .stat{padding:11px}.three strong{font-size:16px}.buttonrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.buttonrow button{font-size:13px}.signal{display:inline-flex;align-items:center;gap:7px;color:var(--mint);font-size:13px;font-weight:750}.signal:before{content:"";width:7px;height:7px;background:currentColor;border-radius:50%}.signal.warn{color:var(--rose)}.candidate-buttons{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 17px}.candidate-buttons button{border:1px solid #40546c;border-radius:10px;background:#1a2a40;color:var(--text);min-width:42px;padding:8px 12px;font-size:14px;font-weight:750}.candidate-buttons button.active{border-color:var(--gold);color:var(--gold);background:#3b3140}.candidate-card{padding:14px 16px;border:1px solid #3a516b;background:#122136;border-radius:13px}.candidate-card h4{margin:0 0 7px;font-size:17px}.candidate-card p{margin:0;color:var(--text);font-size:13px;line-height:1.65}.candidate-card small{display:block;margin-top:6px;color:var(--muted);font-size:12px}.footer{border-top:1px solid var(--border);padding:40px 0 75px;color:var(--muted);font-size:13px}.footer p{max-width:890px;margin:0 0 12px}.footer a{color:var(--blue)}.footer .sources{display:flex;gap:15px;flex-wrap:wrap}.appendix{margin-top:15px}.appendix summary{color:var(--blue);cursor:pointer;font-weight:700;font-size:13px}.appendix .equation{margin-top:14px}select{background:#16273d;color:var(--ink);border:1px solid #4b617e;border-radius:10px;padding:11px 12px;width:100%}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:26px;padding:60px 0}.hero-art{max-width:580px}.chapter-grid{grid-template-columns:1fr}.chapter{padding:58px 0 66px}.prose{max-width:730px}.toprow{gap:12px}.brand{font-size:11px}.chapternav a{padding:9px 7px}}
+@media(max-width:560px){.wrap{padding:0 15px}.hero{padding:50px 0 61px}.hero h1{font-size:clamp(41px,10vw,59px)}.hero-art{padding:22px 15px}.number-cloud{gap:7px}.number-cloud span{height:44px;font-size:18px}.toprow{display:block;padding:8px 0}.brand{display:block;margin:0 0 4px}.chapternav{padding:0 0 3px}.chapternav a{padding:7px 8px}.panel{padding:15px;border-radius:16px}.plot{height:285px}.plot.medium{height:210px}.plot.short{height:145px}.num-grid{gap:4px}.num{font-size:11px;border-radius:6px}.chapter h2{font-size:34px}.three{grid-template-columns:1fr}.three .stat{padding:10px}.compare .stat{padding:9px}.compare strong{font-size:17px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.progress span{transition:none}}
 </style>
 </head>
 <body>
-<div class="shell">
-<header class="hero">
-<div class="eyebrow">Интерактивная математическая лаборатория · без библиотек</div>
-<h1>Риман и <em>симфония</em> простых чисел</h1>
-<p class="lead">Представьте, что простые числа — это неожиданные удары барабана, а нули дзета-функции — частоты огромного оркестра. Как из гладкой линии возникает почти точная карта этих ударов?</p>
-<nav><a class="pill" href="#zeros">01 · Где живут нули</a><a class="pill" href="#synth">02 · Синтезатор</a><a class="pill" href="#resonance">03 · Резонанс</a></nav>
+<header class="topbar">
+  <div class="wrap toprow"><div class="brand">A guided journey into <b>prime numbers</b></div>
+  <nav class="chapternav" aria-label="Story chapters">
+    <a href="#count">01 Count</a><a href="#zeta">02 Zeta</a><a href="#zeros">03 Zeros</a><a href="#hypothesis">04 The claim</a><a href="#proof">05 The prize</a><a href="#synth">06 The waves</a><a href="#search">07 Find one</a>
+  </nav></div>
+  <div class="progress" aria-hidden="true"><span id="readingProgress"></span></div>
 </header>
+<div class="wrap">
+<header class="hero">
+  <div>
+    <div class="eyebrow">An interactive story · 7 short chapters · no prerequisites</div>
+    <h1>How can a function <span>know</span> where prime numbers are?</h1>
+    <p>Prime numbers look unpredictable. Then a mathematician discovered that a strange sum, some invisible zeros, and a collection of waves are deeply connected to them. Here's the story, one idea at a time.</p>
+    <a class="primary" href="#count">Start with the numbers →</a>
+  </div>
+  <div class="hero-art" aria-label="Numbers from 2 to 26, with primes highlighted">
+    <h2>There is a pattern. Just not an obvious one.</h2>
+    <div class="number-cloud" id="heroCloud"></div>
+    <p><span style="color:var(--mint)">Bright:</span> prime numbers · <span style="color:#8ba0bc">Dim:</span> composite numbers</p>
+  </div>
+</header>
+<div class="storyline"><span>Start here</span><div class="line"></div><span>One question, seven discoveries</span></div>
 <main>
-<section id="zeros">
-<div class="section-head"><div class="section-number">01</div><div><h2>Нули на комплексной плоскости</h2><p>Дзета-функция ζ(s) принимает комплексное число s = σ + it и возвращает комплексное значение. Нуль — точка, где ζ(s) = 0. Нетривиальные нули лежат внутри критической полосы 0 &lt; σ &lt; 1. Гипотеза Римана утверждает: у каждого из них σ = ½.</p></div></div>
-<div class="layout"><div class="panel plot-panel"><div class="plot-title"><span>Плоскость s = σ + it</span><span class="meta">Нажмите на одну из шести точек</span></div><canvas id="zeroPlot" class="plot" aria-label="Комплексная плоскость и шесть первых нетривиальных нулей" role="img"></canvas><div class="legend"><span><i class="key mint"></i>Нули</span><span><i class="key dash"></i>Критическая прямая</span><span><i class="key pink"></i>Гипотетический сдвиг (блок 3)</span></div></div><aside class="panel side"><div class="kicker">Выбранный нуль</div><div class="big" id="zeroName">ρ₁ = ½ + 14.1347i</div><div class="sub" id="zeroExplanation">Чем выше точка, тем быстрее колеблется её гармоника по логарифму x.</div><canvas id="wavePlot" class="plot short" style="height:170px" role="img" aria-label="Гармоника от выбранного нуля"></canvas><div class="formula">h<sub>ρ</sub>(x) = −2 Re(x<sup>ρ</sup> / ρ)<small>Вклад пары комплексно-сопряжённых нулей ρ и ρ̄ в формулу для ψ(x).</small></div><p class="info">Мнимая часть <strong>t</strong> задаёт частоту по <strong>ln x</strong>. Действительная часть <strong>σ</strong> задаёт степень роста огибающей <strong>x<sup>σ</sup></strong>, а не постоянную «громкость». Также влияют |ρ| и фаза.</p></aside></div>
-<div class="note"><strong>Важное различие.</strong> Здесь мы не рисуем график самой ζ(s): точки показывают координаты её известных нулей. Ни одно конечное число проверенных нулей не доказывает гипотезу для всех нулей.</div>
+<section class="chapter" id="count">
+  <div class="chapter-top"><span class="chip">01 / 07</span><small>We need a mystery first</small></div>
+  <h2>What makes primes <em>special?</em></h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>A <strong>prime number</strong> is a whole number greater than 1 that you can divide evenly only by <strong>1 and itself</strong>.</p>
+      <p>2, 3, 5, and 7 are prime. But 6 isn't: it's 2 × 3. Every whole number greater than 1 is built from primes, like words are built from letters.</p>
+      <p>They don't appear at equal distances. Sometimes they are close. Sometimes there are long gaps. The question is: <strong>can we predict how they are distributed?</strong></p>
+      <div class="one-idea"><strong>New tool:</strong> π(x), read “pi of x”, simply means “how many primes are at or below x?” It is unrelated to the circle constant π.</div>
+      <div class="bridge"><b>Next:</b> Before counting primes with a fancy function, we need to understand why that function contains prime numbers at all.</div>
+    </div>
+    <div class="panel">
+      <h3>Make the prime numbers appear</h3>
+      <p class="subtitle">Move the slider or click any number. The bright tiles are prime.</p>
+      <div class="control"><label for="primeLimit">Count up to <output id="primeLimitValue">30</output></label><input id="primeLimit" type="range" min="2" max="60" step="1" value="30"></div>
+      <div id="primeGrid" class="num-grid" aria-label="Numbers from 2 through 60"></div>
+      <div class="legend"><span><i></i>Prime</span><span><i class="blue" style="background:#596a83"></i>Not prime</span><span><i class="gold"></i>Selected</span></div>
+      <div class="readout" aria-live="polite"><span class="big" id="primeCountText">π(30) = 10</span><span class="meta" id="numberExplanation">30 is composite.</span></div>
+    </div>
+  </div>
 </section>
-<section id="synth">
-<div class="section-head"><div class="section-number">02</div><div><h2>Синтезатор простых чисел</h2><p>Функция Чебышёва ψ(x) прибавляет ln p в каждой степени простого p: 2, 3, 4 = 2², 5, 7, 8 = 2³, 9 = 3²… Каждый нуль добавляет волну. Сумма 50 пар нулей уже хорошо намечает эту лестницу, но не восстанавливает её идеально.</p></div></div>
-<div class="layout"><div class="panel plot-panel"><div class="plot-title"><span>ψ(x): точные ступени и сумма гармоник</span><span class="meta" id="plotStatus">0 пар нулей</span></div><canvas id="synthPlot" class="plot" aria-label="Точная функция Чебышёва и её аппроксимация" role="img"></canvas><div class="legend"><span><i class="key mint"></i>Точная ψ(x)</span><span><i class="key blue"></i>Усечённая явная формула</span><span><i class="key purple"></i>Простые степени</span></div></div><aside class="panel side"><div class="kicker">Управление спектром</div><div class="control"><label for="zeroCount">Добавлено пар нулей <output id="countValue">0 / 50</output></label><input id="zeroCount" type="range" min="0" max="50" step="1" value="0"></div><div class="buttons"><button class="btn secondary" id="stepButton">+1 нуль</button><button class="btn" id="allButton">Все 50</button><button class="btn secondary" id="resetButton">Сброс</button></div><div class="formula">ψ<sub>N</sub>(x) = x − ln(2π) − ½ln(1 − x<sup>−2</sup>)<br>− 2 Re Σ<sub>n=1…N</sub> x<sup>ρₙ</sup>/ρₙ<small>ρₙ = ½ + iγₙ; обе половины сопряжённой пары учтены множителем 2.</small></div><div class="stat-row"><div class="stat"><span>Пар нулей</span><strong id="statN">0</strong></div><div class="stat"><span>Средняя ошибка*</span><strong id="statError">—</strong></div></div><p class="mini">* Средняя абсолютная ошибка на равномерной сетке x ∈ [2.05, 29.95], исключая непосредственную близость к целым prime powers. При конечном N волны дают эффекты Гиббса около ступеней.</p></aside></div>
-<div class="note"><strong>Почему ступени возникают «из волн»?</strong> В явной формуле главная гладкая часть — x. Каждая пара нулей добавляет осциллирующую поправку −2 Re(x<sup>ρ</sup>/ρ). При суммировании эти поправки компенсируют гладкость там, где у ψ(x) есть арифметические скачки. Для точного равенства требуется бесконечная сумма с правильным порядком предельного перехода. В самих точках скачков предел равен середине ступени.</div>
+<section class="chapter" id="zeta">
+  <div class="chapter-top"><span class="chip">02 / 07</span><small>The unexpected connection</small></div>
+  <h2>Meet a sum that secretly <em>contains every prime.</em></h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>Imagine taking every positive whole number, squaring it, turning it upside down, and adding the results:</p>
+      <div class="equation math-big">1 + 1/4 + 1/9 + 1/16 + ···</div>
+      <p>That is the <strong>Riemann zeta function</strong> at input 2, written <strong>ζ(2)</strong>. At other inputs, you change the power: 2 becomes <em>s</em>.</p>
+      <p>Here's the twist. The same infinite sum can be made by <strong>multiplying one special factor for each prime</strong>. That works because every integer has one unique prime factorization.</p>
+      <div class="one-idea"><strong>Key discovery:</strong> A formula that mentions <em>all integers</em> can be rewritten using <em>only primes</em>. That is the bridge between zeta and prime numbers.</div>
+      <div class="bridge"><b>Next:</b> So far we have only put the ordinary number 2 into zeta. What happens when mathematicians allow stranger inputs?</div>
+    </div>
+    <div class="panel">
+      <h3>Build ζ(2) out of prime factors</h3>
+      <p class="subtitle">Include more primes in the product. See the value approach the infinite sum.</p>
+      <div class="equation">ζ(2) = 1 + 1/2² + 1/3² + ···<br><span class="accent">= (1 − 1/2²)<sup>−1</sup> × (1 − 1/3²)<sup>−1</sup> × ···</span><span class="sub">This second line is called Euler's product formula. It works for real s &gt; 1 (and, more generally, Re(s) &gt; 1).</span></div>
+      <div class="control"><label for="factorCount">Prime factors included <output id="factorCountValue">4 / 10</output></label><input id="factorCount" type="range" min="0" max="10" step="1" value="4"></div>
+      <div class="factor-list" id="factorList" aria-label="Prime factors in Euler's product"></div>
+      <div class="compare"><div class="stat"><small>Your finite product</small><strong id="productResult">—</strong></div><div class="stat"><small>Infinite result: ζ(2)</small><strong>1.644934…</strong></div></div>
+      <p class="tiny" style="margin-bottom:0">A finite product cannot equal the infinite result exactly. ζ(2) = π²/6, where this time π really is the circle constant.</p>
+      <details class="appendix"><summary>Why does multiplication work?</summary><p class="aside-explain">The factor for 2 expands to 1 + 1/2² + 1/2⁴ + ···. The factor for 3 expands to 1 + 1/3² + 1/3⁴ + ···. Multiplying factors lets you pick a power of each prime. Because every integer has a unique prime factorization, you get each term 1/n² exactly once.</p></details>
+    </div>
+  </div>
 </section>
-<section id="resonance">
-<div class="section-head"><div class="section-number">03</div><div><h2>Поиск через резонанс</h2><p>Выберем диапазон и посчитаем, насколько растёт восстановленная ψ(x) при пересечении каждого целого числа. В идеальном пределе величина скачка — ln p для степени простого p и ноль в остальных точках. Посмотрим, что получается из конечных 50 гармоник.</p></div></div>
-<div class="layout"><div class="panel plot-panel"><div class="plot-title"><span>Локальные скачки: ψ(n + ε) − ψ(n − ε)</span><span class="meta status" id="resStatus">Готов к запуску</span></div><canvas id="resPlot" class="plot" aria-label="Резонанс гармоник для целых чисел выбранного диапазона" role="img"></canvas><div class="legend"><span><i class="key mint"></i>Точный скачок</span><span><i class="key blue"></i>Оценка из нулей</span><span><i class="key pink"></i>Модель нарушения ГР</span></div><div class="bottomformula">Для каждого целого <code>n</code> измеряем разность на <code>n ± 0.45</code>. Это фильтр сглаженной лестницы, <strong>не алгоритм гарантированного теста простоты</strong> при N = 50.</div></div><aside class="panel side"><div class="kicker">Эксперимент</div><div class="control"><label for="rangeSelect">Целевой диапазон</label><select id="rangeSelect"><option value="20,24">20–24: простое 23</option><option value="10,19">10–19: четыре простых</option><option value="24,30">24–30: 25 = 5² и 29</option><option value="2,10">2–10: простые степени</option></select></div><div class="control"><label for="epsilon">Ширина окна ε <output id="epsValue">0.45</output></label><input id="epsilon" type="range" min="0.15" max="0.49" step="0.01" value="0.45"></div><label class="toggle"><input id="offLine" type="checkbox"><span><strong>А что, если гипотеза Римана неверна?</strong><br><small class="sub">Заменить первую пару нулей гипотетическим симметричным квартетом σ = 0.85 и 0.15.</small></span></label><div class="buttons"><button class="btn" id="runButton">Запустить резонанс волн</button><button class="btn secondary" id="stopButton">Показать все 50</button></div><div class="metric"><span>Добавлено пар / групп</span><strong id="resCount">0 / 50</strong></div><div class="metric"><span>Выбранная конфигурация</span><strong id="modelType">ГР</strong></div><div class="table-wrap"><table class="peaks"><thead><tr><th>Число</th><th>Оценка</th><th>Точный скачок</th></tr></thead><tbody id="peakRows"></tbody></table></div><p class="mini">При гипотетическом сдвиге мы меняем положение нуля, оставляя остальные 49 пар прежними. Это контрфактическая модель воздействия одного спектрального дефекта, а не настоящая дзета-функция с изменённым нулём.</p></aside></div>
-<div class="note"><strong>Что именно означает «резонанс»?</strong> Это метафора интерференции осциллирующих слагаемых. В точке 23 конечная сумма обычно показывает положительный скачок, а возле 21, 22 и 24 — значения ближе к нулю. Однако отдельные волны не обязаны «полностью гаситься» в каждом составном числе. Число 25 тоже вызовет скачок, поскольку 25 = 5². Чтобы перейти к функции подсчёта <strong>только</strong> простых π(x), нужны дополнительные преобразования, например обращение Мёбиуса.</div>
+<section class="chapter" id="zeros">
+  <div class="chapter-top"><span class="chip">03 / 07</span><small>Now the weird part</small></div>
+  <h2>What is a <em>zero</em> of zeta?</h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>For an ordinary function, a <strong>zero</strong> is an input that makes its output equal 0. For example, <strong>f(3) = 3 − 3 = 0</strong>, so 3 is a zero of f.</p>
+      <p>Zeta is more mysterious. Mathematicians extend it beyond the original infinite sum and allow <strong>complex inputs</strong>: numbers with a real part and an imaginary part. Think of them as addresses on a flat map: <strong>s = a + bi</strong>.</p>
+      <p>At certain addresses, zeta's <em>complex</em> output is exactly zero. These addresses are its zeros. A few easy zeros are −2, −4, −6, …; the interesting ones are called <strong>nontrivial zeros</strong>.</p>
+      <div class="one-idea"><strong>Why care?</strong> These unusual zero locations determine oscillating correction terms that appear in an exact formula connected to primes. We'll build that formula shortly.</div>
+      <div class="bridge"><b>Next:</b> The first interesting zeros line up suspiciously well. Riemann made a claim about <em>all</em> of them.</div>
+    </div>
+    <div class="panel">
+      <div class="plot-title"><h3>Where the first six nontrivial zeros live</h3><small>Click a dot or choose a zero below</small></div>
+      <canvas id="zeroPlot" class="plot" role="img" aria-label="Complex s plane: six real zeta zeros at real part 0.5 and imaginary parts 14 to 38"></canvas>
+      <div class="legend"><span><i></i>Known zeros</span><span><i class="gold"></i>Critical line Re(s) = ½</span><span><i class="rose"></i>Imaginary counterfactual</span></div>
+      <div class="zero-buttons" id="zeroButtons" role="group" aria-label="Select one of the first six zeros"></div>
+      <p class="wave-caption" id="zeroDetails" aria-live="polite"></p>
+      <canvas id="wavePlot" class="plot short" role="img" aria-label="Normalized contribution of selected zeta zero, oscillating as a function of log x"></canvas>
+      <p class="tiny">This is a <strong>normalized wave from the explicit prime formula</strong>, not a plot of ζ(s) itself. Its height coordinate (γ) controls oscillation frequency in log(x). Its horizontal coordinate (β) controls the x<sup>β</sup> growth of its envelope, not a fixed volume knob.</p>
+    </div>
+  </div>
+</section>
+<section class="chapter" id="hypothesis">
+  <div class="chapter-top"><span class="chip">04 / 07</span><small>The million-dollar question</small></div>
+  <h2>Riemann's bet: <em>they all sit on one line.</em></h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>All nontrivial zeros lie in a vertical region called the <strong>critical strip</strong>, between real parts 0 and 1.</p>
+      <p>Riemann proposed something much stronger: <strong>every nontrivial zero has real part exactly ½</strong>. This is the Riemann Hypothesis, or <strong>RH</strong>.</p>
+      <p>We've checked enormous numbers of zeros, and the ones checked lie on the line. But there are infinitely many. <strong>Checking any finite number, even trillions, is not a proof.</strong></p>
+      <p>Why does that half matter? In the formula we will use, a zero with real part β contributes a wave whose envelope scales like <strong>x<sup>β</sup></strong>. If β were larger than ½, that particular contribution could grow faster.</p>
+      <div class="one-idea"><strong>RH is about control:</strong> every nontrivial zero on one line means none of these zero terms has a faster x<sup>β</sup> power than x<sup>½</sup>.</div>
+      <div class="bridge"><b>Next:</b> What exactly would we know about prime numbers if someone proved the claim?</div>
+    </div>
+    <div class="panel">
+      <h3>What if one zero were off the line?</h3>
+      <p class="subtitle">Flip this switch to run an <em>imaginary</em> scenario, not a discovery.</p>
+      <label class="toggle"><input type="checkbox" id="offLine"><div><strong>Imagine RH were false</strong><span>Replace the first critical-line pair with the symmetric off-line pairs at real parts 0.85 and 0.15.</span></div></label>
+      <div class="plot-title" style="margin-top:18px"><h3>How much faster does x<sup>0.85</sup> grow than x<sup>0.5</sup>?</h3></div>
+      <canvas id="envelopePlot" class="plot medium" role="img" aria-label="Ratio x to power 0.85 divided by x to power 0.5, increasing on a log scale"></canvas>
+      <div class="readout"><span class="big" id="amplitudeResult">×631</span><span class="meta" id="amplitudeCaption">At x = 100,000,000, the faster-growing envelope is ~631 times larger.</span></div>
+      <div class="control"><label for="scaleExponent">Zoom out to x = 10<sup>k</sup> <output id="scaleExponentValue">k = 8</output></label><input type="range" id="scaleExponent" min="1" max="12" value="8" step="1"></div>
+      <p class="tiny">This is an envelope <em>ratio</em>, not a predicted error in the actual count of primes. A zero off the line would also have symmetry partners; the switch uses a deliberately altered spectrum, not real zeta zeros.</p>
+    </div>
+  </div>
+</section>
+<section class="chapter" id="proof">
+  <div class="chapter-top"><span class="chip">05 / 07</span><small>What a proof would actually buy us</small></div>
+  <h2>Not a prime-number cheat code. <em>A powerful guarantee.</em></h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>We already know that primes become less common in a fairly predictable way. A smooth curve called <strong>Li(x)</strong> gives a very good approximation to the number of primes below x.</p>
+      <p>But the actual count wobbles around the prediction. <strong>RH would put a strong limit on how large those wobbles can be.</strong></p>
+      <p>Specifically, a famous equivalent statement is that <strong>π(x) − Li(x) = O(√x log x)</strong>. In plain English: beyond some scale, the counting error cannot grow faster than a constant times √x log x.</p>
+      <p>That strengthens a vast range of results in number theory, including bounds on how far you need to look to find primes. It would <strong>not</strong> immediately give a magic formula for the next prime, a fast way to factor enormous numbers, or a proof that all encryption is broken.</p>
+      <div class="one-idea"><strong>What would be proven?</strong> A precise global limit on the irregularity of prime numbers—not a list of every prime number.</div>
+      <div class="bridge"><b>Next:</b> Now that we know what the zeros mean, let's actually use them to reconstruct a graph that jumps at prime numbers.</div>
+    </div>
+    <div class="panel">
+      <h3>How accurate could a prime count be?</h3>
+      <p class="subtitle">Move to a much larger x. The approximate <em>relative</em> size of the RH error term shrinks.</p>
+      <div class="control"><label for="proofExponent">Size of x <output id="proofExponentValue">10⁸</output></label><input id="proofExponent" type="range" min="4" max="12" step="1" value="8"></div>
+      <div class="compare"><div class="stat"><small>Typical count scale x / ln(x)</small><strong id="typicalCount">—</strong></div><div class="stat"><small>RH error-term scale √x · ln(x)</small><strong id="errorScale">—</strong></div></div>
+      <div class="readout"><span class="big" id="relativeScale">—</span><span class="meta">Ratio of these two <em>scales</em> (not an actual error percentage or certified interval)</span></div>
+      <div class="equation" style="margin-top:18px">π(x) = Li(x) + <span class="accent">O(√x · log x)</span><span class="sub">The big-O symbol hides a constant. Without a specified constant, this is <strong>not</strong> a numerical upper bound you can apply to one particular x.</span></div>
+      <p class="tiny">The prime-count approximation Li(x) is more accurate than x/ln(x). We use x/ln(x) only to compare the rough growth scales visually.</p>
+    </div>
+  </div>
+</section>
+<section class="chapter" id="synth">
+  <div class="chapter-top"><span class="chip">06 / 07</span><small>Here is the central trick</small></div>
+  <h2>Build the prime-number <em>staircase out of waves.</em></h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>Instead of counting primes directly, mathematicians often use a close relative, <strong>ψ(x)</strong> (“psi of x”). It makes a jump at each <strong>prime power</strong>: 2, 3, <strong>4 = 2²</strong>, 5, 7, <strong>8 = 2³</strong>, 9, …</p>
+      <p>Why this strange staircase? Because ψ(x) has an astonishing <strong>exact formula using zeta's zeros</strong>. It starts with a smooth ramp, and then each zero adds an oscillating correction.</p>
+      <p>Move the slider. With zero pairs, you mostly see the smooth ramp. Add more pairs and watch the curve start to resemble steps, including the jump at 23.</p>
+      <div class="one-idea"><strong>Remember:</strong> we're reconstructing a weighted count of <em>prime powers</em>, not automatically identifying primes. Only in an infinite, carefully interpreted sum do we get the exact staircase.</div>
+      <div class="bridge"><b>Next:</b> Can we turn the reconstructed staircase into a way to hunt for one particular prime?</div>
+    </div>
+    <div class="panel">
+      <div class="plot-title"><h3>Real staircase vs. waves from genuine zeros</h3><small id="synthStatus">0 of 50 pairs</small></div>
+      <canvas id="synthPlot" class="plot" role="img" aria-label="Exact Chebyshev psi function and approximating explicit formula using first N zeta zeros"></canvas>
+      <div class="legend"><span><i></i>Exact ψ(x)</span><span><i class="blue"></i>Approximation from zeros</span><span><i class="violet"></i>Jump at prime powers</span></div>
+      <div class="control"><label for="zeroCount">How many zero pairs? <output id="zeroCountValue">0 / 50</output></label><input type="range" id="zeroCount" min="0" max="50" value="0" step="1"></div>
+      <div class="buttonrow"><button class="secondary" id="oneMore">+1 pair</button><button class="primary" id="allZeros">Add all 50</button><button class="secondary" id="clearZeros">Reset</button></div>
+      <div class="metricline"><span>Mean absolute difference away from jumps</span><strong id="meanError">—</strong></div>
+      <p class="tiny" id="synthHover" aria-live="polite">Move the pointer over the graph to inspect x.</p>
+      <details class="appendix"><summary>See the exact formula we're really computing</summary>
+        <div class="equation">ψ₀(x) = x − log(2π) − ½ log(1 − x<sup>−2</sup>)<br>− Σ<sub>ρ</sub> x<sup>ρ</sup>/ρ<span class="sub">For x &gt; 1. The sum is over the nontrivial zeros (both positive and negative imaginary parts), in symmetric height order. ψ₀(x) is the midpoint value at a jump. Our curve truncates this at N = 0…50 conjugate pairs; the omitted zeros cause approximation error.</span></div>
+        <div class="equation" style="margin-top:8px">One pair at ρ = β + iγ contributes:<br>−2 x<sup>β</sup> [β cos(γ ln x) + γ sin(γ ln x)] / (β² + γ²)<span class="sub">JavaScript evaluates this expression directly. The 50 imaginary parts γ are embedded in the file, with no server or fake values.</span></div>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="chapter" id="search">
+  <div class="chapter-top"><span class="chip">07 / 07</span><small>Try it yourself, then test the result</small></div>
+  <h2>Can the waves help us <em>find 23?</em></h2>
+  <div class="chapter-grid">
+    <div class="prose">
+      <p>Let's zoom in on 20 through 25. For each whole number n, we'll measure how much our reconstructed ψ(x) rises between <strong>n − 0.45</strong> and <strong>n + 0.45</strong>.</p>
+      <p>In the exact staircase, the jump is <strong>ln(p)</strong> at a prime power p<sup>k</sup> and <strong>0</strong> otherwise. With only 50 zero pairs, the estimated jump is fuzzy. It often gives a striking signal at 23, but there can be false positives and false negatives.</p>
+      <p>We then perform a completely separate, <strong>exact divisibility check</strong> to confirm whether the candidate is prime. This distinction matters: <strong>assuming RH is true does not make a 50-wave approximation an exact primality test.</strong></p>
+      <p><strong>If RH were proved, a serious search could proceed like this:</strong> RH gives rigorous large-scale bounds on prime-counting errors and on how large gaps between primes can get (on the order of √x · log(x), with constants and conditions). Those bounds help choose <em>how far to search</em>. Zeta zeros can suggest where a rise may occur; a primality test then identifies the actual prime.</p>
+      <p>Crucially, <strong>the zeros-to-primes formula does not depend on RH</strong>. We can use the 50 known zeros right now. RH would tell us where <em>all the unseen zeros</em> must lie and would sharpen the guarantees.</p>
+      <div class="one-idea"><strong>Full circle:</strong> primes → zeta's prime product → zeros → waves → approximate prime-power locations → exact primality check.</div>
+      <div class="bridge"><b>Final takeaway:</b> A proof of RH would tighten our understanding of prime-number distribution. The remarkable connection between zeta's zeros and primes already exists as a theorem, whether RH is true or false.</div>
+    </div>
+    <div class="panel">
+      <h3>Run the wave experiment</h3>
+      <p class="subtitle">Blue bars are estimates from the zeros; green bars are the exact staircase jumps.</p>
+      <label for="rangeSelect" class="smallcaps" style="display:block;margin-bottom:7px">Choose a neighborhood</label>
+      <select id="rangeSelect"><option value="20,25">20–25 (23 is prime; 25 is a prime square)</option><option value="10,19">10–19 (four primes)</option><option value="24,30">24–30 (25 = 5² and 29 is prime)</option><option value="2,10">2–10 (several prime powers)</option></select>
+      <div class="plot-title" style="margin-top:20px"><h3>Local rise near each integer</h3><small id="resStatus">Ready: 0 / 50 pairs</small></div>
+      <canvas id="resPlot" class="plot medium" role="img" aria-label="Bars showing estimated and exact local jumps at each selected integer"></canvas>
+      <div class="legend"><span><i></i>Exact jump</span><span><i class="blue"></i>Reconstructed estimate</span><span><i class="rose"></i>Counterfactual estimate</span></div>
+      <div class="buttonrow"><button class="primary" id="playRes">Run wave resonance</button><button class="secondary" id="showRes">Show all 50 now</button><button class="secondary" id="resetRes">Reset</button></div>
+      <div class="metricline"><span>Pairs used</span><strong id="resCount">0 / 50</strong></div>
+      <div class="metricline"><span>Wave model</span><strong id="resModel">Real known zeros</strong></div>
+      <p class="tiny">“Resonance” is a metaphor for interference. Individual terms do <em>not</em> necessarily cancel at every composite number. In particular, 25 creates a genuine jump because 25 = 5². The hypothetical RH-false switch in Chapter 4 changes the model here too.</p>
+      <h3 style="margin-top:23px">Select a candidate to test exactly</h3>
+      <div id="candidateButtons" class="candidate-buttons" role="group" aria-label="Choose a candidate number"></div>
+      <div id="candidateCard" class="candidate-card" aria-live="polite"></div>
+    </div>
+  </div>
 </section>
 </main>
-<footer>Данные: первые 50 положительных мнимых частей нулей ζ(s), округление до 10–12 знаков. Формула фон Мангольдта для ψ₀(x). Источники: <a href="https://www.fungrim.org/topic/Zeros_of_the_Riemann_zeta_function.html" target="_blank" rel="noopener">Fungrim — таблица нулей</a> · <a href="https://www2.math.uu.se/~ast10761/analtalt08/www_notes.pdf" target="_blank" rel="noopener">A. Strömbergsson — явная формула</a>. Все вычисления и графики выполняются локально в браузере.</footer>
+<footer class="footer">
+  <p><strong>Mathematical integrity.</strong> The graphs use the first 50 positive imaginary parts of genuine Riemann zeta zeros and the classical explicit formula for ψ₀(x). The infinite formula is exact in its proper limiting sense. The 50-pair truncation is not exact, and the off-line toggle is a counterfactual spectral toy, not a modification of the true zeta function.</p>
+  <p>Everything runs inside this single HTML file. No external scripts, fonts, charting libraries, internet connection, or server required.</p>
+  <div class="sources"><span>Further reading:</span><a href="https://dlmf.nist.gov/25.16" target="_blank" rel="noopener noreferrer">NIST DLMF — zeta and primes</a><a href="https://www.aimath.org/WWN/rh/rh.pdf" target="_blank" rel="noopener noreferrer">AIM — Riemann Hypothesis</a><a href="https://math.ucr.edu/home/baez/mathematical/riemann_explicit_formula/explicit_formulas.html" target="_blank" rel="noopener noreferrer">Explicit formula notes</a><a href="https://www.fungrim.org/topic/Zeros_of_the_Riemann_zeta_function.html" target="_blank" rel="noopener noreferrer">Tables of zeros</a></div>
+</footer>
 </div>
 <script>
 'use strict';
-/* Verified positive imaginary parts of the first 50 nontrivial zeta zeros. */
+/* First 50 positive imaginary parts of nontrivial zeros, in increasing order.
+   All 50 zeros listed here satisfy beta = 1/2. The conjugates are added by
+   evaluating -2 Re(x^rho/rho) in pairWave(). */
 const GAMMAS = [
-14.134725141735,21.022039638772,25.010857580146,30.424876125860,32.935061587739,
-37.586178158826,40.918719012147,43.327073280915,48.005150881167,49.773832477672,
-52.970321477715,56.446247697063,59.347044002603,60.831778524610,65.112544048082,
-67.079810529494,69.546401711174,72.067157674482,75.704690699083,77.144840068874,
-79.337375020249,82.910380854086,84.735492980517,87.425274613125,88.809111207634,
-92.491899270558,94.651344040520,95.870634228245,98.831194218194,101.317851005731,
-103.725538040478,105.446623052326,107.168611184276,111.029535543170,111.874659176993,
-114.320220915453,116.226680320858,118.790782865976,121.370125002421,122.946829293553,
-124.256818554346,127.516683879297,129.578704199956,131.087688530933,133.497737202998,
-134.756509753374,138.116042054533,139.736208952121,141.123707404021,143.111845807621
+  14.134725141735,21.022039638772,25.010857580146,30.424876125860,32.935061587739,
+  37.586178158826,40.918719012147,43.327073280915,48.005150881167,49.773832477672,
+  52.970321477715,56.446247697063,59.347044002603,60.831778524610,65.112544048082,
+  67.079810529494,69.546401711174,72.067157674482,75.704690699083,77.144840068874,
+  79.337375020249,82.910380854086,84.735492980517,87.425274613125,88.809111207634,
+  92.491899270558,94.651344040520,95.870634228245,98.831194218194,101.317851005731,
+  103.725538040478,105.446623052326,107.168611184276,111.029535543170,111.874659176993,
+  114.320220915453,116.226680320858,118.790782865976,121.370125002421,122.946829293553,
+  124.256818554346,127.516683879297,129.578704199956,131.087688530933,133.497737202998,
+  134.756509753374,138.116042054533,139.736208952121,141.123707404021,143.111845807621
 ];
-const COLORS={grid:'#28405b',text:'#a3b8d3',ink:'#e9f3ff',blue:'#79c8ff',mint:'#6bf0c5',gold:'#ffd17b',pink:'#fb799c',purple:'#b0a2fa',bg:'#101b2d'};
-const prime = n => {if(n<2)return false;for(let d=2;d*d<=n;d++)if(n%d===0)return false;return true;};
-const primes=Array.from({length:31},(_,i)=>i).filter(prime);
-function vonMangoldt(n){for(const p of primes){let q=p;while(q<=n){if(q===n)return Math.log(p);q*=p;}}return 0;}
-const exactJumps=Array.from({length:31},(_,n)=>vonMangoldt(n));
-const sums=exactJumps.map((_,i)=>exactJumps.slice(0,i+1).reduce((a,b)=>a+b,0));
-function psiExact(x){return x<2?0:sums[Math.min(30,Math.floor(x))];}
-/* -2 Re[x^(beta+i gamma)/(beta+i gamma)] =
-   -2*x^beta * (beta*cos(gamma*log x)+gamma*sin(gamma*log x))/(beta²+gamma²).
-   One term incorporates the conjugate with negative imaginary part. */
-function pairWave(x,beta,gamma){const a=gamma*Math.log(x), den=beta*beta+gamma*gamma;
-return -2*Math.pow(x,beta)*(beta*Math.cos(a)+gamma*Math.sin(a))/den;}
-/* Counterfactual off-line zero must respect rho -> 1-conj(rho):
-   replace one critical-line pair by TWO pairs at beta=.85 and .15.
-   This changes the spectral multiset and is not an actual zeta-function. */
-function modeWave(x,i,off){const g=GAMMAS[i];return off&&i===0?pairWave(x,.85,g)+pairWave(x,.15,g):pairWave(x,.5,g);}
-function smoothTerm(x){return x-Math.log(2*Math.PI)-.5*Math.log(1-1/(x*x));}
-function psiApprox(x,N,off=false){let y=smoothTerm(x);for(let i=0;i<N;i++)y+=modeWave(x,i,off);return y;}
+const C={mint:'#66e9c3',blue:'#86c9ff',gold:'#ffd48c',rose:'#ff90b2',violet:'#b6a8ff',grid:'#2c415a',text:'#a7b8cd',ink:'#f0f5ff'};
 const $=id=>document.getElementById(id);
-const state={selected:0,n:0,resN:0,off:false,playing:false,range:[20,24],eps:.45};
-/* Canvas retains a CSS-pixel coordinate system even on high-density screens. */
-function setupCanvas(el){const rect=el.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);if(!rect.width||!rect.height)return null;el.width=Math.round(rect.width*dpr);el.height=Math.round(rect.height*dpr);const ctx=el.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);return {ctx,w:rect.width,h:rect.height};}
-function frame(canvas,domain,opts={}){
- const s=setupCanvas(canvas);if(!s)return null;const {ctx,w,h}=s;
- const pad={left:opts.left??48,right:opts.right??18,top:opts.top??16,bottom:opts.bottom??35};
- const width=w-pad.left-pad.right,height=h-pad.top-pad.bottom;
- const X=x=>pad.left+(x-domain.x0)/(domain.x1-domain.x0)*width;
- const Y=y=>pad.top+(domain.y1-y)/(domain.y1-domain.y0)*height;
- ctx.clearRect(0,0,w,h);ctx.font='11px system-ui, sans-serif';ctx.textBaseline='middle';ctx.lineWidth=1;
- for(const x of opts.xticks||[]){const px=X(x);ctx.strokeStyle=COLORS.grid;ctx.beginPath();ctx.moveTo(px,pad.top);ctx.lineTo(px,h-pad.bottom);ctx.stroke();ctx.fillStyle=COLORS.text;ctx.textAlign='center';ctx.fillText(String(x),px,h-pad.bottom+17);}
- for(const y of opts.yticks||[]){const py=Y(y);ctx.strokeStyle=COLORS.grid;ctx.beginPath();ctx.moveTo(pad.left,py);ctx.lineTo(w-pad.right,py);ctx.stroke();ctx.fillStyle=COLORS.text;ctx.textAlign='right';ctx.fillText(String(y),pad.left-8,py);}
- ctx.strokeStyle='#4e6581';ctx.strokeRect(pad.left,pad.top,width,height);return {...s,X,Y,pad,width,height,domain};
-}
-function poly(g,fn,x0,x1,count,color,lineWidth=2,dash=[]){const {ctx,X,Y}=g;ctx.strokeStyle=color;ctx.lineWidth=lineWidth;ctx.setLineDash(dash);ctx.beginPath();for(let j=0;j<=count;j++){const x=x0+(x1-x0)*j/count,y=fn(x);if(j===0)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y));}ctx.stroke();ctx.setLineDash([]);}
-function dot(ctx,x,y,r,color,halo=false){if(halo){ctx.beginPath();ctx.arc(x,y,r+7,0,2*Math.PI);ctx.fillStyle=color+'26';ctx.fill();}ctx.beginPath();ctx.arc(x,y,r,0,2*Math.PI);ctx.fillStyle=color;ctx.fill();}
-function format(v,d=2){return Number(v).toFixed(d).replace('.',',');}
-function drawZeros(){const g=frame($('zeroPlot'),{x0:-4,x1:2,y0:0,y1:40},{xticks:[-4,-3,-2,-1,0,.5,1,2],yticks:[0,5,10,15,20,25,30,35,40]});if(!g)return;
-const {ctx,X,Y,pad,w,h}=g;ctx.fillStyle='#6bf0c51a';ctx.fillRect(X(0),pad.top,X(1)-X(0),h-pad.top-pad.bottom);
-ctx.strokeStyle=COLORS.gold;ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(X(.5),Y(0));ctx.lineTo(X(.5),Y(40));ctx.stroke();ctx.setLineDash([]);
-GAMMAS.slice(0,6).forEach((gamma,i)=>{const sel=state.selected===i;dot(ctx,X(.5),Y(gamma),sel?6.5:4.5,sel?COLORS.gold:COLORS.mint,sel);if(sel){ctx.font='bold 12px system-ui';ctx.textAlign='left';ctx.fillStyle=COLORS.gold;ctx.fillText('ρ'+(i+1),X(.5)+12,Y(gamma)-10);}});
-if(state.off){dot(ctx,X(.85),Y(GAMMAS[0]),6,COLORS.pink,true);dot(ctx,X(.15),Y(GAMMAS[0]),6,COLORS.pink,true);}
-ctx.fillStyle=COLORS.text;ctx.textAlign='left';ctx.font='12px system-ui';ctx.fillText('Im(s)',pad.left+7,pad.top+12);ctx.textAlign='right';ctx.fillText('Re(s)',w-pad.right-5,h-11);
-}
-function drawWave(){let i=state.selected, gamma=GAMMAS[i];const domain={x0:0,x1:2.4,y0:-1.25,y1:1.25};const g=frame($('wavePlot'),domain,{left:34,right:12,top:10,bottom:28,xticks:[0,.5,1,1.5,2],yticks:[-1,0,1]});if(!g)return;
-const norm=u=>pairWave(Math.exp(u),.5,gamma)*gamma/(2*Math.exp(u*.5));poly(g,norm,0,2.4,500,COLORS.blue,2.4);
-$('zeroName').textContent=`ρ${'₁₂₃₄₅₆'[i]} = ½ + ${format(gamma,4)}i`;
-$('zeroExplanation').textContent=`γ = ${format(gamma,4)}. На диапазоне ln(x) от 0 до 2,4 волна совершает примерно ${format(gamma*2.4/(2*Math.PI),1)} колебаний. Здесь амплитуда нормирована по огибающей для сравнения частот.`;
-const {ctx,w,h}=g;ctx.fillStyle=COLORS.text;ctx.font='11px system-ui';ctx.textAlign='right';ctx.fillText('ln x',w-16,h-10);
-}
-$('zeroPlot').addEventListener('pointerdown',e=>{const rect=$('zeroPlot').getBoundingClientRect();const px=e.clientX-rect.left,py=e.clientY-rect.top;const g={left:48,right:18,top:16,bottom:35};const X=.5;const center=g.left+(X+4)/6*(rect.width-g.left-g.right);let best=-1,min=Infinity;GAMMAS.slice(0,6).forEach((gamma,i)=>{const y=g.top+(40-gamma)/40*(rect.height-g.top-g.bottom);const d=Math.hypot(px-center,py-y);if(d<min){min=d;best=i;}});if(min<27){state.selected=best;drawZeros();drawWave();}});
-function drawExactStair(g){const {ctx,X,Y}=g;ctx.strokeStyle=COLORS.mint;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(X(2),Y(psiExact(2)));for(let n=3;n<=30;n++){ctx.lineTo(X(n),Y(psiExact(n-0.0001)));ctx.lineTo(X(n),Y(psiExact(n)));}ctx.stroke();
-for(let n=2;n<=30;n++){if(exactJumps[n]>0){ctx.strokeStyle=prime(n)?COLORS.mint:COLORS.purple;ctx.lineWidth=1;ctx.globalAlpha=.4;ctx.beginPath();ctx.moveTo(X(n),Y(0));ctx.lineTo(X(n),Y(32));ctx.stroke();ctx.globalAlpha=1;}}
-}
-function drawSynth(){const g=frame($('synthPlot'),{x0:2,x1:30,y0:-1,y1:34},{xticks:[2,5,10,15,20,25,30],yticks:[0,5,10,15,20,25,30]});if(!g)return;drawExactStair(g);poly(g,x=>psiApprox(x,state.n),2,30,1250,COLORS.blue,2.25);$('plotStatus').textContent=`${state.n} пар нулей`;const test=[];for(let x=2.05;x<29.95;x+=.085){if([2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29].some(n=>Math.abs(x-n)<.15))continue;test.push(Math.abs(psiApprox(x,state.n)-psiExact(x)));}let mae=test.reduce((a,b)=>a+b,0)/test.length;$('statError').textContent=format(mae,2);$('statN').textContent=state.n;$('countValue').textContent=`${state.n} / 50`;$('zeroCount').value=state.n;}
-$('zeroCount').addEventListener('input',e=>{state.n=Number(e.target.value);drawSynth();});
-$('stepButton').onclick=()=>{state.n=Math.min(50,state.n+1);drawSynth();};$('allButton').onclick=()=>{state.n=50;drawSynth();};$('resetButton').onclick=()=>{state.n=0;drawSynth();};
-function getRange(){return state.range;}
-function jumpAt(n,N,off){return psiApprox(n+state.eps,N,off)-psiApprox(n-state.eps,N,off);}
-function drawRes(){const [min,max]=getRange(),items=Array.from({length:max-min+1},(_,i)=>min+i);const vals=items.map(n=>jumpAt(n,state.resN,state.off));const targets=items.map(n=>exactJumps[n]);const absMax=Math.max(3.8,...vals.map(Math.abs),...targets.map(Math.abs));const ylim=Math.ceil(absMax*1.2*2)/2;
-const g=frame($('resPlot'),{x0:min-.7,x1:max+.7,y0:-Math.max(1.2,ylim*.25),y1:ylim},{left:42,right:10,top:18,bottom:33,xticks:items,yticks:[0,Math.round(ylim/2*10)/10,ylim]});if(!g)return;
-const {ctx,X,Y}=g;ctx.lineWidth=1.5;items.forEach((n,i)=>{const space=(g.width/items.length);const bw=Math.min(25,space*.3);const target=targets[i],est=vals[i];ctx.fillStyle=COLORS.mint+'80';ctx.fillRect(X(n)-bw-2,Y(target),bw,Math.abs(Y(target)-Y(0)));ctx.fillStyle=state.off?COLORS.pink:COLORS.blue;let top=Y(Math.max(0,est)),bot=Y(Math.min(0,est));ctx.fillRect(X(n)+2,top,bw,Math.max(2,bot-top));if(target>0){ctx.font='bold 11px system-ui';ctx.fillStyle=COLORS.mint;ctx.textAlign='center';ctx.fillText(prime(n)?'p':'pᵏ',X(n),Math.max(g.pad.top+7,Y(target)-13));}});
-$('resCount').textContent=`${state.resN} / 50`;$('modelType').textContent=state.off?'Квартет вне прямой':'ГР';$('modelType').style.color=state.off?COLORS.pink:COLORS.mint;
-$('resStatus').textContent=state.playing?`Суммирование: ${state.resN}/50`:`Показано ${state.resN} / 50`;
-$('peakRows').innerHTML=items.map((n,i)=>`<tr class="${prime(n)?'highlight':''}"><td>${n} ${prime(n)?'· простое':(exactJumps[n]>0?'· pᵏ':'· составное')}</td><td>${format(vals[i],2)}</td><td>${format(targets[i],2)}</td></tr>`).join('');
-}
-$('rangeSelect').addEventListener('change',e=>{state.range=e.target.value.split(',').map(Number);stop(false);drawRes();});
-$('epsilon').addEventListener('input',e=>{state.eps=Number(e.target.value);$('epsValue').textContent=state.eps.toFixed(2);drawRes();});
-$('offLine').addEventListener('change',e=>{state.off=e.target.checked;drawRes();drawZeros();});
-let animationToken=0;function stop(jump){animationToken++;state.playing=false;if(jump)state.resN=50;drawRes();}
-$('stopButton').onclick=()=>stop(true);
-$('runButton').onclick=()=>{animationToken++;const token=animationToken;state.resN=0;state.playing=true;drawRes();let last=0;function tick(timestamp){if(token!==animationToken)return;if(!last)last=timestamp;if(timestamp-last>=55){state.resN=Math.min(50,state.resN+1);last=timestamp;drawRes();}if(state.resN<50)requestAnimationFrame(tick);else{state.playing=false;drawRes();}}requestAnimationFrame(tick);};
-function drawAll(){drawZeros();drawWave();drawSynth();drawRes();}
-let resizeFrame=0;window.addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(drawAll);});
-drawAll();
+const MAX=100;
+function isPrime(n){if(!Number.isInteger(n)||n<2)return false;for(let d=2;d*d<=n;d++){if(n%d===0)return false;}return true;}
+function firstFactor(n){for(let d=2;d*d<=n;d++){if(n%d===0)return d;}return null;}
+const PRIMES=Array.from({length:MAX-1},(_,i)=>i+2).filter(isPrime);
+const MANGOLDT=Array(MAX+1).fill(0);
+for(const p of PRIMES){for(let power=p;power<=MAX;power*=p){MANGOLDT[power]=Math.log(p);if(power>MAX/p)break;}}
+const PSI_PREFIX=Array(MAX+1).fill(0);for(let n=1;n<=MAX;n++)PSI_PREFIX[n]=PSI_PREFIX[n-1]+MANGOLDT[n];
+function psiExact(x){if(x<2)return 0;return PSI_PREFIX[Math.min(MAX,Math.floor(x))];}
+function piExact(x){let k=0;for(const p of PRIMES){if(p>x)break;k++;}return k;}
+/* Euler's product for s=2, truncated to the first k primes. */
+function zetaFiniteProduct(k){let result=1;for(let j=0;j<k;j++){const p=PRIMES[j];result/=1-1/(p*p);}return result;}
+/* A conjugate pair rho=beta +/- i gamma contributes:
+   -(x^rho/rho + x^conj(rho)/conj(rho))
+   = -2 x^beta (beta cos(gamma ln x)+gamma sin(gamma ln x))/(beta²+gamma²). */
+function pairWave(x,beta,gamma){const theta=gamma*Math.log(x);return -2*Math.pow(x,beta)*(beta*Math.cos(theta)+gamma*Math.sin(theta))/(beta*beta+gamma*gamma);}
+/* Counterfactual spectrum must respect the functional equation symmetry:
+   if beta+. i gamma exists, so do beta-. i gamma and (1-beta)+/-i gamma.
+   Replace the first critical-line pair by the quartet beta=.85 and .15.
+   This is NOT a real zeta function with its zero manually moved. */
+function singleMode(x,index,offLine){const gamma=GAMMAS[index];return offLine&&index===0?pairWave(x,.85,gamma)+pairWave(x,.15,gamma):pairWave(x,.5,gamma);}
+/* Riemann-von Mangoldt explicit formula for psi_0, finite truncation:
+   psi_N(x)=x-log(2 pi)-1/2 log(1-x^-2)+sum_{n=1}^N pairWave(x,...)
+   At an exact prime-power discontinuity the infinite expression converges
+   to the midpoint of the left and right values, not the right-continuous psi. */
+function smoothTerm(x){return x-Math.log(2*Math.PI)-.5*Math.log(1-1/(x*x));}
+function psiN(x,N,offLine=false){let v=smoothTerm(x);for(let i=0;i<N;i++)v+=singleMode(x,i,offLine);return v;}
+function localRise(n,N,offLine){const halfWindow=.45;return psiN(n+halfWindow,N,offLine)-psiN(n-halfWindow,N,offLine);}
+const state={primeX:30,factors:4,zeroIndex:0,off:false,scaleExp:8,proofExp:8,n:0,range:[20,25],resN:0,playing:false,candidate:23,hoverX:null};
+function shortNumber(n){return new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:2}).format(n);}
+function fixed(n,d=2){return Number(n).toFixed(d);}
+function renderHero(){const el=$('heroCloud');for(let n=2;n<=26;n++){const span=document.createElement('span');span.textContent=n;if(isPrime(n))span.className='prime';el.appendChild(span);}}
+function renderPrimeGrid(){const el=$('primeGrid');const frag=document.createDocumentFragment();for(let n=2;n<=60;n++){const b=document.createElement('button');b.type='button';b.className='num';b.dataset.n=String(n);b.textContent=String(n);b.setAttribute('aria-label',n+(isPrime(n)?' is prime':' is not prime'));b.addEventListener('click',()=>{state.primeX=n;updatePrimeGrid();});frag.appendChild(b);}el.appendChild(frag);updatePrimeGrid();}
+function updatePrimeGrid(){const x=state.primeX;$('primeLimit').value=x;$('primeLimitValue').textContent=x;$('primeCountText').textContent=`π(${x}) = ${piExact(x)}`;let desc;if(isPrime(x)){desc=`${x} is prime. None of 2 through ${Math.floor(Math.sqrt(x))} divides it (only primes need checking).`;}else{const d=firstFactor(x);desc=d?`${x} is not prime: ${x} = ${d} × ${x/d}.`:`${x} is not prime.`;}$('numberExplanation').textContent=desc;for(const b of $('primeGrid').children){const n=Number(b.dataset.n);b.className=`num${isPrime(n)?' isprime':''}${n>x?' outside':''}${n===x?' chosen':''}`;b.setAttribute('aria-pressed',String(n===x));}}
+function renderProduct(){const k=state.factors;$('factorCountValue').textContent=`${k} / 10`;$('factorCount').value=k;$('productResult').textContent=fixed(zetaFiniteProduct(k),6);const list=$('factorList');list.replaceChildren();for(let i=0;i<10;i++){const e=document.createElement('span');e.className='factor'+(i<k?'':' inactive');e.textContent=`p = ${PRIMES[i]}`;list.appendChild(e);}}
+/* High DPI canvas rendering, coordinates are always in CSS pixels. */
+function createPlot(id,domain,opts={}){const el=$(id);const r=el.getBoundingClientRect();if(!r.width||!r.height)return null;const dpr=Math.min(window.devicePixelRatio||1,2);el.width=Math.round(r.width*dpr);el.height=Math.round(r.height*dpr);const ctx=el.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);const w=r.width,h=r.height,p={l:opts.left??47,r:opts.right??15,t:opts.top??16,b:opts.bottom??32};const pw=w-p.l-p.r,ph=h-p.t-p.b;const X=x=>p.l+(x-domain.x0)/(domain.x1-domain.x0)*pw;const Y=y=>p.t+(domain.y1-y)/(domain.y1-domain.y0)*ph;ctx.clearRect(0,0,w,h);ctx.font='11px ui-sans-serif,system-ui,sans-serif';ctx.textBaseline='middle';ctx.lineWidth=1;for(const x of opts.xticks||[]){ctx.strokeStyle=C.grid;ctx.beginPath();ctx.moveTo(X(x),p.t);ctx.lineTo(X(x),h-p.b);ctx.stroke();ctx.fillStyle=C.text;ctx.textAlign='center';ctx.fillText(opts.xfmt?opts.xfmt(x):String(x),X(x),h-p.b+17);}for(const y of opts.yticks||[]){ctx.strokeStyle=C.grid;ctx.beginPath();ctx.moveTo(p.l,Y(y));ctx.lineTo(w-p.r,Y(y));ctx.stroke();ctx.fillStyle=C.text;ctx.textAlign='right';ctx.fillText(opts.yfmt?opts.yfmt(y):String(y),p.l-8,Y(y));}ctx.strokeStyle='#516882';ctx.strokeRect(p.l,p.t,pw,ph);ctx.save();ctx.beginPath();ctx.rect(p.l,p.t,pw,ph);ctx.clip();return{ctx,X,Y,p,w,h,pw,ph,domain,finish(){ctx.restore();}};}
+function line(g,fn,x0,x1,steps,color,width=2,dash=[]){const {ctx,X,Y}=g;ctx.beginPath();for(let j=0;j<=steps;j++){const x=x0+(x1-x0)*j/steps;const y=fn(x);if(j===0)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y));}ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.stroke();ctx.setLineDash([]);}
+function point(g,x,y,r,color,selected=false){const {ctx,X,Y}=g;const px=X(x),py=Y(y);if(selected){ctx.fillStyle=color+'30';ctx.beginPath();ctx.arc(px,py,r+7,0,2*Math.PI);ctx.fill();}ctx.fillStyle=color;ctx.beginPath();ctx.arc(px,py,r,0,Math.PI*2);ctx.fill();}
+function drawZeroPlot(){const g=createPlot('zeroPlot',{x0:-4,x1:2,y0:0,y1:40},{xticks:[-4,-3,-2,-1,0,.5,1,2],yticks:[0,10,20,30,40]});if(!g)return;const{ctx,X,Y,p}=g;ctx.fillStyle='rgba(102,233,195,.08)';ctx.fillRect(X(0),p.t,X(1)-X(0),g.ph);ctx.strokeStyle=C.gold;ctx.lineWidth=2.2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(X(.5),Y(0));ctx.lineTo(X(.5),Y(40));ctx.stroke();ctx.setLineDash([]);point(g,-2,0,5,'#8295ad');point(g,-4,0,5,'#8295ad');for(let i=0;i<6;i++){point(g,.5,GAMMAS[i],i===state.zeroIndex?7:4.5,i===state.zeroIndex?C.gold:C.mint,i===state.zeroIndex);}if(state.off){point(g,.85,GAMMAS[0],6,C.rose,true);point(g,.15,GAMMAS[0],6,C.rose,true);}g.finish();ctx.textAlign='left';ctx.font='11px system-ui';ctx.fillStyle=C.text;ctx.fillText('Im(s) ↑',p.l+7,p.t+11);ctx.textAlign='right';ctx.fillText('Re(s) →',g.w-p.r,g.h-10);}
+function drawWave(){const i=state.zeroIndex,gamma=GAMMAS[i];const g=createPlot('wavePlot',{x0:0,x1:2.1,y0:-1.17,y1:1.17},{left:32,right:14,top:11,bottom:27,xticks:[0,.5,1,1.5,2],yticks:[-1,0,1]});if(!g)return;const norm=u=>pairWave(Math.exp(u),.5,gamma)*(gamma/(2*Math.exp(.5*u)));line(g,norm,0,2.1,520,C.blue,2.3);g.finish();g.ctx.textAlign='right';g.ctx.fillStyle=C.text;g.ctx.font='11px system-ui';g.ctx.fillText('log(x)',g.w-14,g.h-10);$('zeroDetails').textContent=`Zero ${i+1}: ρ = ½ + ${fixed(gamma,4)}i. Its height γ ≈ ${fixed(gamma,2)} sets the wave's frequency along log(x).`;for(const b of $('zeroButtons').children){const chosen=Number(b.dataset.index)===i;b.classList.toggle('active',chosen);b.setAttribute('aria-pressed',String(chosen));}}
+function chooseZero(i){state.zeroIndex=i;drawZeroPlot();drawWave();}
+function setupZeroControls(){const el=$('zeroButtons');for(let i=0;i<6;i++){const b=document.createElement('button');b.type='button';b.textContent=String(i+1);b.dataset.index=i;b.addEventListener('click',()=>chooseZero(i));el.appendChild(b);}const canvas=$('zeroPlot');canvas.addEventListener('pointerdown',event=>{const rect=canvas.getBoundingClientRect();const px=event.clientX-rect.left,py=event.clientY-rect.top;const left=47,right=15,top=16,bottom=32;const plotX=left+(4.5/6)*(rect.width-left-right);let closest=-1,best=30;for(let i=0;i<6;i++){const plotY=top+(40-GAMMAS[i])/40*(rect.height-top-bottom);const d=Math.hypot(px-plotX,py-plotY);if(d<best){closest=i;best=d;}}if(closest!==-1)chooseZero(closest);});}
+function drawEnvelope(){const k=state.scaleExp;const g=createPlot('envelopePlot',{x0:1,x1:12,y0:0,y1:4.4},{xticks:[1,3,6,9,12],yticks:[0,1,2,3,4],xfmt:x=>'10^'+x,yfmt:y=>y===0?'×1':'×10^'+y});if(!g)return;line(g,()=>0,1,12,20,C.mint,2.1,[6,4]);line(g,t=>.35*t,1,12,100,state.off?C.rose:'#61758c',state.off?3:1.5);point(g,k,.35*k,5,state.off?C.rose:C.blue,true);g.finish();const r=Math.pow(10,.35*k);$('amplitudeResult').textContent=`×${shortNumber(r)}`;$('amplitudeCaption').textContent=`At x = 10^${k}, an x^0.85 envelope is about ${shortNumber(r)} times an x^0.5 envelope.`;$('scaleExponentValue').textContent=`k = ${k}`;}
+function updateProof(){const k=state.proofExp,x=Math.pow(10,k),log=Math.log(x);const count=x/log,error=Math.sqrt(x)*log,ratio=error/count*100;$('proofExponentValue').textContent='10'+String(k).replace(/\d/g,d=>'⁰¹²³⁴⁵⁶⁷⁸⁹'[Number(d)]);$('typicalCount').textContent=shortNumber(count);$('errorScale').textContent=shortNumber(error);$('relativeScale').textContent=fixed(ratio,3)+'%';}
+function drawStairs(g){const{ctx,X,Y}=g;ctx.strokeStyle=C.mint;ctx.lineWidth=2.7;ctx.beginPath();ctx.moveTo(X(1.5),Y(0));for(let n=2;n<=30;n++){ctx.lineTo(X(n),Y(PSI_PREFIX[n-1]));ctx.lineTo(X(n),Y(PSI_PREFIX[n]));}ctx.stroke();for(let n=2;n<=30;n++){if(MANGOLDT[n]===0)continue;ctx.strokeStyle=isPrime(n)?'rgba(102,233,195,.18)':'rgba(182,168,255,.35)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(X(n),Y(0));ctx.lineTo(X(n),Y(33));ctx.stroke();}}
+function drawSynth(){const g=createPlot('synthPlot',{x0:1.5,x1:30,y0:-2,y1:34},{xticks:[2,5,10,15,20,25,30],yticks:[0,5,10,15,20,25,30]});if(!g)return;drawStairs(g);line(g,x=>psiN(x,state.n,state.off),1.5,30,1150,state.off?C.rose:C.blue,2.2);if(state.hoverX!==null){const x=state.hoverX;g.ctx.strokeStyle=C.gold;g.ctx.lineWidth=1;g.ctx.setLineDash([3,5]);g.ctx.beginPath();g.ctx.moveTo(g.X(x),g.Y(-2));g.ctx.lineTo(g.X(x),g.Y(34));g.ctx.stroke();g.ctx.setLineDash([]);}$('synthStatus').textContent=state.n+' of 50 pairs';$('zeroCountValue').textContent=state.n+' / 50';$('zeroCount').value=state.n;let err=0,count=0;for(let x=2.04;x<29.95;x+=.075){if(MANGOLDT.some((v,n)=>v>0&&Math.abs(x-n)<.16))continue;err+=Math.abs(psiN(x,state.n,state.off)-psiExact(x));count++;}$('meanError').textContent=fixed(err/count,3);if(state.hoverX===null)$('synthHover').textContent='Move the pointer over the graph to inspect x.';else{const x=state.hoverX;$('synthHover').textContent=`At x = ${fixed(x,2)}: exact ψ = ${fixed(psiExact(x),2)}, ${state.n}-pair estimate = ${fixed(psiN(x,state.n,state.off),2)}.`;}g.finish();}
+function setupSynthHover(){const el=$('synthPlot');el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),left=47,right=15;const x=1.5+(e.clientX-r.left-left)/(r.width-left-right)*(30-1.5);state.hoverX=Math.max(1.5,Math.min(30,x));drawSynth();});el.addEventListener('pointerleave',()=>{state.hoverX=null;drawSynth();});}
+function makeCandidateButtons(){const el=$('candidateButtons');el.replaceChildren();const [lo,hi]=state.range;for(let n=lo;n<=hi;n++){const b=document.createElement('button');b.type='button';b.textContent=n;b.addEventListener('click',()=>{state.candidate=n;updateCandidate();});b.dataset.n=n;el.appendChild(b);}}
+function primePowerBase(n){if(MANGOLDT[n]===0)return null;for(const p of PRIMES){for(let power=p;power<=n;power*=p){if(power===n)return p;if(power>n/p)break;}}return null;}
+function updateCandidate(){const n=state.candidate,yes=isPrime(n),p=primePowerBase(n),d=firstFactor(n);for(const b of $('candidateButtons').children){const active=Number(b.dataset.n)===n;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));}const message=yes?`Try dividing ${n} by each prime up to √${n} ≈ ${fixed(Math.sqrt(n),2)}. None divides it. So ${n} really is prime.`:(p?`${n} = ${p}^${Math.round(Math.log(n)/Math.log(p))}. This is NOT prime, but it is a prime power, so ψ has a real jump here.`:`${n} = ${d} × ${n/d}. That proves it is composite. The exact ψ staircase has no jump here.`);const estimate=localRise(n,state.resN,state.off);const card=$('candidateCard');card.replaceChildren();const title=document.createElement('h4');title.textContent=`${n}: ${yes?'PRIME':p?'PRIME POWER, NOT PRIME':'COMPOSITE'}`;const para=document.createElement('p');para.textContent=message;const detail=document.createElement('small');detail.textContent=`50-wave experiment currently using ${state.resN} pair(s): estimated local rise ${fixed(estimate,3)}; exact jump ${fixed(MANGOLDT[n],3)}. The exact check uses division, not the waves.`;card.append(title,para,detail);}
+function drawRes(){const[lo,hi]=state.range;const numbers=Array.from({length:hi-lo+1},(_,i)=>i+lo);const estimates=numbers.map(n=>localRise(n,state.resN,state.off));const max=Math.max(4,...estimates.map(v=>Math.abs(v)),...numbers.map(n=>MANGOLDT[n]));const yMax=Math.ceil(max*1.18*2)/2,yMin=-Math.max(1.3,yMax*.24);const g=createPlot('resPlot',{x0:lo-.72,x1:hi+.72,y0:yMin,y1:yMax},{left:43,right:12,top:18,bottom:29,xticks:numbers,yticks:[0,Math.round(yMax/2*10)/10]});if(!g)return;const{ctx,X,Y,pw}=g;const bw=Math.min(23,pw/numbers.length*.24);numbers.forEach((n,i)=>{const actual=MANGOLDT[n],estimate=estimates[i];const deltaY=Y(0)-Y(actual);ctx.fillStyle='rgba(102,233,195,.73)';ctx.fillRect(X(n)-bw-2,Y(actual),bw,Math.max(0,deltaY));ctx.fillStyle=state.off?C.rose:C.blue;const top=Y(Math.max(0,estimate)),bottom=Y(Math.min(0,estimate));ctx.fillRect(X(n)+2,top,bw,Math.max(2,bottom-top));if(actual>0){ctx.fillStyle=C.mint;ctx.font='bold 10px system-ui';ctx.textAlign='center';ctx.fillText(isPrime(n)?'p':'pᵏ',X(n),Math.max(9,Y(actual)-10));}});g.finish();$('resStatus').textContent=state.playing?'Adding: '+state.resN+' / 50 pairs':'Ready: '+state.resN+' / 50 pairs';$('resCount').textContent=state.resN+' / 50';$('resModel').textContent=state.off?'Hypothetical off-line zero':'Real known zeros';$('resModel').style.color=state.off?C.rose:C.mint;updateCandidate();}
+let animationId=0;
+function stopAnimation(){animationId++;state.playing=false;}
+function play(){stopAnimation();state.resN=0;state.playing=true;drawRes();const id=animationId;let last=0;function tick(t){if(id!==animationId)return;if(!last)last=t;if(t-last>65){last=t;state.resN=Math.min(50,state.resN+1);drawRes();}if(state.resN<50){requestAnimationFrame(tick);}else{state.playing=false;drawRes();}}requestAnimationFrame(tick);}
+function setupNavigation(){const links=[...document.querySelectorAll('.chapternav a')],ids=links.map(a=>a.getAttribute('href').slice(1));const sections=ids.map(id=>document.getElementById(id));function update(){let index=0;const threshold=window.innerHeight*.35+68;for(let i=0;i<sections.length;i++){if(sections[i].getBoundingClientRect().top<=threshold)index=i;}links.forEach((a,i)=>a.classList.toggle('active',i===index));const doc=document.documentElement;const progress=Math.max(0,Math.min(100,(window.scrollY/(doc.scrollHeight-window.innerHeight||1))*100));$('readingProgress').style.width=progress+'%';}window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update();}
+function drawAll(){drawZeroPlot();drawWave();drawEnvelope();drawSynth();drawRes();}
+function init(){renderHero();renderPrimeGrid();renderProduct();setupZeroControls();setupSynthHover();setupNavigation();$('primeLimit').addEventListener('input',e=>{state.primeX=Number(e.target.value);updatePrimeGrid();});$('factorCount').addEventListener('input',e=>{state.factors=Number(e.target.value);renderProduct();});$('offLine').addEventListener('change',e=>{state.off=e.target.checked;drawAll();});$('scaleExponent').addEventListener('input',e=>{state.scaleExp=Number(e.target.value);drawEnvelope();});$('proofExponent').addEventListener('input',e=>{state.proofExp=Number(e.target.value);updateProof();});$('zeroCount').addEventListener('input',e=>{state.n=Number(e.target.value);drawSynth();});$('oneMore').addEventListener('click',()=>{state.n=Math.min(50,state.n+1);drawSynth();});$('allZeros').addEventListener('click',()=>{state.n=50;drawSynth();});$('clearZeros').addEventListener('click',()=>{state.n=0;drawSynth();});$('rangeSelect').addEventListener('change',e=>{stopAnimation();state.range=e.target.value.split(',').map(Number);state.resN=0;state.candidate=state.range.includes(23)?23:state.range[0];makeCandidateButtons();drawRes();});$('playRes').addEventListener('click',play);$('showRes').addEventListener('click',()=>{stopAnimation();state.resN=50;drawRes();});$('resetRes').addEventListener('click',()=>{stopAnimation();state.resN=0;drawRes();});makeCandidateButtons();updateProof();drawAll();let raf=0;window.addEventListener('resize',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(drawAll);});}
+init();
 </script>
 </body>
 </html>
