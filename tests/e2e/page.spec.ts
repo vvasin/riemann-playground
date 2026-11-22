@@ -154,8 +154,8 @@ test.describe("language", () => {
     await select.selectOption("ru");
     await expect(page.locator("html")).toHaveAttribute("lang", "ru");
     await expect(page.locator("#primes .step-label")).toHaveText("Шаг 1 из 9");
-    await expect(page.locator("#numberExplanation")).toContainText("30 — не простое число");
-    await expect(page.locator("#waveZeroButtons button").first()).toHaveText("Нуль 1");
+    await expect(page.locator("#numberExplanation")).toContainText("30 — составное число");
+    await expect(page.locator("#waveZeroButtons button").first()).toHaveText("1-й нуль");
 
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("lang", "ru");
@@ -171,6 +171,18 @@ test.describe("language", () => {
     await page.goto("./?lang=ru");
     await expect(page.locator("html")).toHaveAttribute("lang", "ru");
     await expect(page.locator(".brand")).toHaveText("Гипотеза Римана");
+  });
+});
+
+test.describe("in an unsupported browser language", () => {
+  test.use({ locale: "de-DE" });
+
+  test("defaults to English", async ({ page }) => {
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator("#languageSelect")).toHaveValue("en");
+    await expect(page.locator("#primes .step-label")).toHaveText("Step 1 of 9");
+    await page.goto("./?lang=xx");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
   });
 });
 
