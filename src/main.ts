@@ -1,3 +1,4 @@
+import { mountComplex } from "./chapters/complex";
 import { mountEstimate } from "./chapters/estimate";
 import { mountHypothesis } from "./chapters/hypothesis";
 import { mountPrimes } from "./chapters/primes";
@@ -13,7 +14,14 @@ import { mountNavigation } from "./nav";
 
 translatePage();
 
-const plots = [mountEstimate(), mountZeros(), mountWave(), mountSynth(), mountHypothesis()];
+const plots = [
+  mountEstimate(),
+  mountComplex(),
+  mountZeros(),
+  mountWave(),
+  mountSynth(),
+  mountHypothesis(),
+];
 const renders = [
   mountLanguageSelect(),
   mountPrimes(),

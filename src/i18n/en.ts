@@ -29,6 +29,26 @@ export const en = {
     first: "1 × 1 = 1, the first term of ζ(2) (n = 1)",
     because: "{{product}}, because {{n}} = {{factors}}",
   },
+  complex: {
+    zeroPreset: "Zero ½ + {{t}}i",
+    valueZeta: "Value of ζ(s)",
+    valueEta: "Value of η(s)",
+    infinite: "infinite",
+    term: "Term {{n}}: length {{length}}, angle {{angle}} radians.",
+    termFlipped:
+      "Term {{n}}: length {{length}}, angle {{angle}} radians. The minus sign in front of the term adds π to the angle.",
+    convergent:
+      "For σ > 1 the lengths of the arrows have a finite sum, so the path ends at the point ζ(s).",
+    circles:
+      "For σ = 1 the path keeps going round circles of radius about 1/t = {{radius}} around ζ(s). It never settles at one point, so the sum has no value.",
+    spiral:
+      "For σ < 1 the path goes around ζ(s) in a spiral that keeps widening. It never settles at one point, so the sum has no value.",
+    line: "For real s ≤ 1 all arrows point to the right, and the sum grows without limit (step 3).",
+    extensionNote: "The marked value of ζ(s) comes from the extension described in the text.",
+    eta: "The signs alternate, so every second arrow is turned around. The path zigzags with shrinking steps and closes in on η(s). From it, ζ(s) = η(s) / (1 − 2/2ˢ) = {{zeta}}.",
+    etaZero: "The path closes in on 0, so η(s) = 0 and ζ(s) = 0. This s is a zero of ζ (step 6).",
+    etaPole: "Here 1 − 2/2ˢ = 0, so the formula gives no value: ζ is infinite at s = 1.",
+  },
   zeros: {
     strip: "critical strip\n(0 < σ < 1)",
     sumWide: "sum works\nhere (σ > 1)",

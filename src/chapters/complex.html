@@ -1,0 +1,185 @@
+<section class="chapter" id="complex">
+  <p class="step-label" data-i18n="complex.step">Step 5 of 10</p>
+  <h2 data-i18n="complex.title">Zeta at complex inputs</h2>
+  <div class="chapter-grid">
+    <div class="prose" data-i18n="complex.prose">
+      <p>
+        In 1859 Riemann allowed s to be a complex number, <strong>s = σ + it</strong>. σ (sigma) is
+        the real part and t is the imaginary part.
+      </p>
+      <h3>What 1/n<sup>s</sup> means for complex s</h3>
+      <p>
+        A power with a complex exponent cannot be computed by repeated multiplication. It is defined
+        with the number e and the natural logarithm: n<sup>s</sup> = e<sup>s·ln n</sup>. For real s
+        this is the usual power, because e<sup>ln n</sup> = n. A power of e with an imaginary
+        exponent is given by Euler's formula, e<sup>iθ</sup> = cos θ + i sin θ. Together they give
+      </p>
+      <div class="equation">
+        1/n<sup>σ+it</sup> = (1/n<sup>σ</sup>) · e<sup>−it·ln n</sup>,<br />e<sup>−it·ln n</sup> =
+        cos(t ln n) − i sin(t ln n)<span class="sub"
+          >The first line uses 1/n<sup>it</sup> = n<sup>−it</sup> = e<sup>−it·ln n</sup>. The second
+          is Euler's formula with θ = −t·ln n.</span
+        >
+      </div>
+      <p>
+        Draw a complex number a + bi as an arrow from 0 to the point (a, b). An arrow of length r at
+        the angle φ to the positive real axis is the number r·(cos φ + i sin φ). Angles are measured
+        in radians, so a full turn is 2π. Since cos(−x) = cos x and sin(−x) = −sin x, the term
+        1/n<sup>s</sup> is an arrow of length 1/n<sup>σ</sup> at the angle −t·ln n. Its length
+        depends only on σ. t only turns it.
+      </p>
+      <h3>Adding the arrows</h3>
+      <p>
+        To add complex numbers, put their arrows end to end. The panel draws the sum for ζ(s) this
+        way, one arrow per term.
+      </p>
+      <p>
+        When σ &gt; 1, the lengths 1/n<sup>σ</sup> add up to a finite total (step 3). The path then
+        has finite length and ends at one point, the value ζ(s). When σ ≤ 1, the lengths add up to
+        infinity, and turning the arrows does not make up for it. For σ = 1 and t ≠ 0 the path keeps
+        going round in circles. For σ &lt; 1 it winds outward in a widening spiral. For t = 0 all
+        arrows point to the right and the sum grows without limit, as in step 3. In all these cases
+        the sum has no value. So the sum defines ζ(s) only for σ &gt; 1.
+      </p>
+      <h3>Extending zeta beyond the sum</h3>
+      <p>
+        Something similar happens with the geometric series. The sum 1 + q + q² + … works only for
+        −1 &lt; q &lt; 1, but the formula 1/(1 − q) gives a value for every q except 1. For zeta,
+        one such formula uses the alternating sum
+      </p>
+      <div class="equation">
+        η(s) = 1 − 1/2<sup>s</sup> + 1/3<sup>s</sup> − 1/4<sup>s</sup> + …<span class="sub"
+          >Because the signs alternate, this sum has a finite value for every σ &gt; 0.</span
+        >
+      </div>
+      <p>
+        In the panel, choose η: every second arrow points the opposite way, and the path closes in
+        on one point.
+      </p>
+      <p>
+        For σ &gt; 1 one can check that ζ(s) = η(s) / (1 − 2/2<sup>s</sup>). The right side also
+        makes sense for 0 &lt; σ ≤ 1, and that is how ζ is defined there. The bottom is 0 where
+        2<sup>s</sup> = 2: at s = 1 and at the points 1 ± 2πik / ln 2 for k = 1, 2, 3, … At s = 1, ζ
+        is truly infinite. At the other points η(s) is also 0, and ζ takes the value that it
+        approaches from nearby points. It has been proven that there is only one way to extend ζ
+        that keeps it smooth (complex differentiable), so every correct formula gives the same
+        values. A different formula, the <em>functional equation</em>, extends ζ to σ ≤ 0.
+      </p>
+      <p>
+        The panel marks the value ζ(s) given by this formula. For 0 &lt; σ ≤ 1 and t ≠ 0, the
+        circles or the spiral of the ζ sum go around this point, although the sum itself does not
+        approach it.
+      </p>
+      <details class="appendix">
+        <summary>Why ζ(s) = η(s) / (1 − 2/2<sup>s</sup>)</summary>
+        <div class="equation">
+          ζ(s) − η(s) = 2·(1/2<sup>s</sup> + 1/4<sup>s</sup> + 1/6<sup>s</sup> + …)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+          (2/2<sup>s</sup>) · (1 + 1/2<sup>s</sup> + 1/3<sup>s</sup> + …) = (2/2<sup>s</sup>) ·
+          ζ(s)<br />so η(s) = (1 − 2/2<sup>s</sup>) · ζ(s).<span class="sub"
+            >The even terms appear with + in ζ and − in η, so subtracting leaves twice the even
+            terms. Since 1/(2k)<sup>s</sup> = (1/2<sup>s</sup>)(1/k<sup>s</sup>), the even terms add
+            up to (1/2<sup>s</sup>)·ζ(s).</span
+          >
+        </div>
+      </details>
+      <div class="keypoint">
+        <strong>Key point:</strong> for complex s, the term 1/n<sup>s</sup> is an arrow of length
+        1/n<sup>σ</sup>, turned by the angle −t·ln n. The arrows add up to a finite value only for σ
+        &gt; 1. The formula η(s)/(1 − 2/2<sup>s</sup>) gives ζ for 0 &lt; σ ≤ 1, and the functional
+        equation gives it for σ ≤ 0.
+      </div>
+    </div>
+    <div class="panel">
+      <h3 data-i18n="complex.panelTitle">Adding the terms as arrows</h3>
+      <p class="subtitle" data-i18n="complex.subtitle">
+        Choose s and the sum, then change the number of terms. Each arrow is one term. The gold
+        arrow is the last term added.
+      </p>
+      <div
+        class="choice"
+        id="sPreset"
+        role="group"
+        aria-label="Choose s"
+        data-i18n-aria-label="complex.presetLabel"
+      ></div>
+      <div class="control">
+        <div class="control-head">
+          <label for="complexSigma" data-i18n="complex.sigmaLabel">Real part σ</label>
+          <output id="complexSigmaValue" for="complexSigma">2.00</output>
+        </div>
+        <input id="complexSigma" type="range" min="0.05" max="2" step="0.05" value="2" />
+      </div>
+      <div class="control">
+        <div class="control-head">
+          <label for="complexT" data-i18n="complex.tLabel">Imaginary part t</label>
+          <output id="complexTValue" for="complexT">5.00</output>
+        </div>
+        <input id="complexT" type="range" min="0" max="30" step="0.05" value="5" />
+      </div>
+      <div
+        class="axis-switch"
+        id="sumSwitch"
+        role="group"
+        aria-label="Which sum"
+        data-i18n-aria-label="complex.sumLabel"
+      >
+        <button type="button" data-sum="zeta" class="active" aria-pressed="true">
+          ζ: 1 + 1/2ˢ + 1/3ˢ + …
+        </button>
+        <button type="button" data-sum="eta" aria-pressed="false">η: 1 − 1/2ˢ + 1/3ˢ − …</button>
+      </div>
+      <div class="control">
+        <div class="control-head">
+          <label for="termCount" data-i18n="complex.termsLabel">Number of terms N</label>
+          <output id="termCountValue" for="termCount">10</output>
+        </div>
+        <input id="termCount" type="range" min="1" max="500" step="1" value="10" />
+      </div>
+      <div class="button-row">
+        <button class="secondary" id="removeTerm" type="button" data-i18n="complex.removeTerm">
+          Remove 1 term
+        </button>
+        <button class="secondary" id="addTerm" type="button" data-i18n="complex.addTerm">
+          Add 1 term
+        </button>
+      </div>
+      <canvas
+        id="arrowPlot"
+        class="plot"
+        role="img"
+        aria-label="The terms of the sum drawn as arrows placed end to end in the complex plane"
+        data-i18n-aria-label="complex.plotLabel"
+      ></canvas>
+      <p class="axis-note" data-i18n="complex.plotAxes">
+        Horizontal: real part. Vertical: imaginary part. Both axes have the same scale, so the
+        angles are true.
+      </p>
+      <ul class="legend">
+        <li>
+          <span class="swatch blue"></span
+          ><span data-i18n="complex.legendTerms">Terms, end to end</span>
+        </li>
+        <li>
+          <span class="swatch gold"></span
+          ><span data-i18n="complex.legendLast">Last term added</span>
+        </li>
+        <li>
+          <span class="swatch dot ring"></span
+          ><span data-i18n="complex.legendValue">Value of ζ(s) or η(s)</span>
+        </li>
+      </ul>
+      <div class="compare">
+        <div class="stat">
+          <small data-i18n="complex.partialSum">Sum of the N terms</small>
+          <strong id="arrowSum">—</strong>
+        </div>
+        <div class="stat">
+          <small id="arrowValueLabel">Value of ζ(s)</small>
+          <strong id="arrowValue">—</strong>
+        </div>
+      </div>
+      <p class="tiny" id="lastTerm"></p>
+      <p class="explain" id="arrowExplain" aria-live="polite"></p>
+    </div>
+  </div>
+</section>

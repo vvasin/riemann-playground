@@ -38,3 +38,14 @@ export function scientific(value: number): string {
   const [mantissa, exponent] = value.toExponential(2).split("e");
   return `${fixed(Number(mantissa), 2)} × ${powerOfTen(Number(exponent))}`;
 }
+
+export function signed(value: number, digits: number): string {
+  const sign = value <= -(10 ** -digits) / 2 ? "−" : "";
+  return sign + fixed(Math.abs(value), digits);
+}
+
+export function complexNumber([re, im]: readonly [number, number], digits: number): string {
+  const imaginary = signed(im, digits);
+  const [sign, size] = imaginary.startsWith("−") ? ["−", imaginary.slice(1)] : ["+", imaginary];
+  return `${signed(re, digits)} ${sign} ${size}i`;
+}

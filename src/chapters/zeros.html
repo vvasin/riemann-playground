@@ -1,57 +1,8 @@
 <section class="chapter" id="zeros">
-  <p class="step-label" data-i18n="zeros.step">Step 5 of 9</p>
-  <h2 data-i18n="zeros.title">Complex inputs and the zeros of zeta</h2>
+  <p class="step-label" data-i18n="zeros.step">Step 6 of 10</p>
+  <h2 data-i18n="zeros.title">The zeros of zeta</h2>
   <div class="chapter-grid">
     <div class="prose" data-i18n="zeros.prose">
-      <p>
-        In 1859 Riemann allowed s to be a complex number, <strong>s = σ + it</strong>. σ (sigma) is
-        the real part and t is the imaginary part.
-      </p>
-      <h3>What 1/n<sup>s</sup> means for complex s</h3>
-      <p>
-        Write n = e<sup>ln n</sup> and use Euler's formula e<sup>iθ</sup> = cos θ + i sin θ. Then
-      </p>
-      <div class="equation">
-        1/n<sup>σ+it</sup> = (1/n<sup>σ</sup>) · (cos(t ln n) − i sin(t ln n))
-      </div>
-      <p>
-        So each term is a complex number of size 1/n<sup>σ</sup>, turned by the angle −t·ln n. The
-        size depends only on σ. The sum still has a finite value when σ &gt; 1, and does not when σ
-        ≤ 1.
-      </p>
-      <h3>Extending zeta beyond the sum</h3>
-      <p>
-        Something similar happens with the geometric series. The sum 1 + q + q² + … works only for
-        −1 &lt; q &lt; 1, but the formula 1/(1 − q) gives a value for every q except 1. For zeta,
-        one such formula uses the alternating sum
-      </p>
-      <div class="equation">
-        η(s) = 1 − 1/2<sup>s</sup> + 1/3<sup>s</sup> − 1/4<sup>s</sup> + …<span class="sub"
-          >Because the signs alternate, this sum has a finite value for every σ &gt; 0.</span
-        >
-      </div>
-      <p>
-        For σ &gt; 1 one can check that ζ(s) = η(s) / (1 − 2/2<sup>s</sup>). The right side also
-        makes sense for 0 &lt; σ ≤ 1, and that is how ζ is defined there. The bottom is 0 where
-        2<sup>s</sup> = 2: at s = 1 and at the points 1 ± 2πik / ln 2 for k = 1, 2, 3, … At s = 1, ζ
-        is truly infinite. At the other points η(s) is also 0, and ζ takes the value that it
-        approaches from nearby points. It has been proven that there is only one way to extend ζ
-        that keeps it smooth (complex differentiable), so every correct formula gives the same
-        values. A different formula, the <em>functional equation</em>, extends ζ to σ ≤ 0.
-      </p>
-      <details class="appendix">
-        <summary>Why ζ(s) = η(s) / (1 − 2/2<sup>s</sup>)</summary>
-        <div class="equation">
-          ζ(s) − η(s) = 2·(1/2<sup>s</sup> + 1/4<sup>s</sup> + 1/6<sup>s</sup> + …)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-          (2/2<sup>s</sup>) · (1 + 1/2<sup>s</sup> + 1/3<sup>s</sup> + …) = (2/2<sup>s</sup>) ·
-          ζ(s)<br />so η(s) = (1 − 2/2<sup>s</sup>) · ζ(s).<span class="sub"
-            >The even terms appear with + in ζ and − in η, so subtracting leaves twice the even
-            terms. Since 1/(2k)<sup>s</sup> = (1/2<sup>s</sup>)(1/k<sup>s</sup>), the even terms add
-            up to (1/2<sup>s</sup>)·ζ(s).</span
-          >
-        </div>
-      </details>
-      <h3>Zeros</h3>
       <p>A <strong>zero</strong> of ζ is an input s with ζ(s) = 0. There are two kinds:</p>
       <ul>
         <li>
@@ -64,13 +15,17 @@
         </li>
       </ul>
       <p>
+        In the panel of step 5, choose this zero and the η sum. The path closes in on 0, so η(s) =
+        0, and then ζ(s) = η(s) / (1 − 2/2<sup>s</sup>) = 0.
+      </p>
+      <p>
         A nontrivial zero is usually written <strong>ρ = β + iγ</strong> (rho, beta, gamma). They
         come in mirror images: if β + iγ is a zero, then so are β − iγ, (1 − β) + iγ and (1 − β) −
-        iγ. The panel shows only the upper half (t &gt; 0).
+        iγ. The panel of this step shows only the upper half (t &gt; 0).
       </p>
       <div class="keypoint">
-        <strong>Key point:</strong> ζ can be evaluated at complex numbers. Its nontrivial zeros are
-        points β + iγ in the critical strip. Every one found so far has β = ½.
+        <strong>Key point:</strong> the nontrivial zeros of ζ are points β + iγ in the critical
+        strip. Every one found so far has β = ½.
       </div>
     </div>
     <div class="panel">

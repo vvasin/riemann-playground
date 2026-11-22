@@ -22,11 +22,12 @@
           <a href="#estimate" data-i18n="nav.estimate">2 Counting</a>
           <a href="#zeta" data-i18n="nav.zeta">3 Zeta</a>
           <a href="#product" data-i18n="nav.product">4 Euler product</a>
-          <a href="#zeros" data-i18n="nav.zeros">5 Zeros</a>
-          <a href="#wave" data-i18n="nav.wave">6 One wave</a>
-          <a href="#synth" data-i18n="nav.synth">7 All waves</a>
-          <a href="#hypothesis" data-i18n="nav.hypothesis">8 The hypothesis</a>
-          <a href="#proof" data-i18n="nav.proof">9 Consequences</a>
+          <a href="#complex" data-i18n="nav.complex">5 Complex s</a>
+          <a href="#zeros" data-i18n="nav.zeros">6 Zeros</a>
+          <a href="#wave" data-i18n="nav.wave">7 One wave</a>
+          <a href="#synth" data-i18n="nav.synth">8 All waves</a>
+          <a href="#hypothesis" data-i18n="nav.hypothesis">9 Hypothesis</a>
+          <a href="#proof" data-i18n="nav.proof">10 Consequences</a>
         </nav>
         <select
           id="languageSelect"
@@ -48,11 +49,11 @@
             <p>
               The Riemann hypothesis is a claim about where one particular function, the zeta
               function, is equal to zero. It was stated in 1859. In November 2026 a proof was
-              released and checked by computer (step 8). It matters because the zeros of this
+              released and checked by computer (step 9). It matters because the zeros of this
               function control how regularly the prime numbers are spread among the whole numbers.
             </p>
             <p>
-              This page builds the idea from the beginning in nine steps. You need arithmetic,
+              This page builds the idea from the beginning in ten steps. You need arithmetic,
               powers, sums, complex numbers, and sine and cosine. Each step has a small calculation
               you can change. Every number and graph on the page is computed from the actual
               formulas.
@@ -73,8 +74,10 @@
                 <span>How zeta is tied to the primes</span>
               </li>
               <li>
-                <a href="#zeros">Complex inputs and zeros</a> <span>Where zeta equals 0</span>
+                <a href="#complex">Complex inputs</a>
+                <span>Terms as arrows, and extending zeta</span>
               </li>
+              <li><a href="#zeros">The zeros of zeta</a> <span>Where zeta equals 0</span></li>
               <li>
                 <a href="#wave">One zero, one wave</a>
                 <span>The exact formula for counting primes</span>
@@ -98,6 +101,7 @@
         <html-include src="src/chapters/estimate.html"></html-include>
         <html-include src="src/chapters/zeta.html"></html-include>
         <html-include src="src/chapters/product.html"></html-include>
+        <html-include src="src/chapters/complex.html"></html-include>
         <html-include src="src/chapters/zeros.html"></html-include>
         <html-include src="src/chapters/wave.html"></html-include>
         <html-include src="src/chapters/synth.html"></html-include>
@@ -109,9 +113,9 @@
           <strong>About the calculations.</strong> The heights γ of the first 50 nontrivial zeros
           are taken from published tables. ζ(σ + it) is computed with Euler–Maclaurin summation.
           li(x) is computed with Ramanujan's series. ψ(x) and π(x) up to 100 000 are computed
-          exactly; π(10<sup>k</sup>) for k ≥ 6 are published values. The formula in steps 6 and 7 is
+          exactly; π(10<sup>k</sup>) for k ≥ 6 are published values. The formula in steps 7 and 8 is
           the explicit formula for ψ, cut off after N pairs of zeros; the cut-off is the only source
-          of difference from the exact staircase. The zero with β ≠ ½ in step 8 is hypothetical.
+          of difference from the exact staircase. The zero with β ≠ ½ in step 9 is hypothetical.
         </p>
         <div class="sources">
           <span data-i18n="footer.reading">Further reading:</span>
