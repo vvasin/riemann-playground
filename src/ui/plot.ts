@@ -223,11 +223,21 @@ export function onPlotHover(id: string, onChange: (x: number | null) => void): v
   });
 }
 
-export function niceTicks(max: number): number[] {
-  const rough = max / 4;
+function niceStep(rough: number): number {
   const magnitude = 10 ** Math.floor(Math.log10(rough));
-  const step = [1, 2, 2.5, 5, 10].map((m) => m * magnitude).find((s) => s >= rough) ?? rough;
+  return [1, 2, 2.5, 5, 10].map((m) => m * magnitude).find((s) => s >= rough) ?? rough;
+}
+
+export function niceTicks(max: number): number[] {
+  const step = niceStep(max / 4);
   const ticks: number[] = [];
   for (let value = 0; value <= max; value += step) ticks.push(value);
+  return ticks;
+}
+
+export function ticksBetween(min: number, max: number, count: number): number[] {
+  const step = niceStep((max - min) / count);
+  const ticks: number[] = [];
+  for (let k = Math.ceil(min / step); k * step <= max; k++) ticks.push(k * step + 0);
   return ticks;
 }

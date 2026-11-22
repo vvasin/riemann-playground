@@ -1,6 +1,6 @@
 # Riemann playground
 
-A single-page interactive article that explains the Riemann hypothesis from scratch, in 9 steps. Built with Vite and TypeScript, no network requests. The only runtime dependencies are `i18next` and `i18next-browser-languagedetector` (page is in English and Russian). Deployed to GitHub Pages by `.github/workflows/ci.yml`.
+A single-page interactive article that explains the Riemann hypothesis from scratch, in 10 steps. Built with Vite and TypeScript, no network requests. The only runtime dependencies are `i18next` and `i18next-browser-languagedetector` (page is in English and Russian). Deployed to GitHub Pages by `.github/workflows/ci.yml`.
 
 ```sh
 npm run dev        # dev server
@@ -21,26 +21,27 @@ npm run lint:html  # validate dist/index.html (run after build)
 
 - `index.html`: page shell (top bar, hero, footer). Chapters are pulled in with `<html-include src="…">`, which `plugins/html-include.ts` inlines at build time.
 - `src/chapters/<id>.html` + `<id>.ts`: one pair per step. Each `.ts` exports `mount<Name>()`; plot chapters return their `draw` function, which `src/main.ts` re-runs on resize. Each chapter keeps its own state in local variables.
-- `src/math/`: pure functions (`primes`, `li`, `complex`, `zeta`, `psi`, `explicit-formula`), with colocated `*.test.ts`.
+- `src/math/`: pure functions (`primes`, `li`, `complex`, `zeta` (also `eta`, `partialSums`), `psi`, `explicit-formula`), with colocated `*.test.ts`.
 - `src/data/`: `ZERO_HEIGHTS` (first 50 zero heights), `PUBLISHED_PRIME_COUNTS` (π(10^k), k = 4…12).
 - `src/ui/`: `dom` (element lookup and event helpers), `plot` (canvas plots via `createPlot`), `choices` (toggle-button groups), `colors` (canvas palette).
 - `src/format.ts`: number formatting in the current language's locale; `src/nav.ts`: active nav link and reading progress.
 - `src/i18n/`: translations (see below).
 - `src/styles/`: `tokens` → `base` → `layout` → `topbar` → `hero` → `controls` → `prose` → `panel` → `widgets`, imported in this order by `index.css`. Responsive overrides sit next to the rules they change.
 
-| #   | id           | Content                                                             | Interaction                                                         |
-| --- | ------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| 1   | `primes`     | primes, π(x)                                                        | number grid 2–100 + slider                                          |
-| 2   | `estimate`   | li(x), x/ln x, prime number theorem, the error li − π               | canvas `estimatePlot`, range buttons up to 10⁵                      |
-| 3   | `zeta`       | ζ(s) as a sum, s > 1 needed                                         | s = 1…4 buttons, term slider                                        |
-| 4   | `product`    | Euler product via unique factorization + geometric series           | pick terms from the sums for 2 and 3; product slider                |
-| 5   | `zeros`      | complex s, extension via η(s)/(1 − 2/2^s), trivial/nontrivial zeros | σ slider → `zeroMap` + `zetaLine` (live \|ζ(σ+it)\|)                |
-| 6   | `wave`       | ψ(x), explicit formula, one pair of zeros = one wave                | zero buttons, linear/log axis, `wavePlot`                           |
-| 7   | `synth`      | sum of N waves rebuilds the ψ staircase                             | one N slider shared by `synthPlot` and `barPlot`                    |
-| 8   | `hypothesis` | statement, what is known, the 2026 proof, why ½, why it matters     | β slider for a hypothetical zero: `hypoWave`, `hypoScale` (log-log) |
-| 9   | `proof`      | Schoenfeld bound, other consequences, what RH does not give         | 10^k slider over published π(10^k) values                           |
+| #   | id           | Content                                                            | Interaction                                                         |
+| --- | ------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| 1   | `primes`     | primes, π(x)                                                       | number grid 2–100 + slider                                          |
+| 2   | `estimate`   | li(x), x/ln x, prime number theorem, the error li − π              | canvas `estimatePlot`, range buttons up to 10⁵                      |
+| 3   | `zeta`       | ζ(s) as a sum, s > 1 needed                                        | s = 1…4 buttons, term slider                                        |
+| 4   | `product`    | Euler product via unique factorization + geometric series          | pick terms from the sums for 2 and 3; product slider                |
+| 5   | `complex`    | complex s, 1/n^s as an arrow, where the sum converges, η extension | s presets + σ/t sliders, ζ/η switch, N slider → `arrowPlot`         |
+| 6   | `zeros`      | trivial/nontrivial zeros, critical strip, ρ = β + iγ, symmetry     | σ slider → `zeroMap` + `zetaLine` (live \|ζ(σ+it)\|)                |
+| 7   | `wave`       | ψ(x), explicit formula, one pair of zeros = one wave               | zero buttons, linear/log axis, `wavePlot`                           |
+| 8   | `synth`      | sum of N waves rebuilds the ψ staircase                            | one N slider shared by `synthPlot` and `barPlot`                    |
+| 9   | `hypothesis` | statement, what is known, the 2026 proof, why ½, why it matters    | β slider for a hypothetical zero: `hypoWave`, `hypoScale` (log-log) |
+| 10  | `proof`      | Schoenfeld bound, other consequences, what RH does not give        | 10^k slider over published π(10^k) values                           |
 
-The top nav (`.chapter-nav`) and the hero "Overview" list link to these ids. Update both, the include list in `index.html`, and the "Step N of 9" labels if steps are added or reordered; the e2e test checks they agree.
+The top nav (`.chapter-nav`) and the hero "Overview" list link to these ids. Update both, the include list in `index.html`, and the "Step N of 10" labels and the cross-references ("step N") in the prose if steps are added or reordered; the e2e test checks they agree.
 
 ## Translations
 
@@ -54,11 +55,12 @@ Slider controls use `.control` > `.control-head` (`<label for>` + `<output for>`
 
 ## Verified facts (do not "correct" these without a source)
 
-- RH is proven: Levent Alpöge released a Lean proof (about 17 million lines) on 20 Nov 2026; the Lean FRO and Mathlib Initiative joint statement of 21 Nov 2026 (leanprover-community.github.io/blog/posts/riemann-hypothesis/) certifies that it proves Mathlib's `RiemannHypothesis` and that the proof is correct. The page states this in the hero and step 8, notes that human study of the ideas and the Clay prize process are ongoing, and does not mention the generalized RH (not covered by the statement).
+- RH is proven: Levent Alpöge released a Lean proof (about 17 million lines) on 20 Nov 2026; the Lean FRO and Mathlib Initiative joint statement of 21 Nov 2026 (leanprover-community.github.io/blog/posts/riemann-hypothesis/) certifies that it proves Mathlib's `RiemannHypothesis` and that the proof is correct. The page states this in the hero and step 9, notes that human study of the ideas and the Clay prize process are ongoing, and does not mention the generalized RH (not covered by the statement).
 - Schoenfeld (1976): under RH, |π(x) − li(x)| < √x·ln x/(8π) for x ≥ 2657, and the converse also holds. Before the RH proof, it was already proven for x up to about 10²⁶ from zeros checked by computer (Büthe; Johnston, arXiv 2109.02249). The page says so.
 - The constants of the best bound proven without RH (Platt–Trudgian 2021, Johnston–Yang) were **not** confirmed, so the page describes that bound only in words.
-- With N = 50, the bars in step 7 pick out every prime and prime power up to 30. Their bars are all higher than every other bar, which stays within ±0.9. Across all N, the bars stay in [−0.88, 3.86].
+- With N = 50, the bars in step 8 pick out every prime and prime power up to 30. Their bars are all higher than every other bar, which stays within ±0.9. Across all N, the bars stay in [−0.88, 3.86].
 - Checked numbers (the zeta values are not shown on the page; they validate `zeta`): ζ(½+10i) = 1.5449 − 0.1153i, ζ(−1) = −1/12, li(10¹²) = 37,607,950,280.8. There are 16 primes between 1001 and 1100, the gap after 1129 is 22, and H_n > 10 first at n = 12,367.
+- In step 5, for 0 < σ < 1 the partial sums of ζ wind around ζ(s) at distance about N^(1−σ)/|1 − s|; for σ = 1 they circle ζ(1+it) with radius about 1/|t|. `zeta.test.ts` pins this.
 - Other cited results: Hardy 1914 (infinitely many zeros on the line), Conrey 1989 (> 40%), Cramér 1920 (prime gaps under RH), Littlewood 1914 (π − li changes sign).
 
 ## Testing

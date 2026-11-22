@@ -5,6 +5,7 @@ const CHAPTERS = [
   "estimate",
   "zeta",
   "product",
+  "complex",
   "zeros",
   "wave",
   "synth",
@@ -48,7 +49,9 @@ test.describe("layout", () => {
       expect(links).toEqual(hrefs);
     }
     for (const [i, id] of CHAPTERS.entries()) {
-      await expect(page.locator(`#${id} .step-label`)).toHaveText(`Step ${i + 1} of 9`);
+      await expect(page.locator(`#${id} .step-label`)).toHaveText(
+        `Step ${i + 1} of ${CHAPTERS.length}`,
+      );
       await expect(page.locator(`#${id} .keypoint`)).toHaveCount(1);
     }
   });
@@ -105,14 +108,41 @@ test.describe("controls", () => {
     await expect(page.locator("#factorList .inactive")).toHaveCount(0);
   });
 
-  test("step 5 finds zeros only on the critical line", async ({ page }) => {
+  test("step 5 adds the terms as arrows", async ({ page }) => {
+    await expect(page.locator("#sPreset button.active")).toHaveText("s = 2 + 5i");
+    await expect(page.locator("#lastTerm")).toHaveText(
+      "Term 10: length 0.010, angle −11.51 radians.",
+    );
+    await page.locator("#addTerm").click();
+    await expect(page.locator("#termCountValue")).toHaveText("11");
+    await expect(page.locator("#arrowExplain")).toContainText("ends at the point ζ(s)");
+
+    await page.locator("#sPreset button", { hasText: "s = ½ + 5i" }).click();
+    await expect(page.locator("#complexSigmaValue")).toHaveText("0.50");
+    await expect(page.locator("#arrowExplain")).toContainText("spiral that keeps widening");
+
+    await page.locator("#sPreset button", { hasText: "Zero" }).click();
+    await page.locator("#sumSwitch button[data-sum=eta]").click();
+    await expect(page.locator("#arrowValueLabel")).toHaveText("Value of η(s)");
+    await expect(page.locator("#arrowValue")).toHaveText("0.000 + 0.000i");
+    await expect(page.locator("#arrowExplain")).toContainText("This s is a zero of ζ");
+
+    await slide(page, "complexSigma", 1);
+    await slide(page, "complexT", 0);
+    await expect(page.locator("#sPreset button.active")).toHaveCount(0);
+    await expect(page.locator("#arrowExplain")).toContainText("ζ is infinite at s = 1");
+    await page.locator("#sumSwitch button[data-sum=zeta]").click();
+    await expect(page.locator("#arrowValue")).toHaveText("infinite");
+  });
+
+  test("step 6 finds zeros only on the critical line", async ({ page }) => {
     await expect(page.locator("#zetaMin")).toHaveText("ζ = 0 on this line (10 zeros for t ≤ 50)");
     await slide(page, "sigma", 0.8);
     await expect(page.locator("#sigmaValue")).toHaveText("0.80");
     await expect(page.locator("#zetaMin")).toHaveText(/^Smallest value: 0\.\d{3}$/);
   });
 
-  test("step 6 switches zero and axis", async ({ page }) => {
+  test("step 7 switches zero and axis", async ({ page }) => {
     await page.locator("#waveZeroButtons button", { hasText: "Zero 2" }).click();
     await expect(page.locator("#waveInfo")).toContainText("Zero 2: ρ = ½ + 21.022i.");
     await page.locator("#wave .axis-switch button[data-axis=log]").click();
@@ -123,7 +153,7 @@ test.describe("controls", () => {
     );
   });
 
-  test("step 7 adds pairs of zeros", async ({ page }) => {
+  test("step 8 adds pairs of zeros", async ({ page }) => {
     await page.locator("#addPair").click();
     await expect(page.locator("#pairCountValue")).toHaveText("1");
     await page.locator("#allPairs").click();
@@ -132,14 +162,14 @@ test.describe("controls", () => {
     await expect(page.locator("#pairCountValue")).toHaveText("0");
   });
 
-  test("step 8 compares a hypothetical zero", async ({ page }) => {
+  test("step 9 compares a hypothetical zero", async ({ page }) => {
     await slide(page, "betaSlider", 0.5);
     await expect(page.locator("#hypoExplain")).toContainText("the waves coincide");
     await slide(page, "scaleExponent", 12);
     await expect(page.locator("#scaleX")).toHaveText("1 trillion");
   });
 
-  test("step 9 compares the error with the bound", async ({ page }) => {
+  test("step 10 compares the error with the bound", async ({ page }) => {
     await slide(page, "proofExponent", 12);
     await expect(page.locator("#proofExponentValue")).toHaveText("10¹²");
     await expect(page.locator("#proofPi")).toHaveText("37,607,912,018");
@@ -153,7 +183,7 @@ test.describe("language", () => {
     await expect(select).toHaveValue("en");
     await select.selectOption("ru");
     await expect(page.locator("html")).toHaveAttribute("lang", "ru");
-    await expect(page.locator("#primes .step-label")).toHaveText("Шаг 1 из 9");
+    await expect(page.locator("#primes .step-label")).toHaveText("Шаг 1 из 10");
     await expect(page.locator("#numberExplanation")).toContainText("30 — составное число");
     await expect(page.locator("#waveZeroButtons button").first()).toHaveText("1-й нуль");
 
@@ -162,7 +192,7 @@ test.describe("language", () => {
     await expect(select).toHaveValue("ru");
 
     await select.selectOption("en");
-    await expect(page.locator("#primes .step-label")).toHaveText("Step 1 of 9");
+    await expect(page.locator("#primes .step-label")).toHaveText("Step 1 of 10");
     await expect(page.locator("#zetaMin")).toHaveText("ζ = 0 on this line (10 zeros for t ≤ 50)");
     await expect(page).toHaveTitle("The Riemann Hypothesis, Step by Step");
   });
@@ -180,7 +210,7 @@ test.describe("in an unsupported browser language", () => {
   test("defaults to English", async ({ page }) => {
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
     await expect(page.locator("#languageSelect")).toHaveValue("en");
-    await expect(page.locator("#primes .step-label")).toHaveText("Step 1 of 9");
+    await expect(page.locator("#primes .step-label")).toHaveText("Step 1 of 10");
     await page.goto("./?lang=xx");
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
   });
@@ -211,7 +241,9 @@ test.describe("in Russian", () => {
       expect(links).toEqual(hrefs);
     }
     for (const [i, id] of CHAPTERS.entries()) {
-      await expect(page.locator(`#${id} .step-label`)).toHaveText(`Шаг ${i + 1} из 9`);
+      await expect(page.locator(`#${id} .step-label`)).toHaveText(
+        `Шаг ${i + 1} из ${CHAPTERS.length}`,
+      );
       await expect(page.locator(`#${id} .keypoint`)).toHaveCount(1);
     }
   });
@@ -219,6 +251,10 @@ test.describe("in Russian", () => {
   test("formats the readouts", async ({ page }) => {
     await page.locator("#estimateRange button", { hasText: "100 000" }).click();
     await expect(page.locator("#estPi")).toHaveText("9 592");
+    await expect(page.locator("#arrowSum")).toHaveText(/^\d,\d{3} [+−] \d,\d{3}i$/);
+    await expect(page.locator("#lastTerm")).toHaveText(
+      "Слагаемое 10: длина 0,010, угол −11,51 рад.",
+    );
     await slide(page, "sigma", 0.8);
     await expect(page.locator("#sigmaValue")).toHaveText("0,80");
     await expect(page.locator("#zetaMin")).toHaveText(/^Наименьшее значение: 0,\d{3}$/);

@@ -48,3 +48,22 @@ export function zetaAbs(sigma: number, t: number): number {
   const [re, im] = zeta(sigma, t);
   return Math.hypot(re, im);
 }
+
+export function eta(sigma: number, t: number): Complex {
+  const twoToOneMinusS = inversePower(2, [sigma - 1, t]);
+  return multiply([1 - twoToOneMinusS[0], -twoToOneMinusS[1]], zeta(sigma, t));
+}
+
+export function partialSums(s: Complex, count: number, alternating: boolean): Complex[] {
+  const sums: Complex[] = [[0, 0]];
+  let re = 0;
+  let im = 0;
+  for (let n = 1; n <= count; n++) {
+    const [termRe, termIm] = inversePower(n, s);
+    const sign = alternating && n % 2 === 0 ? -1 : 1;
+    re += sign * termRe;
+    im += sign * termIm;
+    sums.push([re, im]);
+  }
+  return sums;
+}
