@@ -1,8 +1,8 @@
 <section class="chapter" id="hypothesis">
-  <p class="step-label">Step 8 of 9</p>
-  <h2>The Riemann hypothesis</h2>
+  <p class="step-label" data-i18n="hypothesis.step">Step 8 of 9</p>
+  <h2 data-i18n="hypothesis.title">The Riemann hypothesis</h2>
   <div class="chapter-grid">
-    <div class="prose">
+    <div class="prose" data-i18n="hypothesis.prose">
       <div class="equation statement">
         Every nontrivial zero of the zeta function has real part ½.
       </div>
@@ -64,15 +64,19 @@
       </div>
     </div>
     <div class="panel">
-      <h3>A zero on the line compared with a hypothetical zero off it</h3>
-      <p class="subtitle">
+      <h3 data-i18n="hypothesis.waveTitle">
+        A zero on the line compared with a hypothetical zero off it
+      </h3>
+      <p class="subtitle" data-i18n="hypothesis.waveSubtitle">
         The blue wave comes from the real first zero, ½ + 14.13i. The pink wave comes from a
         hypothetical zero at the same height with real part β. The proof shows that no such zero
         exists; this only shows what one would do.
       </p>
       <div class="control">
         <div class="control-head">
-          <label for="betaSlider">Real part β of the hypothetical zero</label>
+          <label for="betaSlider" data-i18n="hypothesis.betaLabel"
+            >Real part β of the hypothetical zero</label
+          >
           <output id="betaValue" for="betaSlider">0.80</output>
         </div>
         <input id="betaSlider" type="range" min="0.5" max="0.95" step="0.05" value="0.8" />
@@ -81,17 +85,23 @@
         id="hypoWave"
         class="plot short"
         role="img"
+        data-i18n-aria-label="hypothesis.waveLabel"
         aria-label="Wave of the real first zero and of a hypothetical zero with larger real part, for x from 2 to 100"
       ></canvas>
       <ul class="legend">
-        <li><span class="swatch blue"></span>Real zero, β = ½</li>
         <li>
-          <span class="swatch rose"></span>Hypothetical zero, β = <span id="betaLegend">0.80</span>
+          <span class="swatch blue"></span
+          ><span data-i18n="hypothesis.legendReal">Real zero, β = ½</span>
+        </li>
+        <li>
+          <span class="swatch rose"></span
+          ><span data-i18n="hypothesis.legendHypo">Hypothetical zero, β =</span>
+          <span id="betaLegend">0.80</span>
         </li>
       </ul>
       <hr class="divider" />
-      <h3>Size of each wave for large x</h3>
-      <p class="subtitle">
+      <h3 data-i18n="hypothesis.scaleTitle">Size of each wave for large x</h3>
+      <p class="subtitle" data-i18n="hypothesis.scaleSubtitle">
         Both axes use powers of 10. The grey line is x itself, the main term of ψ(x). The size of a
         wave is 2·x<sup>β</sup>/|ρ|.
       </p>
@@ -99,27 +109,40 @@
         id="hypoScale"
         class="plot medium"
         role="img"
+        data-i18n-aria-label="hypothesis.scaleLabel"
         aria-label="Sizes of the two waves and of x, on logarithmic axes up to ten to the twelfth"
       ></canvas>
       <ul class="legend">
         <li><span class="swatch grey"></span>x</li>
-        <li><span class="swatch blue"></span>Real zero's wave</li>
-        <li><span class="swatch rose"></span>Hypothetical wave</li>
+        <li>
+          <span class="swatch blue"></span
+          ><span data-i18n="hypothesis.legendRealWave">Real zero's wave</span>
+        </li>
+        <li>
+          <span class="swatch rose"></span
+          ><span data-i18n="hypothesis.legendHypoWave">Hypothetical wave</span>
+        </li>
       </ul>
       <div class="control">
         <div class="control-head">
-          <label for="scaleExponent">Read values at x</label>
+          <label for="scaleExponent" data-i18n="hypothesis.readAt">Read values at x</label>
           <output id="scaleExponentValue" for="scaleExponent">10⁸</output>
         </div>
         <input id="scaleExponent" type="range" min="2" max="12" step="1" value="8" />
       </div>
       <div class="compare three">
         <div class="stat"><small>x</small> <strong id="scaleX">—</strong></div>
-        <div class="stat"><small>Real zero's wave</small> <strong id="scaleReal">—</strong></div>
-        <div class="stat"><small>Hypothetical wave</small> <strong id="scaleHypo">—</strong></div>
+        <div class="stat">
+          <small data-i18n="hypothesis.statReal">Real zero's wave</small>
+          <strong id="scaleReal">—</strong>
+        </div>
+        <div class="stat">
+          <small data-i18n="hypothesis.statHypo">Hypothetical wave</small>
+          <strong id="scaleHypo">—</strong>
+        </div>
       </div>
       <p class="explain" id="hypoExplain"></p>
-      <p class="tiny">
+      <p class="tiny" data-i18n="hypothesis.note">
         A zero at β would come with a mirror zero at 1 − β, whose wave is smaller. It is not shown.
       </p>
     </div>

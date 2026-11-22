@@ -2,9 +2,9 @@ import { byId } from "./ui/dom";
 
 const ACTIVE_THRESHOLD = 0.35;
 
-export function mountNavigation(): void {
+export function mountNavigation(): () => void {
   const nav = document.querySelector<HTMLElement>(".chapter-nav");
-  if (!nav) return;
+  if (!nav) return () => undefined;
   const links = [...nav.querySelectorAll("a")];
   const sections = links.map((link) => byId(link.hash.slice(1)));
   const progress = byId("readingProgress");
@@ -19,13 +19,13 @@ export function mountNavigation(): void {
     });
   }
 
-  function update() {
+  function update(recenter = false) {
     const threshold = window.innerHeight * ACTIVE_THRESHOLD;
     const active = sections.findLastIndex(
       (section) => section.getBoundingClientRect().top <= threshold,
     );
     links.forEach((link, i) => link.classList.toggle("active", i === active));
-    if (active !== current && active >= 0) {
+    if (active >= 0 && (active !== current || recenter)) {
       centerLink(links[active]);
       current = active;
     }
@@ -33,7 +33,18 @@ export function mountNavigation(): void {
     progress.style.width = `${Math.max(0, Math.min(100, (window.scrollY / scrollable) * 100))}%`;
   }
 
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
+  window.addEventListener(
+    "scroll",
+    () => {
+      update();
+    },
+    { passive: true },
+  );
+  window.addEventListener("resize", () => {
+    update();
+  });
   update();
+  return () => {
+    update(true);
+  };
 }

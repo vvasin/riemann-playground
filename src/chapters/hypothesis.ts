@@ -1,6 +1,7 @@
 import { ZERO_HEIGHTS } from "../data/zeros";
 import { fixed, inWords, powerOfTen } from "../format";
 import { pairWave } from "../math/explicit-formula";
+import { t } from "../i18n";
 import { COLORS } from "../ui/colors";
 import { onSlider, setText } from "../ui/dom";
 import { createPlot } from "../ui/plot";
@@ -63,12 +64,17 @@ const percentOf = (part: number, whole: number, smallDigits: number) =>
 
 function describe(beta: number, exponent: number): string {
   if (beta === CRITICAL) {
-    return "With β = ½ the two zeros are the same, so the waves coincide. Move the slider to the right.";
+    return t("hypothesis.coincide");
   }
   const x = 10 ** exponent;
   const real = waveSize(x, CRITICAL);
   const hypo = waveSize(x, beta);
-  return `At x = ${powerOfTen(exponent)} the hypothetical wave is about ${inWords(hypo / real)} times larger than the real one, and equals ${percentOf(hypo, x, 4)}% of x. The real wave is ${percentOf(real, x, 6)}% of x. As x grows, the real wave becomes a smaller and smaller share of x; the closer β is to 1, the more slowly this happens for the hypothetical one.`;
+  return t("hypothesis.explain", {
+    x: powerOfTen(exponent),
+    ratio: inWords(hypo / real),
+    hypoPercent: percentOf(hypo, x, 4),
+    realPercent: percentOf(real, x, 6),
+  });
 }
 
 export function mountHypothesis(): () => void {

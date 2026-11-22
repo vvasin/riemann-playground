@@ -1,6 +1,6 @@
 # Riemann playground
 
-A single-page interactive article that explains the Riemann hypothesis from scratch, in 9 steps. Built with Vite and TypeScript, no runtime dependencies, no network requests. Deployed to GitHub Pages by `.github/workflows/ci.yml`.
+A single-page interactive article that explains the Riemann hypothesis from scratch, in 9 steps. Built with Vite and TypeScript, no network requests. The only runtime dependencies are `i18next` and `i18next-browser-languagedetector` (page is in English and Russian). Deployed to GitHub Pages by `.github/workflows/ci.yml`.
 
 ```sh
 npm run dev        # dev server
@@ -24,7 +24,8 @@ npm run lint:html  # validate dist/index.html (run after build)
 - `src/math/`: pure functions (`primes`, `li`, `complex`, `zeta`, `psi`, `explicit-formula`), with colocated `*.test.ts`.
 - `src/data/`: `ZERO_HEIGHTS` (first 50 zero heights), `PUBLISHED_PRIME_COUNTS` (π(10^k), k = 4…12).
 - `src/ui/`: `dom` (element lookup and event helpers), `plot` (canvas plots via `createPlot`), `choices` (toggle-button groups), `colors` (canvas palette).
-- `src/format.ts`: number formatting; `src/nav.ts`: active nav link and reading progress.
+- `src/format.ts`: number formatting in the current language's locale; `src/nav.ts`: active nav link and reading progress.
+- `src/i18n/`: translations (see below).
 - `src/styles/`: `tokens` → `base` → `layout` → `topbar` → `hero` → `controls` → `prose` → `panel` → `widgets`, imported in this order by `index.css`. Responsive overrides sit next to the rules they change.
 
 | #   | id           | Content                                                             | Interaction                                                         |
@@ -41,6 +42,14 @@ npm run lint:html  # validate dist/index.html (run after build)
 
 The top nav (`.chapter-nav`) and the hero "Overview" list link to these ids. Update both, the include list in `index.html`, and the "Step N of 9" labels if steps are added or reordered; the e2e test checks they agree.
 
+## Translations
+
+- Languages: English (source) and Russian. The initial language comes from `?lang=`, then the choice saved in `localStorage` (`language`), then the browser's language list; the fallback is English. The `#languageSelect` in the top bar switches language without a reload and saves the choice.
+- English static text stays in the HTML. Each translatable element carries `data-i18n="key"` (replaces its inner HTML) or `data-i18n-<attribute>="key"` (e.g. `data-i18n-aria-label`). `src/i18n/page.ts` remembers the English original as the default value. Do not put `data-i18n` on an element whose descendants the scripts keep references to, and do not nest `data-i18n` elements.
+- Strings built in TypeScript go through `t()` from `src/i18n`; their English text is in `src/i18n/en.ts`. Plurals use i18next suffixes (`_one`/`_other` in English, `_one`/`_few`/`_many`/`_other` in Russian).
+- `src/i18n/ru.ts` holds every Russian string; the prose of each step (`<id>.prose`), the hero and the overview are in `src/i18n/ru/*.html`. Russian text uses decimal commas and the same plain style as the English. Every chapter mount returns a render function that `main.ts` re-runs on language change, so labels set from scripts must be set in that function.
+- When changing English text, update the Russian text too. `src/i18n/i18n.test.ts` checks that every key has a Russian string, that links and key points are kept, and the Russian plurals and number formats.
+
 Slider controls use `.control` > `.control-head` (`<label for>` + `<output for>`) + `<input type="range">`. Do not nest the `<output>` inside the `<label>`.
 
 ## Verified facts (do not "correct" these without a source)
@@ -55,7 +64,7 @@ Slider controls use `.control` > `.control-head` (`<label for>` + `<output for>`
 ## Testing
 
 - `npm test`: unit tests for the math and formatting, pinning the verified numbers above.
-- `npm run test:e2e`: Playwright at 1280px and 390px. Checks no page/console errors, no horizontal scroll, nav/overview/step labels, and drives every control and reads its readout.
-- For visual changes, also screenshot each `section.chapter` at 1280px and 390px.
+- `npm run test:e2e`: Playwright at 1280px and 390px. Checks no page/console errors, no horizontal scroll, nav/overview/step labels, and drives every control and reads its readout. Also checks language detection, switching, and the Russian page (labels, layout, number formats).
+- For visual changes, also screenshot each `section.chapter` at 1280px and 390px, in both languages.
 
-Keep the page free of runtime dependencies and network requests. Keep comments to a minimum; prefer clear names.
+Keep the page free of network requests and of runtime dependencies other than the two i18n packages. Keep comments to a minimum; prefer clear names.

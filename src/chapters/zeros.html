@@ -1,8 +1,8 @@
 <section class="chapter" id="zeros">
-  <p class="step-label">Step 5 of 9</p>
-  <h2>Complex inputs and the zeros of zeta</h2>
+  <p class="step-label" data-i18n="zeros.step">Step 5 of 9</p>
+  <h2 data-i18n="zeros.title">Complex inputs and the zeros of zeta</h2>
   <div class="chapter-grid">
-    <div class="prose">
+    <div class="prose" data-i18n="zeros.prose">
       <p>
         In 1859 Riemann allowed s to be a complex number, <strong>s = σ + it</strong>. σ (sigma) is
         the real part and t is the imaginary part.
@@ -74,15 +74,15 @@
       </div>
     </div>
     <div class="panel">
-      <h3>Look for zeros along a vertical line</h3>
-      <p class="subtitle">
+      <h3 data-i18n="zeros.panelTitle">Look for zeros along a vertical line</h3>
+      <p class="subtitle" data-i18n="zeros.subtitle">
         Choose a real part σ. The top picture shows that line in the complex plane. The bottom graph
         shows |ζ(σ + it)|, the distance of ζ from 0, as t goes from 0 to 50. At a zero, the graph
         touches 0.
       </p>
       <div class="control">
         <div class="control-head">
-          <label for="sigma">Real part σ</label>
+          <label for="sigma" data-i18n="zeros.sigmaLabel">Real part σ</label>
           <output id="sigmaValue" for="sigma">0.50</output>
         </div>
         <input id="sigma" type="range" min="0.05" max="1.5" step="0.05" value="0.5" />
@@ -91,22 +91,37 @@
         id="zeroMap"
         class="plot"
         role="img"
+        data-i18n-aria-label="zeros.mapLabel"
         aria-label="Complex plane with the critical strip, the first ten nontrivial zeros on the line real part one half, the trivial zeros at minus 2 and minus 4, and the selected vertical line"
       ></canvas>
-      <p class="axis-note">Horizontal: real part σ. Vertical: imaginary part t.</p>
+      <p class="axis-note" data-i18n="zeros.mapAxes">
+        Horizontal: real part σ. Vertical: imaginary part t.
+      </p>
       <ul class="legend">
-        <li><span class="swatch dot"></span>Nontrivial zeros</li>
-        <li><span class="swatch dot violet"></span>Trivial zeros</li>
-        <li><span class="swatch dot rose"></span>s = 1, where ζ is infinite</li>
-        <li><span class="swatch gold"></span>Chosen line</li>
+        <li>
+          <span class="swatch dot"></span
+          ><span data-i18n="zeros.legendNontrivial">Nontrivial zeros</span>
+        </li>
+        <li>
+          <span class="swatch dot violet"></span
+          ><span data-i18n="zeros.legendTrivial">Trivial zeros</span>
+        </li>
+        <li>
+          <span class="swatch dot rose"></span
+          ><span data-i18n="zeros.legendPole">s = 1, where ζ is infinite</span>
+        </li>
+        <li>
+          <span class="swatch gold"></span><span data-i18n="zeros.legendLine">Chosen line</span>
+        </li>
       </ul>
       <canvas
         id="zetaLine"
         class="plot short"
         role="img"
         aria-label="Absolute value of zeta along the chosen vertical line"
+        data-i18n-aria-label="zeros.lineLabel"
       ></canvas>
-      <p class="axis-note">
+      <p class="axis-note" data-i18n="zeros.lineAxes">
         Horizontal: t. Vertical: |ζ(σ + it)|. Thin marks show the heights of the known zeros.
       </p>
       <div class="readout" aria-live="polite">

@@ -1,6 +1,7 @@
 import { ZERO_HEIGHTS } from "../data/zeros";
 import { fixed } from "../format";
 import { zetaAbs } from "../math/zeta";
+import { t } from "../i18n";
 import { COLORS } from "../ui/colors";
 import { onSlider, setText } from "../ui/dom";
 import { createPlot } from "../ui/plot";
@@ -8,8 +9,6 @@ import { createPlot } from "../ui/plot";
 const HEIGHT = 50;
 const Y_MAX = 4;
 const SHOWN_ZEROS = ZERO_HEIGHTS.slice(0, 10);
-const ZERO_NOTE =
-  "On the line σ = ½ the graph touches 0 at t = 14.13, 21.02, 25.01, 30.42, 32.94, 37.59, 40.92, 43.33, 48.01 and 49.77. These are the nontrivial zeros.";
 
 export function findMinimum(sigma: number): { value: number; at: number } {
   let value = Infinity;
@@ -51,15 +50,21 @@ function drawMap(sigma: number) {
   ctx.font = "11px system-ui";
   ctx.fillStyle = COLORS.mint;
   ctx.textAlign = "right";
-  ctx.fillText("critical strip", x(-0.12), y(47));
-  ctx.fillText("(0 < σ < 1)", x(-0.12), y(44.5));
+  t("zeros.strip")
+    .split("\n")
+    .forEach((line, i) => {
+      ctx.fillText(line, x(-0.12), y(47 - 2.5 * i));
+    });
 
   ctx.fillStyle = COLORS.label;
   ctx.textAlign = "left";
-  const [first, second, left] =
-    plot.innerWidth > 420 ? ["sum works", "here (σ > 1)", 1.08] : ["sum", "works", 1.06];
-  ctx.fillText(first, x(left), y(30));
-  ctx.fillText(second, x(left), y(27.5));
+  const wide = plot.innerWidth > 420;
+  const left = x(wide ? 1.08 : 1.06);
+  t(wide ? "zeros.sumWide" : "zeros.sumNarrow")
+    .split("\n")
+    .forEach((line, i) => {
+      ctx.fillText(line, left, y(30 - 2.5 * i), x(2) - left - 2);
+    });
 
   ctx.strokeStyle = "rgba(255,212,140,.35)";
   ctx.setLineDash([4, 5]);
@@ -112,19 +117,18 @@ function drawLine(sigma: number) {
 function describeMinimum(sigma: number) {
   const { value, at } = findMinimum(sigma);
   if (value < 1e-3) {
-    setText("zetaMin", "ζ = 0 on this line (10 zeros for t ≤ 50)");
-    setText("zetaMinNote", ZERO_NOTE);
+    setText("zetaMin", t("zeros.onLine"));
+    setText("zetaMinNote", t("zeros.zeroNote"));
     return;
   }
-  const nearPole =
-    sigma >= 0.95 && sigma <= 1.05
-      ? " Near t = 0 the graph goes off the top because ζ is infinite at s = 1."
-      : "";
-  setText("zetaMin", `Smallest value: ${fixed(value, 3)}`);
-  setText(
-    "zetaMinNote",
-    `On the line σ = ${fixed(sigma, 2)}, the smallest value of |ζ| for t from 0 to 50 is ${fixed(value, 3)}, near t = ${fixed(at, 2)}. It never reaches 0, so this part of the line has no zeros.${nearPole}`,
-  );
+  const note = t("zeros.minNote", {
+    sigma: fixed(sigma, 2),
+    value: fixed(value, 3),
+    at: fixed(at, 2),
+  });
+  const nearPole = sigma >= 0.95 && sigma <= 1.05 ? ` ${t("zeros.nearPole")}` : "";
+  setText("zetaMin", t("zeros.smallest", { value: fixed(value, 3) }));
+  setText("zetaMinNote", note + nearPole);
 }
 
 export function mountZeros(): () => void {

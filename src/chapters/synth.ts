@@ -1,6 +1,7 @@
 import { ZERO_HEIGHTS } from "../data/zeros";
 import { fixed } from "../format";
 import { psiApprox, riseAt } from "../math/explicit-formula";
+import { t } from "../i18n";
 import { isPrime } from "../math/primes";
 import { PRIME_POWERS, psi, stepAt } from "../math/psi";
 import { COLORS } from "../ui/colors";
@@ -12,7 +13,6 @@ const X_MIN = 1.5;
 const X_MAX = 30;
 const Y_MIN = -2;
 const Y_MAX = 34;
-const HOVER_HINT = "Hover over or tap the graph to compare values at one x.";
 
 const nearStep = (x: number) => PRIME_POWERS.some((n) => Math.abs(x - n) < 0.16);
 
@@ -101,9 +101,14 @@ function drawBars(pairs: number, [lo, hi]: number[]) {
 }
 
 function describeHover(pairs: number, hover: number | null): string {
-  if (hover === null) return HOVER_HINT;
+  if (hover === null) return t("synth.hoverHint");
   const x = Math.max(X_MIN, hover);
-  return `At x = ${fixed(x, 2)}: exact ψ(x) = ${fixed(psi(x), 3)}, formula with ${pairs} pair${pairs === 1 ? "" : "s"} = ${fixed(psiApprox(x, pairs), 3)}.`;
+  return t("synth.hover", {
+    count: pairs,
+    x: fixed(x, 2),
+    psi: fixed(psi(x), 3),
+    approx: fixed(psiApprox(x, pairs), 3),
+  });
 }
 
 export function mountSynth(): () => void {

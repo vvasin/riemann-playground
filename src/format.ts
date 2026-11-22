@@ -1,9 +1,20 @@
+import { locale } from "./i18n";
+
 const SUPERSCRIPT_DIGITS = "⁰¹²³⁴⁵⁶⁷⁸⁹";
 
-const compactFormat = new Intl.NumberFormat("en-US", {
-  notation: "compact",
-  compactDisplay: "long",
-  maximumSignificantDigits: 3,
+const formatters = new Map<string, Intl.NumberFormat>();
+
+function format(value: number, options: Intl.NumberFormatOptions): string {
+  const key = `${locale()} ${JSON.stringify(options)}`;
+  let formatter = formatters.get(key);
+  if (!formatter) formatters.set(key, (formatter = new Intl.NumberFormat(locale(), options)));
+  return formatter.format(value);
+}
+
+const decimals = (digits: number, useGrouping: boolean): Intl.NumberFormatOptions => ({
+  minimumFractionDigits: digits,
+  maximumFractionDigits: digits,
+  useGrouping,
 });
 
 export const superscript = (value: number | string): string =>
@@ -14,16 +25,16 @@ export const superscript = (value: number | string): string =>
 
 export const powerOfTen = (exponent: number): string => `10${superscript(exponent)}`;
 
-export const integer = (value: number): string => Math.round(value).toLocaleString("en-US");
+export const integer = (value: number): string => format(Math.round(value), decimals(0, true));
 
-export const fixed = (value: number, digits = 2): string => value.toFixed(digits);
+export const fixed = (value: number, digits = 2): string => format(value, decimals(digits, false));
 
-export const oneDecimal = (value: number): string =>
-  value.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+export const oneDecimal = (value: number): string => format(value, decimals(1, true));
 
-export const inWords = (value: number): string => compactFormat.format(value);
+export const inWords = (value: number): string =>
+  format(value, { notation: "compact", compactDisplay: "long", maximumSignificantDigits: 3 });
 
-export const scientific = (value: number): string =>
-  value
-    .toExponential(2)
-    .replace(/e-(\d+)/, (_, exponent: string) => ` × 10⁻${superscript(exponent)}`);
+export function scientific(value: number): string {
+  const [mantissa, exponent] = value.toExponential(2).split("e");
+  return `${fixed(Number(mantissa), 2)} × ${powerOfTen(Number(exponent))}`;
+}

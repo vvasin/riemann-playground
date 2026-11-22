@@ -1,14 +1,15 @@
 import { PUBLISHED_PRIME_COUNTS } from "../data/prime-counts";
 import { fixed, integer, oneDecimal, powerOfTen } from "../format";
 import { li } from "../math/li";
+import { t } from "../i18n";
 import { byId, onSlider, setText } from "../ui/dom";
 
 export const schoenfeldBound = (x: number): number => (Math.sqrt(x) * Math.log(x)) / (8 * Math.PI);
 
-export function mountProof(): void {
+export function mountProof(): () => void {
   const slider = onSlider("proofExponent", render);
 
-  function render(exponent: number) {
+  function render(exponent = Number(slider.value)) {
     const x = 10 ** exponent;
     const count = PUBLISHED_PRIME_COUNTS[exponent];
     const estimate = li(x);
@@ -24,9 +25,15 @@ export function mountProof(): void {
     byId("proofMeter").style.width = `${Math.min(100, 100 * share)}%`;
     setText(
       "proofExplain",
-      `The actual error is ${fixed(100 * share, 1)}% of the bound. Compared with the number of primes, the bound is ${fixed((100 * bound) / count, bound / count < 0.001 ? 4 : 3)}% of π(x).`,
+      t("proof.explain", {
+        share: fixed(100 * share, 1),
+        boundPercent: fixed((100 * bound) / count, bound / count < 0.001 ? 4 : 3),
+      }),
     );
   }
 
-  render(Number(slider.value));
+  render();
+  return () => {
+    render();
+  };
 }

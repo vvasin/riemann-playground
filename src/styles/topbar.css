@@ -51,6 +51,14 @@
   background: #1b3045;
 }
 
+.language-select {
+  flex: none;
+  width: auto;
+  margin: 0;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
 .progress {
   height: 3px;
   background: #1b293c;
@@ -65,8 +73,16 @@
 
 @media (width <= 560px) {
   .top-row {
+    position: relative;
     display: block;
     padding: 8px 0 4px;
+  }
+
+  .language-select {
+    position: absolute;
+    top: 6px;
+    right: 0;
+    padding: 3px 6px;
   }
 
   .brand {

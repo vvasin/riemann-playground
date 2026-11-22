@@ -1,16 +1,17 @@
 import { li } from "../math/li";
 import { primeCount } from "../math/primes";
 import { fixed, integer, oneDecimal } from "../format";
+import { t } from "../i18n";
 import { COLORS } from "../ui/colors";
 import { type Choice, renderChoices } from "../ui/choices";
 import { setText } from "../ui/dom";
 import { createPlot, niceTicks, onPlotHover } from "../ui/plot";
 
 const RANGES: Choice<number>[] = [
-  [100, "up to 100"],
-  [1000, "1,000"],
-  [10000, "10,000"],
-  [100000, "100,000"],
+  [100, () => t("estimate.upTo", { x: integer(100) })],
+  [1000, () => integer(1000)],
+  [10000, () => integer(10000)],
+  [100000, () => integer(100000)],
 ];
 
 const xOverLog = (x: number) => x / Math.log(x);
@@ -18,7 +19,12 @@ const xOverLog = (x: number) => x / Math.log(x);
 function describeHover(hover: number | null): string {
   if (hover === null) return "";
   const x = Math.max(2, hover);
-  return `At x = ${integer(x)}: π(x) = ${integer(primeCount(x))}, li(x) = ${oneDecimal(li(x))}, x / ln x = ${oneDecimal(xOverLog(x))}.`;
+  return t("estimate.hover", {
+    x: integer(x),
+    pi: integer(primeCount(x)),
+    li: oneDecimal(li(x)),
+    xlog: oneDecimal(xOverLog(x)),
+  });
 }
 
 export function mountEstimate(): () => void {
@@ -74,7 +80,12 @@ export function mountEstimate(): () => void {
     setText("estXlog", oneDecimal(xOverLog(max)));
     setText(
       "estimateExplain",
-      `At x = ${integer(max)}: li(x) − π(x) = ${fixed(error, 1)}, which is ${fixed((100 * error) / count, 2)}% of π(x). The estimate x / ln x is off by ${fixed((100 * (count - xOverLog(max))) / count, 1)}%.`,
+      t("estimate.explain", {
+        x: integer(max),
+        error: fixed(error, 1),
+        percent: fixed((100 * error) / count, 2),
+        xlogPercent: fixed((100 * (count - xOverLog(max))) / count, 1),
+      }),
     );
     setText("estimateHover", describeHover(hover));
     highlight(max);

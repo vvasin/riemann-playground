@@ -1,8 +1,8 @@
 <section class="chapter" id="zeta">
-  <p class="step-label">Step 3 of 9</p>
-  <h2>The zeta function</h2>
+  <p class="step-label" data-i18n="zeta.step">Step 3 of 9</p>
+  <h2 data-i18n="zeta.title">The zeta function</h2>
   <div class="chapter-grid">
-    <div class="prose">
+    <div class="prose" data-i18n="zeta.prose">
       <p>
         Pick a number s. Raise every whole number to the power s, take the reciprocals, and add them
         all:
@@ -28,24 +28,40 @@
       </div>
     </div>
     <div class="panel">
-      <h3>Adding the terms one by one</h3>
-      <p class="subtitle">Choose s, then change how many terms are added.</p>
-      <div class="choice" id="sChoice" role="group" aria-label="Choose s"></div>
+      <h3 data-i18n="zeta.panelTitle">Adding the terms one by one</h3>
+      <p class="subtitle" data-i18n="zeta.subtitle">
+        Choose s, then change how many terms are added.
+      </p>
+      <div
+        class="choice"
+        id="sChoice"
+        role="group"
+        aria-label="Choose s"
+        data-i18n-aria-label="zeta.sLabel"
+      ></div>
       <div class="control">
         <div class="control-head">
-          <label for="sumCount">Number of terms</label>
+          <label for="sumCount" data-i18n="zeta.termsLabel">Number of terms</label>
           <output id="sumCountValue" for="sumCount">10</output>
         </div>
         <input id="sumCount" type="range" min="1" max="250" step="1" value="10" />
       </div>
-      <ul class="fraction-strip" id="fractionStrip" aria-label="First terms of the sum"></ul>
+      <ul
+        class="fraction-strip"
+        id="fractionStrip"
+        aria-label="First terms of the sum"
+        data-i18n-aria-label="zeta.stripLabel"
+      ></ul>
       <div class="sum-progress" id="sumProgress" aria-hidden="true">
         <span id="sumProgressFill"></span>
       </div>
       <div class="compare">
-        <div class="stat"><small>Sum of these terms</small> <strong id="sumResult">—</strong></div>
         <div class="stat">
-          <small>Value of the infinite sum</small>
+          <small data-i18n="zeta.partialSum">Sum of these terms</small>
+          <strong id="sumResult">—</strong>
+        </div>
+        <div class="stat">
+          <small data-i18n="zeta.infiniteSum">Value of the infinite sum</small>
           <strong id="sumLimit">—</strong>
         </div>
       </div>

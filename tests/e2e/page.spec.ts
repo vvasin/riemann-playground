@@ -146,3 +146,88 @@ test.describe("controls", () => {
     await expect(page.locator("#proofLi")).toHaveText("37,607,950,280.8");
   });
 });
+
+test.describe("language", () => {
+  test("switches to Russian and back, and remembers the choice", async ({ page }) => {
+    const select = page.locator("#languageSelect");
+    await expect(select).toHaveValue("en");
+    await select.selectOption("ru");
+    await expect(page.locator("html")).toHaveAttribute("lang", "ru");
+    await expect(page.locator("#primes .step-label")).toHaveText("Шаг 1 из 9");
+    await expect(page.locator("#numberExplanation")).toContainText("30 — составное число");
+    await expect(page.locator("#waveZeroButtons button").first()).toHaveText("1-й нуль");
+
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("lang", "ru");
+    await expect(select).toHaveValue("ru");
+
+    await select.selectOption("en");
+    await expect(page.locator("#primes .step-label")).toHaveText("Step 1 of 9");
+    await expect(page.locator("#zetaMin")).toHaveText("ζ = 0 on this line (10 zeros for t ≤ 50)");
+    await expect(page).toHaveTitle("The Riemann Hypothesis, Step by Step");
+  });
+
+  test("reads the language from the address", async ({ page }) => {
+    await page.goto("./?lang=ru");
+    await expect(page.locator("html")).toHaveAttribute("lang", "ru");
+    await expect(page.locator(".brand")).toHaveText("Гипотеза Римана");
+  });
+});
+
+test.describe("in an unsupported browser language", () => {
+  test.use({ locale: "de-DE" });
+
+  test("defaults to English", async ({ page }) => {
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator("#languageSelect")).toHaveValue("en");
+    await expect(page.locator("#primes .step-label")).toHaveText("Step 1 of 9");
+    await page.goto("./?lang=xx");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  });
+});
+
+test.describe("in Russian", () => {
+  test.use({ locale: "ru-RU" });
+
+  test("is detected from the browser language", async ({ page }) => {
+    await expect(page.locator("html")).toHaveAttribute("lang", "ru");
+    await expect(page.locator("#languageSelect")).toHaveValue("ru");
+    await expect(page).toHaveTitle("Гипотеза Римана шаг за шагом");
+  });
+
+  test("has no horizontal scroll", async ({ page }) => {
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test("keeps the links, step labels and key points", async ({ page }) => {
+    const hrefs = CHAPTERS.map((id) => `#${id}`);
+    for (const list of [".chapter-nav a", ".steps a"]) {
+      const links = await page
+        .locator(list)
+        .evaluateAll((a) => a.map((e) => e.getAttribute("href")));
+      expect(links).toEqual(hrefs);
+    }
+    for (const [i, id] of CHAPTERS.entries()) {
+      await expect(page.locator(`#${id} .step-label`)).toHaveText(`Шаг ${i + 1} из 9`);
+      await expect(page.locator(`#${id} .keypoint`)).toHaveCount(1);
+    }
+  });
+
+  test("formats the readouts", async ({ page }) => {
+    await page.locator("#estimateRange button", { hasText: "100 000" }).click();
+    await expect(page.locator("#estPi")).toHaveText("9 592");
+    await slide(page, "sigma", 0.8);
+    await expect(page.locator("#sigmaValue")).toHaveText("0,80");
+    await expect(page.locator("#zetaMin")).toHaveText(/^Наименьшее значение: 0,\d{3}$/);
+    await slide(page, "pairCount", 1);
+    await page.locator("#synthPlot").hover();
+    await expect(page.locator("#synthHover")).toContainText("формула с 1 парой");
+    await slide(page, "scaleExponent", 12);
+    await expect(page.locator("#scaleX")).toHaveText("1 триллион");
+    await slide(page, "proofExponent", 12);
+    await expect(page.locator("#proofLi")).toHaveText("37 607 950 280,8");
+  });
+});

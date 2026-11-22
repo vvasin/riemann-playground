@@ -7,25 +7,40 @@ import { mountSynth } from "./chapters/synth";
 import { mountWave } from "./chapters/wave";
 import { mountZeros } from "./chapters/zeros";
 import { mountZeta } from "./chapters/zeta";
+import { onLanguageChange } from "./i18n";
+import { mountLanguageSelect, translatePage } from "./i18n/page";
 import { mountNavigation } from "./nav";
 
-mountPrimes();
-mountZeta();
-mountProduct();
-mountProof();
+translatePage();
 
 const plots = [mountEstimate(), mountZeros(), mountWave(), mountSynth(), mountHypothesis()];
-const drawPlots = () => {
-  plots.forEach((draw) => {
+const renders = [
+  mountLanguageSelect(),
+  mountPrimes(),
+  mountZeta(),
+  mountProduct(),
+  mountProof(),
+  ...plots,
+];
+const run = (list: (() => void)[]) => {
+  list.forEach((draw) => {
     draw();
   });
 };
 
-mountNavigation();
-drawPlots();
+const updateNavigation = mountNavigation();
+run(renders);
+
+onLanguageChange(() => {
+  translatePage();
+  run(renders);
+  updateNavigation();
+});
 
 let frame = 0;
 window.addEventListener("resize", () => {
   cancelAnimationFrame(frame);
-  frame = requestAnimationFrame(drawPlots);
+  frame = requestAnimationFrame(() => {
+    run(plots);
+  });
 });
