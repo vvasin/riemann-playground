@@ -1,8 +1,8 @@
 <section class="chapter" id="primes">
-  <p class="step-label">Step 1 of 9</p>
-  <h2>Prime numbers and the counting function π(x)</h2>
+  <p class="step-label" data-i18n="primes.step">Step 1 of 9</p>
+  <h2 data-i18n="primes.title">Prime numbers and the counting function π(x)</h2>
   <div class="chapter-grid">
-    <div class="prose">
+    <div class="prose" data-i18n="primes.prose">
       <p>
         A <strong>prime number</strong> is a whole number greater than 1 that is divisible only by 1
         and by itself: 2, 3, 5, 7, 11, 13, …
@@ -29,8 +29,10 @@
       </div>
     </div>
     <div class="panel">
-      <h3>Primes up to x</h3>
-      <p class="subtitle">Move the slider or click a number to set x. Primes are highlighted.</p>
+      <h3 data-i18n="primes.panelTitle">Primes up to x</h3>
+      <p class="subtitle" data-i18n="primes.subtitle">
+        Move the slider or click a number to set x. Primes are highlighted.
+      </p>
       <div class="control">
         <div class="control-head">
           <label for="primeLimit">x</label>
@@ -43,10 +45,13 @@
         class="num-grid"
         role="group"
         aria-label="Numbers from 2 through 100"
+        data-i18n-aria-label="primes.gridLabel"
       ></div>
       <ul class="legend">
-        <li><span class="swatch"></span>Prime</li>
-        <li><span class="swatch grey"></span>Not prime</li>
+        <li><span class="swatch"></span><span data-i18n="primes.legendPrime">Prime</span></li>
+        <li>
+          <span class="swatch grey"></span><span data-i18n="primes.legendNotPrime">Not prime</span>
+        </li>
         <li><span class="swatch gold"></span>x</li>
       </ul>
       <div class="readout" aria-live="polite">

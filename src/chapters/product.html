@@ -1,8 +1,8 @@
 <section class="chapter" id="product">
-  <p class="step-label">Step 4 of 9</p>
-  <h2>Euler's product: how zeta is tied to the primes</h2>
+  <p class="step-label" data-i18n="product.step">Step 4 of 9</p>
+  <h2 data-i18n="product.title">Euler's product: how zeta is tied to the primes</h2>
   <div class="chapter-grid">
-    <div class="prose">
+    <div class="prose" data-i18n="product.prose">
       <p>Take s = 2. For each prime p, write a sum that uses only the powers of p:</p>
       <div class="equation">
         for 2: 1 + 1/2² + 1/4² + 1/8² + …<br />for 3: 1 + 1/3² + 1/9² + 1/27² + …<br />for 5: 1 +
@@ -38,49 +38,61 @@
       </div>
     </div>
     <div class="panel">
-      <h3>Pick one term from each sum</h3>
-      <p class="subtitle">
+      <h3 data-i18n="product.pickTitle">Pick one term from each sum</h3>
+      <p class="subtitle" data-i18n="product.pickSubtitle">
         Choose a term from the sum for 2 and from the sum for 3. All other primes contribute 1.
       </p>
       <div class="power-control">
-        <span>From the sum for 2</span>
+        <span data-i18n="product.from2">From the sum for 2</span>
         <div
           class="power-buttons"
           id="power2"
           role="group"
           aria-label="Term from the sum for 2"
+          data-i18n-aria-label="product.from2Label"
         ></div>
       </div>
       <div class="power-control">
-        <span>From the sum for 3</span>
+        <span data-i18n="product.from3">From the sum for 3</span>
         <div
           class="power-buttons"
           id="power3"
           role="group"
           aria-label="Term from the sum for 3"
+          data-i18n-aria-label="product.from3Label"
         ></div>
       </div>
       <div class="equation term-result" id="termResult" aria-live="polite">—</div>
-      <p class="tiny">
+      <p class="tiny" data-i18n="product.note">
         With only 2 and 3 you get the numbers 1, 2, 3, 4, 6, 8, 9, 12, … Including the sums for 5,
         7, 11, … produces every other whole number.
       </p>
       <hr class="divider" />
-      <h3>Multiply the factors for the first primes</h3>
-      <p class="subtitle">
+      <h3 data-i18n="product.multiplyTitle">Multiply the factors for the first primes</h3>
+      <p class="subtitle" data-i18n="product.multiplySubtitle">
         Each prime p adds the factor 1/(1 − 1/p²). The product approaches ζ(2).
       </p>
       <div class="control">
         <div class="control-head">
-          <label for="factorCount">Number of primes used</label>
+          <label for="factorCount" data-i18n="product.countLabel">Number of primes used</label>
           <output id="factorCountValue" for="factorCount">4</output>
         </div>
         <input id="factorCount" type="range" min="0" max="10" step="1" value="4" />
       </div>
-      <ul class="factor-list" id="factorList" aria-label="Primes included in the product"></ul>
+      <ul
+        class="factor-list"
+        id="factorList"
+        aria-label="Primes included in the product"
+        data-i18n-aria-label="product.listLabel"
+      ></ul>
       <div class="compare">
-        <div class="stat"><small>Product</small> <strong id="productResult">—</strong></div>
-        <div class="stat"><small>ζ(2) = π²/6</small> <strong>1.644934…</strong></div>
+        <div class="stat">
+          <small data-i18n="product.productLabel">Product</small>
+          <strong id="productResult">—</strong>
+        </div>
+        <div class="stat">
+          <small>ζ(2) = π²/6</small> <strong data-i18n="product.zeta2Value">1.644934…</strong>
+        </div>
       </div>
     </div>
   </div>

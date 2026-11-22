@@ -1,4 +1,5 @@
 import { isPrime, primeCount, primesUpTo, smallestFactor } from "../math/primes";
+import { t } from "../i18n";
 import { byId, onSlider, setText } from "../ui/dom";
 
 const GRID_MAX = 100;
@@ -6,12 +7,10 @@ const GRID_MAX = 100;
 function describe(n: number): string {
   if (!isPrime(n)) {
     const factor = smallestFactor(n);
-    return `${n} is not prime: ${n} = ${factor} × ${n / factor}.`;
+    return t("primes.notPrime", { n, factor, other: n / factor });
   }
   const root = Math.floor(Math.sqrt(n));
-  return root < 2
-    ? `${n} is prime.`
-    : `${n} is prime: no number from 2 to ${root} divides it. (Checking up to √${n} is enough.)`;
+  return root < 2 ? t("primes.prime", { n }) : t("primes.primeChecked", { n, root });
 }
 
 function abbreviate(primes: number[]): string {
@@ -24,12 +23,11 @@ function createCell(n: number, onSelect: () => void): HTMLButtonElement {
   cell.type = "button";
   cell.className = isPrime(n) ? "num is-prime" : "num";
   cell.textContent = String(n);
-  cell.setAttribute("aria-label", isPrime(n) ? `${n}, prime` : String(n));
   cell.addEventListener("click", onSelect);
   return cell;
 }
 
-export function mountPrimes(): void {
+export function mountPrimes(): () => void {
   const slider = onSlider("primeLimit", select);
   let limit = Number(slider.value);
 
@@ -51,15 +49,17 @@ export function mountPrimes(): void {
     setText("primeCountText", `π(${limit}) = ${primeCount(limit)}`);
     setText(
       "numberExplanation",
-      `${describe(limit)} Primes up to ${limit}: ${abbreviate(primesUpTo(limit))}.`,
+      `${describe(limit)} ${t("primes.list", { n: limit, primes: abbreviate(primesUpTo(limit)) })}`,
     );
     cells.forEach((cell, i) => {
       const n = i + 2;
       cell.classList.toggle("outside", n > limit);
       cell.classList.toggle("chosen", n === limit);
       cell.setAttribute("aria-pressed", String(n === limit));
+      cell.setAttribute("aria-label", isPrime(n) ? t("primes.cellPrime", { n }) : String(n));
     });
   }
 
   render();
+  return render;
 }

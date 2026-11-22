@@ -1,4 +1,5 @@
 import { fixed, scientific, superscript } from "../format";
+import { t } from "../i18n";
 import { type Choice, renderChoices } from "../ui/choices";
 import { byId, createElement, onSlider, setText } from "../ui/dom";
 
@@ -10,15 +11,12 @@ const EXPONENTS: Choice<number>[] = [
 ];
 
 const LIMITS = new Map([
-  [2, { value: Math.PI ** 2 / 6, label: "π²/6 = 1.644934…" }],
-  [3, { value: 1.2020569031595942, label: "1.202057…" }],
-  [4, { value: Math.PI ** 4 / 90, label: "π⁴/90 = 1.082323…" }],
+  [2, { value: Math.PI ** 2 / 6, prefix: "π²/6 = " }],
+  [3, { value: 1.2020569031595942, prefix: "" }],
+  [4, { value: Math.PI ** 4 / 90, prefix: "π⁴/90 = " }],
 ]);
 
 const SHOWN_TERMS = 8;
-
-const DIVERGENT_NOTE =
-  "For s = 1 the sum keeps growing. After n terms it is about ln n + 0.577. It passes 10 only after 12,367 terms, and passes 100 after about 1.5 × 10⁴³ terms, but it never stops growing.";
 
 export function partialSum(s: number, terms: number): number {
   let total = 0;
@@ -32,18 +30,22 @@ function renderTerms(s: number, terms: number) {
     return createElement("li", "", k === 1 ? "1" : `1/${k}${s === 1 ? "" : superscript(s)}`);
   });
   if (terms > SHOWN_TERMS)
-    items.push(createElement("li", "more", `+ ${terms - SHOWN_TERMS} more terms`));
+    items.push(createElement("li", "more", t("zeta.more", { count: terms - SHOWN_TERMS })));
   byId("fractionStrip").replaceChildren(...items);
 }
 
 function describeShare(terms: number, percent: number, remainder: number): string {
-  const head = terms === 1 ? "The first term gives" : `The first ${terms} terms give`;
-  const share = percent > 99.9999 ? "more than 99.9999" : fixed(percent, percent > 99.99 ? 4 : 2);
+  const share =
+    percent > 99.9999
+      ? t("zeta.moreThan", { value: fixed(99.9999, 4) })
+      : fixed(percent, percent > 99.99 ? 4 : 2);
   const rest = remainder < 1e-5 ? scientific(remainder) : fixed(remainder, 6);
-  return `${head} ${share}% of the total. The remaining infinitely many terms add up to ${rest}.`;
+  return terms === 1
+    ? t("zeta.shareFirst", { share, rest })
+    : t("zeta.share", { count: terms, share, rest });
 }
 
-export function mountZeta(): void {
+export function mountZeta(): () => void {
   let s = 2;
   let terms = Number(byId("sumCount", HTMLInputElement).value);
 
@@ -67,17 +69,18 @@ export function mountZeta(): void {
     const progress = byId("sumProgress");
     if (limit) {
       const percent = (100 * total) / limit.value;
-      setText("sumLimit", limit.label);
+      setText("sumLimit", `${limit.prefix}${fixed(limit.value, 6)}…`);
       progress.style.visibility = "visible";
       byId("sumProgressFill").style.width = `${percent}%`;
       setText("sumExplain", describeShare(terms, percent, limit.value - total));
     } else {
-      setText("sumLimit", "none (grows forever)");
+      setText("sumLimit", t("zeta.noLimit"));
       progress.style.visibility = "hidden";
-      setText("sumExplain", DIVERGENT_NOTE);
+      setText("sumExplain", t("zeta.divergent"));
     }
     highlight(s);
   }
 
   render();
+  return render;
 }

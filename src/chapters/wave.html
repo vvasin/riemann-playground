@@ -1,8 +1,8 @@
 <section class="chapter" id="wave">
-  <p class="step-label">Step 6 of 9</p>
-  <h2>One zero produces one wave</h2>
+  <p class="step-label" data-i18n="wave.step">Step 6 of 9</p>
+  <h2 data-i18n="wave.title">One zero produces one wave</h2>
   <div class="chapter-grid">
-    <div class="prose">
+    <div class="prose" data-i18n="wave.prose">
       <p>
         To connect the zeros with primes we use a counting function that is a little different from
         π(x). <strong>ψ(x)</strong>, read “psi of x”, is a staircase that steps up at every prime
@@ -56,23 +56,43 @@
       </div>
     </div>
     <div class="panel">
-      <h3>The wave of one pair of zeros</h3>
-      <p class="subtitle">
+      <h3 data-i18n="wave.panelTitle">The wave of one pair of zeros</h3>
+      <p class="subtitle" data-i18n="wave.subtitle">
         Pick one of the first six zeros. The graph shows its exact contribution to ψ(x) for x from 2
         to 30. Dashed lines show its size, ±2·√x / |ρ|.
       </p>
-      <div class="choice" id="waveZeroButtons" role="group" aria-label="Choose a zero"></div>
-      <div class="axis-switch" role="group" aria-label="Horizontal scale">
-        <button type="button" data-axis="linear" class="active" aria-pressed="true">
+      <div
+        class="choice"
+        id="waveZeroButtons"
+        role="group"
+        aria-label="Choose a zero"
+        data-i18n-aria-label="wave.zeroLabel"
+      ></div>
+      <div
+        class="axis-switch"
+        role="group"
+        aria-label="Horizontal scale"
+        data-i18n-aria-label="wave.scaleLabel"
+      >
+        <button
+          type="button"
+          data-axis="linear"
+          class="active"
+          aria-pressed="true"
+          data-i18n="wave.linearButton"
+        >
           Ordinary x axis
         </button>
-        <button type="button" data-axis="log" aria-pressed="false">Logarithmic x axis</button>
+        <button type="button" data-axis="log" aria-pressed="false" data-i18n="wave.logButton">
+          Logarithmic x axis
+        </button>
       </div>
       <canvas
         id="wavePlot"
         class="plot medium"
         role="img"
         aria-label="Contribution of one pair of zeros to psi of x"
+        data-i18n-aria-label="wave.plotLabel"
       ></canvas>
       <p class="axis-note" id="axisCaption"></p>
       <p class="hover-note" id="waveInfo" aria-live="polite"></p>

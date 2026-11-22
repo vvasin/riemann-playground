@@ -1,6 +1,7 @@
 import { ZERO_HEIGHTS } from "../data/zeros";
 import { fixed } from "../format";
 import { pairWave } from "../math/explicit-formula";
+import { t } from "../i18n";
 import { COLORS } from "../ui/colors";
 import { renderChoices } from "../ui/choices";
 import { setPressed, setText } from "../ui/dom";
@@ -11,12 +12,9 @@ type Axis = "linear" | "log";
 const X_MIN = 2;
 const X_MAX = 30;
 const ENVELOPE = { samples: 300, color: "rgba(134,201,255,.45)", width: 1.2, dash: [5, 4] };
-const ZERO_CHOICES = ZERO_HEIGHTS.slice(0, 6).map((_, i) => [i, `Zero ${i + 1}`] as const);
-const CAPTIONS: Record<Axis, string> = {
-  linear:
-    "Ordinary axis: equal distances mean adding the same amount to x. The oscillations get wider toward the right.",
-  log: "Logarithmic axis: equal distances mean multiplying x by the same factor. The same oscillations are now evenly spaced.",
-};
+const ZERO_CHOICES = ZERO_HEIGHTS.slice(0, 6).map(
+  (_, i) => [i, () => t("wave.zero", { n: i + 1 })] as const,
+);
 
 const scales = {
   linear: {
@@ -86,12 +84,17 @@ export function mountWave(): () => void {
       plot.finish();
     }
 
-    setText("axisCaption", CAPTIONS[axis]);
+    setText("axisCaption", t(`wave.${axis}`));
     setText(
       "waveInfo",
       hover === null
-        ? `Zero ${zero + 1}: ρ = ½ + ${fixed(gamma, 3)}i. One full oscillation takes ln x up by 2π/γ = ${fixed((2 * Math.PI) / gamma, 3)}, that is, x is multiplied by ${fixed(Math.exp((2 * Math.PI) / gamma), 3)}.`
-        : `At x = ${fixed(toX(hover), 2)} this pair adds ${fixed(wave(hover), 3)} to ψ(x).`,
+        ? t("wave.info", {
+            n: zero + 1,
+            gamma: fixed(gamma, 3),
+            period: fixed((2 * Math.PI) / gamma, 3),
+            factor: fixed(Math.exp((2 * Math.PI) / gamma), 3),
+          })
+        : t("wave.hover", { x: fixed(toX(hover), 2), value: fixed(wave(hover), 3) }),
     );
     highlight(zero);
     for (const button of axisButtons) setPressed(button, button.dataset.axis === axis);

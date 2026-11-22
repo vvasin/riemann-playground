@@ -1,8 +1,8 @@
 <section class="chapter" id="proof">
-  <p class="step-label">Step 9 of 9</p>
-  <h2>What the proof establishes</h2>
+  <p class="step-label" data-i18n="proof.step">Step 9 of 9</p>
+  <h2 data-i18n="proof.title">What the proof establishes</h2>
   <div class="chapter-grid">
-    <div class="prose">
+    <div class="prose" data-i18n="proof.prose">
       <p>
         Von Koch (1901) showed that the Riemann hypothesis is equivalent to a statement about
         counting primes. Schoenfeld (1976) gave it in a form with explicit numbers:
@@ -56,8 +56,8 @@
       </div>
     </div>
     <div class="panel">
-      <h3>Actual error compared with the bound</h3>
-      <p class="subtitle">
+      <h3 data-i18n="proof.panelTitle">Actual error compared with the bound</h3>
+      <p class="subtitle" data-i18n="proof.subtitle">
         Choose x. The values of π(x) for x ≥ 10<sup>6</sup> are published results of large
         computations; li(x) and the bound are computed here. The bound holds for every x ≥ 2657.
       </p>
@@ -71,26 +71,28 @@
       <table class="data-table" aria-live="polite">
         <tbody>
           <tr>
-            <th scope="row">π(x), number of primes up to x</th>
+            <th scope="row" data-i18n="proof.rowPi">π(x), number of primes up to x</th>
             <td id="proofPi">—</td>
           </tr>
           <tr>
-            <th scope="row">li(x), the estimate</th>
+            <th scope="row" data-i18n="proof.rowLi">li(x), the estimate</th>
             <td id="proofLi">—</td>
           </tr>
           <tr>
-            <th scope="row">Actual error li(x) − π(x)</th>
+            <th scope="row" data-i18n="proof.rowError">Actual error li(x) − π(x)</th>
             <td id="proofError">—</td>
           </tr>
           <tr>
-            <th scope="row">Bound √x · ln x / (8π)</th>
+            <th scope="row" data-i18n="proof.rowBound">Bound √x · ln x / (8π)</th>
             <td id="proofBound">—</td>
           </tr>
         </tbody>
       </table>
       <p class="explain" id="proofExplain"></p>
       <div class="meter" aria-hidden="true"><span id="proofMeter"></span></div>
-      <p class="tiny">The bar shows the actual error as a share of the bound.</p>
+      <p class="tiny" data-i18n="proof.note">
+        The bar shows the actual error as a share of the bound.
+      </p>
     </div>
   </div>
 </section>

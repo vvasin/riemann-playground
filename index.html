@@ -6,34 +6,44 @@
     <meta name="theme-color" content="#0b1020" />
     <meta
       name="description"
+      data-i18n-content="page.description"
       content="An interactive, step-by-step explanation of the Riemann hypothesis: what the zeta function is, how its zeros are connected to prime numbers, and what its proof establishes."
     />
-    <title>The Riemann Hypothesis, Step by Step</title>
+    <title data-i18n="page.title">The Riemann Hypothesis, Step by Step</title>
     <link rel="stylesheet" href="./src/styles/index.css" />
     <script type="module" src="./src/main.ts"></script>
   </head>
   <body>
     <header class="topbar">
       <div class="wrap top-row">
-        <a class="brand" href="#top">The Riemann hypothesis</a>
-        <nav class="chapter-nav" aria-label="Steps">
-          <a href="#primes">1 Primes</a>
-          <a href="#estimate">2 Counting</a>
-          <a href="#zeta">3 Zeta</a>
-          <a href="#product">4 Euler product</a>
-          <a href="#zeros">5 Zeros</a>
-          <a href="#wave">6 One wave</a>
-          <a href="#synth">7 All waves</a>
-          <a href="#hypothesis">8 The hypothesis</a>
-          <a href="#proof">9 Consequences</a>
+        <a class="brand" href="#top" data-i18n="page.brand">The Riemann hypothesis</a>
+        <nav class="chapter-nav" aria-label="Steps" data-i18n-aria-label="page.stepsLabel">
+          <a href="#primes" data-i18n="nav.primes">1 Primes</a>
+          <a href="#estimate" data-i18n="nav.estimate">2 Counting</a>
+          <a href="#zeta" data-i18n="nav.zeta">3 Zeta</a>
+          <a href="#product" data-i18n="nav.product">4 Euler product</a>
+          <a href="#zeros" data-i18n="nav.zeros">5 Zeros</a>
+          <a href="#wave" data-i18n="nav.wave">6 One wave</a>
+          <a href="#synth" data-i18n="nav.synth">7 All waves</a>
+          <a href="#hypothesis" data-i18n="nav.hypothesis">8 The hypothesis</a>
+          <a href="#proof" data-i18n="nav.proof">9 Consequences</a>
         </nav>
+        <select
+          id="languageSelect"
+          class="language-select"
+          aria-label="Language"
+          data-i18n-aria-label="page.language"
+        >
+          <option value="en" lang="en">English</option>
+          <option value="ru" lang="ru">Русский</option>
+        </select>
       </div>
       <div class="progress" aria-hidden="true"><span id="readingProgress"></span></div>
     </header>
     <div class="wrap" id="top">
       <main>
         <header class="hero">
-          <div>
+          <div data-i18n="hero.intro">
             <h1>The Riemann hypothesis, step by step</h1>
             <p>
               The Riemann hypothesis is a claim about where one particular function, the zeta
@@ -49,9 +59,9 @@
             </p>
             <a class="primary" href="#primes">Start with step 1</a>
           </div>
-          <nav class="steps" aria-label="Overview">
-            <h2>Overview</h2>
-            <ol>
+          <nav class="steps" aria-label="Overview" data-i18n-aria-label="hero.overviewLabel">
+            <h2 data-i18n="hero.overviewTitle">Overview</h2>
+            <ol data-i18n="hero.overview">
               <li><a href="#primes">Prime numbers</a> <span>Counting them with π(x)</span></li>
               <li>
                 <a href="#estimate">Estimating the count</a>
@@ -95,7 +105,7 @@
         <html-include src="src/chapters/proof.html"></html-include>
       </main>
       <footer class="footer">
-        <p>
+        <p data-i18n="footer.about">
           <strong>About the calculations.</strong> The heights γ of the first 50 nontrivial zeros
           are taken from published tables. ζ(σ + it) is computed with Euler–Maclaurin summation.
           li(x) is computed with Ramanujan's series. ψ(x) and π(x) up to 100 000 are computed
@@ -104,26 +114,40 @@
           of difference from the exact staircase. The zero with β ≠ ½ in step 8 is hypothetical.
         </p>
         <div class="sources">
-          <span>Further reading:</span>
+          <span data-i18n="footer.reading">Further reading:</span>
           <a
             href="https://www.claymath.org/millennium/riemann-hypothesis/"
             target="_blank"
             rel="noopener noreferrer"
+            data-i18n="footer.clay"
             >Clay Mathematics Institute: problem statement</a
           >
-          <a href="https://www.aimath.org/WWN/rh/rh.pdf" target="_blank" rel="noopener noreferrer"
+          <a
+            href="https://www.aimath.org/WWN/rh/rh.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n="footer.aim"
             >AIM: Riemann hypothesis overview</a
           >
-          <a href="https://dlmf.nist.gov/25.16" target="_blank" rel="noopener noreferrer"
+          <a
+            href="https://dlmf.nist.gov/25.16"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n="footer.dlmf"
             >NIST DLMF: zeta and primes</a
           >
-          <a href="https://arxiv.org/abs/2109.02249" target="_blank" rel="noopener noreferrer"
+          <a
+            href="https://arxiv.org/abs/2109.02249"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n="footer.johnston"
             >Johnston: bounds from checked zeros</a
           >
           <a
             href="https://www.fungrim.org/topic/Zeros_of_the_Riemann_zeta_function.html"
             target="_blank"
             rel="noopener noreferrer"
+            data-i18n="footer.zeros"
             >Tables of zeros</a
           >
         </div>

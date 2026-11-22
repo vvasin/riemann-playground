@@ -1,8 +1,8 @@
 <section class="chapter" id="synth">
-  <p class="step-label">Step 7 of 9</p>
-  <h2>Adding the waves rebuilds the prime staircase</h2>
+  <p class="step-label" data-i18n="synth.step">Step 7 of 9</p>
+  <h2 data-i18n="synth.title">Adding the waves rebuilds the prime staircase</h2>
   <div class="chapter-grid">
-    <div class="prose">
+    <div class="prose" data-i18n="synth.prose">
       <p>
         Start with the smooth part, x − ln(2π) − ½·ln(1 − 1/x²), and add the waves of the first N
         pairs of zeros. The panel uses the first 50 pairs, with heights γ from 14.13 to 143.11.
@@ -31,56 +31,85 @@
       </div>
     </div>
     <div class="panel">
-      <h3>The staircase ψ(x) and the formula with N pairs of zeros</h3>
+      <h3 data-i18n="synth.panelTitle">The staircase ψ(x) and the formula with N pairs of zeros</h3>
       <div class="control">
         <div class="control-head">
-          <label for="pairCount">Pairs of zeros N</label>
+          <label for="pairCount" data-i18n="synth.pairsLabel">Pairs of zeros N</label>
           <output id="pairCountValue" for="pairCount">0</output>
         </div>
         <input id="pairCount" type="range" min="0" max="50" step="1" value="0" />
       </div>
       <div class="button-row">
-        <button class="secondary" id="addPair" type="button">Add 1 pair</button>
-        <button class="secondary" id="allPairs" type="button">Use all 50</button>
-        <button class="secondary" id="resetPairs" type="button">Reset to 0</button>
+        <button class="secondary" id="addPair" type="button" data-i18n="synth.addPair">
+          Add 1 pair
+        </button>
+        <button class="secondary" id="allPairs" type="button" data-i18n="synth.allPairs">
+          Use all 50
+        </button>
+        <button class="secondary" id="resetPairs" type="button" data-i18n="synth.resetPairs">
+          Reset to 0
+        </button>
       </div>
       <canvas
         id="synthPlot"
         class="plot"
         role="img"
         aria-label="The exact psi staircase and the formula using the first N pairs of zeros"
+        data-i18n-aria-label="synth.plotLabel"
       ></canvas>
       <ul class="legend">
-        <li><span class="swatch"></span>ψ(x), exact</li>
-        <li><span class="swatch blue"></span>Formula with N pairs</li>
-        <li><span class="swatch grey"></span>Primes</li>
-        <li><span class="swatch violet"></span>Prime powers (4, 8, 9, …)</li>
+        <li><span class="swatch"></span><span data-i18n="synth.legendExact">ψ(x), exact</span></li>
+        <li>
+          <span class="swatch blue"></span
+          ><span data-i18n="synth.legendFormula">Formula with N pairs</span>
+        </li>
+        <li><span class="swatch grey"></span><span data-i18n="synth.legendPrimes">Primes</span></li>
+        <li>
+          <span class="swatch violet"></span
+          ><span data-i18n="synth.legendPowers">Prime powers (4, 8, 9, …)</span>
+        </li>
       </ul>
       <p class="hover-note" id="synthHover" aria-live="polite"></p>
       <div class="metric-line">
-        <span>Average distance between the curves, away from the steps</span>
+        <span data-i18n="synth.meanError"
+          >Average distance between the curves, away from the steps</span
+        >
         <strong id="meanError">—</strong>
       </div>
       <hr class="divider" />
-      <h3>Rise of the curve at each whole number</h3>
-      <label for="barRange" class="choice-label">Numbers shown</label>
+      <h3 data-i18n="synth.barsTitle">Rise of the curve at each whole number</h3>
+      <label for="barRange" class="choice-label" data-i18n="synth.rangeLabel">Numbers shown</label>
       <select id="barRange">
-        <option value="2,10">2 to 10: primes 2, 3, 5, 7; prime powers 4, 8, 9</option>
-        <option value="10,19">10 to 19: primes 11, 13, 17, 19; prime power 16</option>
-        <option value="20,25" selected>20 to 25: prime 23; prime power 25</option>
-        <option value="24,30">24 to 30: prime 29; prime powers 25, 27</option>
+        <option value="2,10" data-i18n="synth.range1">
+          2 to 10: primes 2, 3, 5, 7; prime powers 4, 8, 9
+        </option>
+        <option value="10,19" data-i18n="synth.range2">
+          10 to 19: primes 11, 13, 17, 19; prime power 16
+        </option>
+        <option value="20,25" selected data-i18n="synth.range3">
+          20 to 25: prime 23; prime power 25
+        </option>
+        <option value="24,30" data-i18n="synth.range4">
+          24 to 30: prime 29; prime powers 25, 27
+        </option>
       </select>
       <canvas
         id="barPlot"
         class="plot short"
         role="img"
+        data-i18n-aria-label="synth.barsLabel"
         aria-label="Bars comparing the actual step of psi with the rise of the formula at each whole number"
       ></canvas>
       <ul class="legend">
-        <li><span class="swatch"></span>Actual step (ln p)</li>
-        <li><span class="swatch blue"></span>Rise of the formula with N pairs</li>
+        <li>
+          <span class="swatch"></span><span data-i18n="synth.legendStep">Actual step (ln p)</span>
+        </li>
+        <li>
+          <span class="swatch blue"></span
+          ><span data-i18n="synth.legendRise">Rise of the formula with N pairs</span>
+        </li>
       </ul>
-      <p class="tiny">
+      <p class="tiny" data-i18n="synth.note">
         Labels: p = prime, pᵏ = power of a prime. Uses the same N as the graph above.
       </p>
     </div>

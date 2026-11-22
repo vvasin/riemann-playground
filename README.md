@@ -26,10 +26,15 @@ src/chapters/         one .html + .ts pair per step
 src/math/             zeta, li, primes, ψ and the explicit formula
 src/data/             zero heights and published prime counts
 src/ui/               DOM helpers, canvas plots, toggle buttons
+src/i18n/             i18next setup, English script strings, Russian translation
 src/styles/           CSS, one file per area
 plugins/              Vite plugin for HTML includes
 tests/e2e/            Playwright tests (unit tests sit next to the code as *.test.ts)
 ```
+
+## Languages
+
+The page is in English and Russian, using [i18next](https://www.i18next.com/) with `i18next-browser-languagedetector`. The language is taken from `?lang=en|ru`, then from the user's earlier choice, then from the browser's language settings; the selector in the top bar switches it. English text lives in the HTML; translations live in `src/i18n/`.
 
 ## Deployment
 

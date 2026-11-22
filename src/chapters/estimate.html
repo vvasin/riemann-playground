@@ -1,8 +1,8 @@
 <section class="chapter" id="estimate">
-  <p class="step-label">Step 2 of 9</p>
-  <h2>Estimating how many primes there are</h2>
+  <p class="step-label" data-i18n="estimate.step">Step 2 of 9</p>
+  <h2 data-i18n="estimate.title">Estimating how many primes there are</h2>
   <div class="chapter-grid">
-    <div class="prose">
+    <div class="prose" data-i18n="estimate.prose">
       <p>
         Around 1800, Gauss noticed from tables of primes that near a number n, roughly one number in
         every <strong>ln n</strong> is prime. (ln is the natural logarithm.) Near 1000, ln n ≈ 6.9,
@@ -36,17 +36,29 @@
       </div>
     </div>
     <div class="panel">
-      <h3>π(x) compared with two estimates</h3>
-      <p class="subtitle">Choose how far to count. Hover over or tap the graph to read values.</p>
-      <div class="choice" id="estimateRange" role="group" aria-label="Largest x"></div>
+      <h3 data-i18n="estimate.panelTitle">π(x) compared with two estimates</h3>
+      <p class="subtitle" data-i18n="estimate.subtitle">
+        Choose how far to count. Hover over or tap the graph to read values.
+      </p>
+      <div
+        class="choice"
+        id="estimateRange"
+        role="group"
+        aria-label="Largest x"
+        data-i18n-aria-label="estimate.rangeLabel"
+      ></div>
       <canvas
         id="estimatePlot"
         class="plot"
         role="img"
         aria-label="Prime counting function compared with li(x) and x divided by ln x"
+        data-i18n-aria-label="estimate.plotLabel"
       ></canvas>
       <ul class="legend">
-        <li><span class="swatch"></span>π(x), the actual count</li>
+        <li>
+          <span class="swatch"></span
+          ><span data-i18n="estimate.legendPi">π(x), the actual count</span>
+        </li>
         <li><span class="swatch blue"></span>li(x)</li>
         <li><span class="swatch violet"></span>x / ln x</li>
       </ul>
@@ -57,7 +69,7 @@
         <div class="stat"><small>x / ln x</small> <strong id="estXlog">—</strong></div>
       </div>
       <p class="explain" id="estimateExplain"></p>
-      <p class="tiny">
+      <p class="tiny" data-i18n="estimate.note">
         li(x) is larger than π(x) for every x anyone has computed. Littlewood proved in 1914 that
         this reverses infinitely many times, but the first reversal happens beyond 10<sup>19</sup>.
       </p>
